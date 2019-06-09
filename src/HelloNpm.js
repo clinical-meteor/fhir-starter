@@ -6,9 +6,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
-import { Card, CardActions, CardText, DatePicker, Toggle, RaisedButton, TextField } from 'material-ui';
+
 
 import React from 'react';
+import PropTypes from 'prop-types'
+
+import { RaisedButton, TextField, Card, CardTitle, CardText } from 'material-ui';
+
 
 export class HelloNpm extends React.Component {
   constructor(props) {
@@ -22,8 +26,30 @@ export class HelloNpm extends React.Component {
   }
 
   render() {
-    return <Card>Welcome, {this.name}!</Card>;
+    return(
+      <div style={{margin: '40px'}}>
+        <Card>
+          <CardTitle 
+            title="Lorem Ipsum"
+            subtitle="set dolar et..."
+            />
+          <CardText>
+            <TextField
+              name='foo'
+              type='text'
+              floatingLabelText='Full Name'
+              floatingLabelFixed={true}
+              value={this.state.name}
+              />
+          {/* <RaisedButton id="foo">Foo</RaisedButton> */}
+
+          </CardText>
+        </Card>
+      </div>
+    );
   }
 }
-
+HelloNpm.propTypes = {
+  id: PropTypes.string,
+};
 export default HelloNpm;
