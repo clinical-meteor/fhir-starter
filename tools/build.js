@@ -23,7 +23,7 @@ let promise = Promise.resolve();
 promise = promise.then(() => del(['dist/*']));
 
 // Compile source code into a distributable format with Babel
-['es', 'cjs', 'umd'].forEach((format) => {
+['jsx', 'es', 'cjs', 'umd'].forEach((format) => {
   promise = promise.then(() => rollup.rollup({
     input: 'src/index.js',
     external: Object.keys(pkg.dependencies),
@@ -33,8 +33,8 @@ promise = promise.then(() => del(['dist/*']));
         babelrc: false,
         exclude: 'node_modules/**',
         externalHelpers: false,
-        runtimeHelpers: true,
-        presets: pkg.babel.presets.map(x => (x === 'latest' ? ['latest', { es2015: { modules: false } }] : x)),
+        runtimeHelpers: true
+        // presets: pkg.babel.presets.map(x => (x === 'latest' ? ['latest', { es2015: { modules: false } }] : x)),
       })),
       commonjs(),
     ],

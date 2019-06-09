@@ -1,8 +1,14 @@
 import { CardActions, CardText, DatePicker, Toggle, RaisedButton, TextField } from 'material-ui';
 
-import { get, set } from 'lodash';
+// we can clean this up when lodash exports { get, set }
+// import { get, set } from 'lodash';
+import _ from 'lodash';
+let get = _.get;
+let set = _.set;
+
+import moment from 'moment-es6'
+
 import { Row, Col } from 'react-bootstrap';
-import moment from 'moment';
 
 import React from 'react';
 import PropTypes from 'prop-types';

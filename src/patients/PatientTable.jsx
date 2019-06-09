@@ -3,9 +3,11 @@ import { FlatButton, Toggle } from 'material-ui';
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
-import { TableNoData } from './TableNoData'
+// import { TableNoData } from './TableNoData'
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import _ from 'lodash';
+
+let get = _.get;
 
 import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
 import { GoTrashcan } from 'react-icons/go'
@@ -300,7 +302,7 @@ export class PatientTable extends React.Component {
     }
 
     if(patientsToRender.length === 0){
-      footer = <TableNoData noDataPadding={ this.props.noDataMessagePadding } />
+      // footer = <TableNoData noDataPadding={ this.props.noDataMessagePadding } />
     } else {
       for (var i = 0; i < patientsToRender.length; i++) {
 
