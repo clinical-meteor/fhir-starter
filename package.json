@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "material-fhir-ui",
   "version": "0.5.2",
   "description": "A project template for authoring and publishing JavaScript libraries",
