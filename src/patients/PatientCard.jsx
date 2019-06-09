@@ -1,15 +1,13 @@
 import React from 'react';
-import ReactMixin from 'react-mixin';
 
-import { ListItem } from 'material-ui/List';
-import { GlassCard, Glass, DynamicSpacer } from 'meteor/clinical:glass-ui';
-import { Card, CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card';
-import { Col, Grid, Row } from 'react-bootstrap';
+import { GlassCard, DynamicSpacer } from 'meteor/clinical:glass-ui';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
+import { Col, Row } from 'react-bootstrap';
 import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 
-import { get } from 'lodash';
-import moment from 'moment';
+import { get } from 'lodash-es';
+import moment from 'moment-es6'
 
 const style = {
     avatar: {

@@ -125,3 +125,8 @@ Please see the [meteor-on-fhir](https://github.com/clinical-meteor/meteor-on-fhi
 This project is licensed under the terms of the
 [MIT license](https://github.com/callemall/material-ui/blob/master/LICENSE)
 
+
+## References  
+- https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396  
+- https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/  
+- https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562  

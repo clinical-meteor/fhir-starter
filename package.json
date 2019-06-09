@@ -1,6 +1,6 @@
 {
   "name": "material-fhir-ui",
-  "version": "0.5.5",
+  "version": "0.5.8",
   "description": "A project template for authoring and publishing JavaScript libraries",
   "homepage": "http://clinical.meteorapp.com",
   "repository": "clinical-meteor/material-fhir-ui",
@@ -29,11 +29,13 @@
     "@babel/runtime": "^7.0.0",
     "babel-loader": "^8.0.6",
     "babel-preset-latest": "^6.24.1",
+    "lodash-es": "^4.17.11",
     "material-ui": "^0.20.1",
     "moment-es6": "^1.0.0",
     "prop-types": "^15.7.2",
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
+    "react": "^16.7.0",
+    "react-bootstrap": "^0.31.5",
+    "react-dom": "^16.7.0",
     "react-mixin": "^4.0.0",
     "react-proptypes": "^1.0.0"
   },
@@ -71,8 +73,7 @@
     "test:cover": "nyc npm test",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build": "rollup -c",
-    "publish": "rollup -c",
-    "prepublish": "npm --version",
+    "prepublish": "rollup -c",
     "publish:docs": "easystatic deploy docs --repo kriasoft/babel-starter-kit",
     "start": "easystatic start docs"
   }

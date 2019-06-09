@@ -30,7 +30,7 @@ export class HelloNpm extends React.Component {
       <div style={{margin: '40px'}}>
         <Card>
           <CardTitle 
-            title="Lorem Ipsum"
+            title="Hello Npm"
             subtitle="set dolar et..."
             />
           <CardText>

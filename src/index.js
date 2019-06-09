@@ -8,8 +8,9 @@
  */
 
 import HelloNpm from './HelloNpm';
+import HelloPatientCard from './patients/HelloPatientCard';
 
 // import PatientDetail from './patients/PatientDetail.jsx';
 // import PatientTable from './patients/PatientTable.jsx';
 
-export default HelloNpm;
+export default {HelloPatientCard, HelloNpm};
