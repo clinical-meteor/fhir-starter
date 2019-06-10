@@ -45,7 +45,7 @@ const style = {
   },
   content: {
     marginLeft: '160px',
-    position: 'relative',
+    position: 'relative'
   },
   patientCard: {
     overflowY: 'none'
@@ -55,7 +55,7 @@ const style = {
 },
 }
 
-export class HelloPatientCard extends React.Component {
+export class PatientCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,7 +67,7 @@ export class HelloPatientCard extends React.Component {
   }
 
   render() {
-    console.log('HelloPatientCard.render', this.props)
+    console.log('PatientCard.render', this.props)
 
     let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = this.props;
 
@@ -114,6 +114,10 @@ export class HelloPatientCard extends React.Component {
       </div>
     }
 
+    if(this.props.style){
+      style.patientCard = this.props.style;
+    }
+
     return(
       <div className='patientCard' style={style.patientCardSpace} >
         <Card style={ style.photo } >
@@ -139,7 +143,7 @@ export class HelloPatientCard extends React.Component {
     );
   }
 }
-HelloPatientCard.propTypes = {
+PatientCard.propTypes = {
   multiline: PropTypes.bool,
   fullName: PropTypes.string,
   familyName: PropTypes.string,
@@ -149,6 +153,7 @@ HelloPatientCard.propTypes = {
   gender: PropTypes.string,
   avatar: PropTypes.string,
   hideDetails: PropTypes.string,
-  overflowY: PropTypes.string
+  overflowY: PropTypes.string,
+  style: PropTypes.object
 };
-export default HelloPatientCard;
+export default PatientCard;
