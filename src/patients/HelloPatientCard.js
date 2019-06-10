@@ -12,7 +12,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TextField, Card, CardTitle, CardText } from 'material-ui';
-import { Col, Row } from 'react-bootstrap';
 
 import { get } from 'lodash-es';
 import moment from 'moment-es6'
@@ -44,6 +43,10 @@ const style = {
       position: 'relative',
       top: '0px'
   },
+  content: {
+    marginLeft: '160px',
+    position: 'relative',
+  },
   patientCard: {
     overflowY: 'none'
   },
@@ -64,10 +67,9 @@ export class HelloPatientCard extends React.Component {
   }
 
   render() {
-
     console.log('HelloPatientCard.render', this.props)
 
-    let { active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = this.props;
+    let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = this.props;
 
     fullName = get(this, 'props.patient.name[0].text', '');
     familyName = get(this, 'props.patient.name[0].family[0]', '');        
@@ -76,9 +78,42 @@ export class HelloPatientCard extends React.Component {
     birthdate = get(this, 'props.patient.birthDate', '');
     gender = get(this, 'props.patient.gender', '');
     avatar = get(this, 'props.patient.photo[0].url', '');
-    // avatarImg = get(this, 'props.patient.photo[0].url', '/packages/clinical_hl7-resource-patient/assets/noAvatar.png');
-
+    identifier = get(this, 'props.patient.identifier[0].value', '');
         
+    let details;
+    if(!this.props.hideDetails){
+      details = <div style={style.content}>
+      <TextField
+        name='identifier'
+        type='text'
+        floatingLabelText='Identifier'
+        floatingLabelFixed={true}
+        value={identifier}
+        /><br />
+      <TextField
+        name='fullName'
+        type='text'
+        floatingLabelText='Full Name'
+        floatingLabelFixed={true}
+        value={fullName}
+        /><br />
+      <TextField
+        name='birthdate'
+        type='text'
+        floatingLabelText='Birthdate'
+        floatingLabelFixed={true}
+        value={birthdate}
+        /><br />
+      <TextField
+        name='gender'
+        type='text'
+        floatingLabelText='Gender'
+        floatingLabelFixed={true}
+        value={gender}
+        /><br />
+      </div>
+    }
+
     return(
       <div className='patientCard' style={style.patientCardSpace} >
         <Card style={ style.photo } >
@@ -93,87 +128,11 @@ export class HelloPatientCard extends React.Component {
         <Card style={ style.patientCard } >
           <CardTitle
               title={ fullName }
-              subtitle={ email }
+              subtitle={ birthdate + ', ' + gender }
               style={ style.title }
             />
           <CardText>
-          {/* <div id='profileDemographicsPane' style={{position: 'relative'}}>
-          <Row style={ style.synopsis} >
-            <Col md={6}>
-              <TextField
-                id='givenNameInput'
-                ref='given'
-                name='given'
-                type='text'
-                floatingLabelText='given name'
-                value={ givenName }
-                //onChange={ this.props.updateGivenName ? this.props.updateGivenName.bind(this) : null }
-                fullWidth
-                /><br/>
-            </Col>
-            <Col md={6}>
-              <TextField
-                id='familyNameInput'
-                ref='family'
-                name='family'
-                type='text'
-                floatingLabelText='family name'
-                value={ familyName }
-                //onChange={ this.props.updateFamilyName ? this.props.updateFamilyName.bind(this) : null }
-                fullWidth
-                /><br/>
-            </Col>
-          </Row>
-          <Row style={ style.synopsis }>
-            <Col md={4}>
-              <TextField
-                id='birthdateInput'
-                ref='birthdate'
-                name='birthdate'
-                type='date'
-                floatingLabelText='date of birth'
-                floatingLabelFixed={true}
-                value={ moment(birthdate).format('YYYY-MM-DD') }                          
-                //onChange={ this.props.updateBirthdate ? this.props.updateBirthdate.bind(this) : null }
-                fullWidth
-                /><br/>
-            </Col>
-            <Col md={2}>
-              <TextField
-                id='genderInput'
-                ref='gender'
-                name='gender'
-                type='text'
-                floatingLabelText='gender'
-                value={ gender }
-                //onChange={ this.props.updateGender ? this.props.updateGender.bind(this) : null }
-                fullWidth
-                /><br/>
-
-            </Col>
-            <Col md={6}>
-              <TextField
-                id='avatarInput'
-                ref='avatar'
-                name='avatar'
-                type='text'
-                floatingLabelText='avatar'
-                value={ avatar }
-                //onChange={ this.props.updateAvatar ? this.props.updateAvatar.bind(this) : null }
-                fullWidth
-                /><br/>
-
-            </Col>
-          </Row>
-        </div> */}
-            {/* <TextField
-              name='foo'
-              type='text'
-              floatingLabelText='Full Name'
-              floatingLabelFixed={true}
-              value={this.state.name}
-              /> */}
-
+            { details }
           </CardText>
         </Card>
       </div>
@@ -189,6 +148,7 @@ HelloPatientCard.propTypes = {
   birthdate: PropTypes.string,
   gender: PropTypes.string,
   avatar: PropTypes.string,
+  hideDetails: PropTypes.string,
   overflowY: PropTypes.string
 };
 export default HelloPatientCard;
