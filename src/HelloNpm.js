@@ -11,7 +11,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-import { RaisedButton, TextField, Card, CardTitle, CardText } from 'material-ui';
+import { TextField, Card, CardTitle, CardText } from 'material-ui';
 
 
 export class HelloNpm extends React.Component {

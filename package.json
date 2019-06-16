@@ -1,8 +1,8 @@
 {
   "name": "material-fhir-ui",
-  "version": "0.5.10",
-  "description": "A project template for authoring and publishing JavaScript libraries",
-  "homepage": "http://clinical.meteorapp.com",
+  "version": "0.6.0",
+  "description": "Reausable and composable FHIR components built with React and Material UI.",
+  "homepage": "http://github.com/clinical-meteor/material-fhir-ui",
   "repository": "clinical-meteor/material-fhir-ui",
   "author": "Abigail Watson <awatson1978@gmail.com>",
   "contributors": [
@@ -10,7 +10,15 @@
     "Vladimir Kutepov <frenzzy.man@gmail.com>"
   ],
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "fhir",
+    "material",
+    "ui",
+    "materialui",
+    "react",
+    "dstu2",
+    "r4"
+  ],
   "main": "dist/bundle.js",
   "style": "dist/styles.css",
   "files": [
@@ -29,8 +37,9 @@
     "@babel/runtime": "^7.0.0",
     "babel-loader": "^8.0.6",
     "babel-preset-latest": "^6.24.1",
+    "bootstrap": "^3.3.7",
     "lodash-es": "^4.17.11",
-    "material-ui": "^0.20.1",
+    "material-ui": "0.20.1",
     "moment-es6": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.7.0",

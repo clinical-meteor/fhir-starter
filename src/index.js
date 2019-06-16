@@ -7,10 +7,9 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import HelloNpm from './HelloNpm';
 import PatientCard from './patients/PatientCard';
 
 // import PatientDetail from './patients/PatientDetail.jsx';
 // import PatientTable from './patients/PatientTable.jsx';
 
-export default {PatientCard, HelloNpm};
+export default { PatientCard };

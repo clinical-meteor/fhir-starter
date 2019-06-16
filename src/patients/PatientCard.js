@@ -1,17 +1,16 @@
 /**
- * Babel Starter Kit (https://www.kriasoft.com/babel-starter-kit)
- *
- * Copyright © 2015-2016 Kriasoft, LLC. All rights reserved.
+ * Copyright © 2015-2016 Symptomatic, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TextField, Card, CardTitle, CardText } from 'material-ui';
+
+import { Grid, Col, Row } from 'react-bootstrap';
 
 import { get } from 'lodash-es';
 import moment from 'moment-es6'
@@ -67,7 +66,7 @@ export class PatientCard extends React.Component {
   }
 
   render() {
-    console.log('PatientCard.render', this.props)
+    // console.log('PatientCard.render', this.props)
 
     let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = this.props;
 
@@ -82,36 +81,101 @@ export class PatientCard extends React.Component {
         
     let details;
     if(!this.props.hideDetails){
-      details = <div style={style.content}>
-      <TextField
-        name='identifier'
-        type='text'
-        floatingLabelText='Identifier'
-        floatingLabelFixed={true}
-        value={identifier}
-        /><br />
-      <TextField
-        name='fullName'
-        type='text'
-        floatingLabelText='Full Name'
-        floatingLabelFixed={true}
-        value={fullName}
-        /><br />
-      <TextField
-        name='birthdate'
-        type='text'
-        floatingLabelText='Birthdate'
-        floatingLabelFixed={true}
-        value={birthdate}
-        /><br />
-      <TextField
-        name='gender'
-        type='text'
-        floatingLabelText='Gender'
-        floatingLabelFixed={true}
-        value={gender}
-        /><br />
-      </div>
+      // details = <div style={style.content}>
+      // <TextField
+      //   name='identifier'
+      //   type='text'
+      //   floatingLabelText='Identifier'
+      //   floatingLabelFixed={true}
+      //   value={identifier}
+      //   /><br />
+      // <TextField
+      //   name='fullName'
+      //   type='text'
+      //   floatingLabelText='Full Name'
+      //   floatingLabelFixed={true}
+      //   value={fullName}
+      //   /><br />
+      // <TextField
+      //   name='birthdate'
+      //   type='text'
+      //   floatingLabelText='Birthdate'
+      //   floatingLabelFixed={true}
+      //   value={birthdate}
+      //   /><br />
+      // <TextField
+      //   name='gender'
+      //   type='text'
+      //   floatingLabelText='Gender'
+      //   floatingLabelFixed={true}
+      //   value={gender}
+      //   /><br />
+      // </div>
+        details = <div id='profileDemographicsPane' style={{position: 'relative'}}>
+                  <Row style={ style.synopsis} >
+                    <Col md={6}>
+                      <TextField
+                        id='givenNameInput'
+                        name='given'
+                        type='text'
+                        floatingLabelText='given name'
+                        value={ givenName }
+                        //onChange={ this.props.updateGivenName ? this.props.updateGivenName.bind(this) : null }
+                        fullWidth
+                        /><br/>
+                    </Col>
+                    <Col md={6}>
+                      <TextField
+                        id='familyNameInput'
+                        name='family'
+                        type='text'
+                        floatingLabelText='family name'
+                        value={ familyName }
+                        //onChange={ this.props.updateFamilyName ? this.props.updateFamilyName.bind(this) : null }
+                        fullWidth
+                        /><br/>
+                    </Col>
+                  </Row>
+                  <Row style={ style.synopsis }>
+                    <Col md={4}>
+                      <TextField
+                        id='birthdateInput'
+                        name='birthdate'
+                        type='date'
+                        floatingLabelText='date of birth'
+                        floatingLabelFixed={true}
+                        value={ moment(birthdate).format('YYYY-MM-DD') }                          
+                        //onChange={ this.props.updateBirthdate ? this.props.updateBirthdate.bind(this) : null }
+                        fullWidth
+                        /><br/>
+                    </Col>
+                    <Col md={2}>
+                      <TextField
+                        id='genderInput'
+                        name='gender'
+                        type='text'
+                        floatingLabelText='gender'
+                        value={ gender }
+                        //onChange={ this.props.updateGender ? this.props.updateGender.bind(this) : null }
+                        fullWidth
+                        /><br/>
+
+                    </Col>
+                    <Col md={6}>
+                      <TextField
+                        id='avatarInput'
+                        name='avatar'
+                        type='text'
+                        floatingLabelText='avatar'
+                        value={ avatar }
+                        //onChange={ this.props.updateAvatar ? this.props.updateAvatar.bind(this) : null }
+                        fullWidth
+                        /><br/>
+
+                    </Col>
+                  </Row>
+                </div>
+
     }
 
     if(this.props.style){
@@ -152,7 +216,7 @@ PatientCard.propTypes = {
   birthdate: PropTypes.string,
   gender: PropTypes.string,
   avatar: PropTypes.string,
-  hideDetails: PropTypes.string,
+  hideDetails: PropTypes.bool,
   overflowY: PropTypes.string,
   style: PropTypes.object
 };
