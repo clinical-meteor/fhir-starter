@@ -1,13 +1,15 @@
-import { FlatButton, Toggle } from 'material-ui';
+import { FlatButton, Checkbox } from 'material-ui';
 
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
 // import { TableNoData } from './TableNoData'
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
+import moment from 'moment-es6'
+import _ from 'lodash';
 let get = _.get;
+let set = _.set;
 
 import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
 import { GoTrashcan } from 'react-icons/go'
@@ -40,7 +42,7 @@ let styles = {
 flattenPatient = function(person){
   let result = {
     _id: person._id,
-    id: person.id,
+    id: person._id,
     active: true,
     gender: get(person, 'gender'),
     name: '',
@@ -57,6 +59,7 @@ flattenPatient = function(person){
   result.birthDate = moment(person.birthDate).format("YYYY-MM-DD")
   result.photo = get(person, 'photo[0].url', '');
   result.identifier = get(person, 'identifier[0].value', '');
+  result.gender = get(person, 'gender', '');
 
   result.maritalStatus = get(person, 'maritalStatus.text', '');
   result.deceased = get(person, 'deceasedBoolean', '');
@@ -78,6 +81,7 @@ flattenPatient = function(person){
     }
   }
 
+  console.log('flattened', result)
   return result;
 }
 
@@ -88,9 +92,6 @@ export class PatientTable extends React.Component {
       selected: [],
       patients: []
     }
-  }
-  imgError(avatarId) {
-    this.refs[avatarId].src = Meteor.absoluteUrl() + 'noAvatar.png';
   }
   renderRowAvatarHeader(){
     if (get(Meteor, 'settings.public.defaults.avatars') && (this.props.showAvatars === true)) {
@@ -105,7 +106,11 @@ export class PatientTable extends React.Component {
     if (get(Meteor, 'settings.public.defaults.avatars') && (this.props.showAvatars === true)) {
       return (
         <td className='avatar'>
-          <img src={patient.photo} ref={patient._id} onError={ this.imgError.bind(this, patient._id) } style={avatarStyle}/>
+          <img 
+            src={patient.photo} 
+            onError={(e)=>{e.target.onerror = null; e.target.src = Meteor.absoluteUrl() + 'noAvatar.png'}}
+            style={avatarStyle}
+          />
         </td>
       );
     }
@@ -125,15 +130,15 @@ export class PatientTable extends React.Component {
     }
   }
 
-  renderSpeciesHeader(hideSpecies){
-    if(hideSpecies){
+  renderSpeciesHeader(){
+    if(!this.props.hideSpecies || (this.props.fhirVersion === "R4")){
       return (
         <th className='species'>Species</th>
       );
     }
   }
-  renderSpeciesRow(hideSpecies, patient){
-    if(hideSpecies){
+  renderSpecies(patient){
+    if(!this.props.hideSpecies || (this.props.fhirVersion === "R4")){
       return (
         <td className='species' style={styles.cellHideOnPhone}>
           {patient.species}
@@ -172,28 +177,28 @@ export class PatientTable extends React.Component {
     console.log('Selecting a new Patient...');
     // console.log('patientId', patientId, foo, bar)
     if(typeof this.props.onRowClick  === "function"){
-      console.log('Apparently we received an onRowClick() as a prop')
+      // console.log('Apparently we received an onRowClick() as a prop')
       this.props.onRowClick(patientId);
     }
   }
-  renderToggleHeader(){
-    if (!this.props.hideToggle) {
-      return (
-        <th className="toggle" style={{width: '60px'}} >Toggle</th>
-      );
-    }
-  }
-  renderToggle(){
-    if (!this.props.hideToggle) {
-      return (
-        <td className="toggle" style={{width: '60px'}}>
-            <Toggle
-              defaultToggled={true}
-            />
-          </td>
-      );
-    }
-  }
+  // renderCheckboxHeader(){
+  //   if (!this.props.hideCheckbox) {
+  //     return (
+  //       <th className="checkbox" style={{width: '60px'}} >Checkbox</th>
+  //     );
+  //   }
+  // }
+  // renderCheckbox(){
+  //   if (!this.props.hideCheckbox) {
+  //     return (
+  //       <td className="checkbox" style={{width: '60px'}}>
+  //           <Checkbox
+  //             defaultChecked={true}
+  //           />
+  //         </td>
+  //     );
+  //   }
+  // }
   renderActionIconsHeader(){
     if (!this.props.hideActionIcons) {
       return (
@@ -212,13 +217,19 @@ export class PatientTable extends React.Component {
 
       return (
         <td className='actionIcons' style={{minWidth: '120px'}}>
-          <FaTags style={iconStyle} onClick={this.showSecurityDialog.bind(this, patient)} />
+          <FaTags style={iconStyle} onClick={this.onMetaClick.bind(this, patient)} />
           <GoTrashcan style={iconStyle} onClick={this.removeRecord.bind(this, patient._id)} />  
         </td>
       );
     }
   } 
 
+  onMetaClick(patient){
+    let self = this;
+    if(this.props.onMetaClick){
+      this.props.onMetaClick(self, patient);
+    }
+  }
   renderMaritalStatusHeader(){
     if (!this.props.hideMaritalStatus) {
       return (
@@ -266,14 +277,7 @@ export class PatientTable extends React.Component {
     console.log('Remove patient ', _id)
     Patients._collection.remove({_id: _id})
   }
-  showSecurityDialog(patient){
-    console.log('showSecurityDialog', patient)
 
-    Session.set('securityDialogResourceJson', Patients.findOne(get(patient, '_id')));
-    Session.set('securityDialogResourceType', 'Patient');
-    Session.set('securityDialogResourceId', get(patient, '_id'));
-    Session.set('securityDialogOpen', true);
-  }
   render () {
     let tableRows = [];
     let footer;
@@ -316,7 +320,7 @@ export class PatientTable extends React.Component {
         tableRows.push(
           <tr key={i} className="patientRow" style={rowStyle} onClick={this.selectPatientRow.bind(this, patientsToRender[i]._id )} >
   
-            { this.renderToggle(patientsToRender[i]) }
+            {/* { this.renderCheckbox(patientsToRender[i]) } */}
             { this.renderActionIcons(patientsToRender[i]) }
 
             { this.renderRowAvatar(patientsToRender[i], styles.avatar) }
@@ -329,8 +333,8 @@ export class PatientTable extends React.Component {
             { this.renderMaritalStatus(patientsToRender[i]) }
             { this.renderLanguage(patientsToRender[i]) }
 
-            { this.renderIsActive(this.props.hideActive, patientsToRender[i].active) }
-            { this.renderSpeciesRow(this.props.hideSpecies, patientsToRender[i]) }
+            { this.renderIsActive(patientsToRender[i].active) }
+            {/* { this.renderSpecies(patientsToRender[i]) } */}
             { this.renderActionButton(patientsToRender[i], styles.avatar) }
           </tr>
         );
@@ -344,25 +348,19 @@ export class PatientTable extends React.Component {
         <Table id='patientsTable' hover >
           <thead>
             <tr>
-              { this.renderToggleHeader() }
+              {/* { this.renderCheckboxHeader() } */}
               { this.renderActionIconsHeader() }
               { this.renderRowAvatarHeader() }
               {this.renderIdentifierHeader() }
 
-              {/* <th className='identifier' style={styles.hideOnPhone}>Identifier</th> */}
               <th className='name'>Name</th>
               <th className='gender'>Gender</th>
               <th className='birthdate' style={{minWidth: '100px'}}>Birthdate</th>
 
               { this.renderMaritalStatusHeader(patientsToRender[i]) }
-              { this.renderLanguageHeader(patientsToRender[i]) }
-
-              {/* <th className='maritalStatus' style={styles.hideOnPhone}>Marital Status</th> */}
-              {/* <th className='language' style={styles.hideOnPhone}>Language</th> */}
-              {/* <th className='isActive' style={styles.hideOnPhone}>Active</th> */}
-              
-              {this.renderIsActiveHeader() }
-              { this.renderSpeciesHeader(this.props.hideSpecies) }
+              { this.renderLanguageHeader(patientsToRender[i]) }              
+              { this.renderIsActiveHeader() }
+              {/* { this.renderSpeciesHeader(this.props.hideSpecies) } */}
               { this.renderActionButtonHeader() }
             </tr>
           </thead>
@@ -378,11 +376,11 @@ export class PatientTable extends React.Component {
 
 PatientTable.propTypes = {
   id: PropTypes.string,
-  data: PropTypes.array,
+  patients: PropTypes.array,
   fhirVersion: PropTypes.string,
   showActionButton: PropTypes.bool,
   onRowClick: PropTypes.func,
-  hideToggle: PropTypes.bool,
+  hideCheckbox: PropTypes.bool,
   hideActionIcons: PropTypes.bool,
   hideIdentifier: PropTypes.bool,
   hideActive: PropTypes.bool,
@@ -394,6 +392,7 @@ PatientTable.propTypes = {
   paginationLimit: PropTypes.number,
   onCellClick: PropTypes.func,
   onRowClick: PropTypes.func,
+  onMetaClick: PropTypes.func,
   onActionButtonClick: PropTypes.func,
   actionButtonLabel: PropTypes.string
 };

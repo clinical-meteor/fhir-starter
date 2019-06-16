@@ -8,8 +8,12 @@
  */
 
 import PatientCard from './patients/PatientCard';
+import PatientTable from './patients/PatientTable';
 
 // import PatientDetail from './patients/PatientDetail.jsx';
 // import PatientTable from './patients/PatientTable.jsx';
 
-export default { PatientCard };
+export default { 
+  PatientCard,
+  PatientTable
+};
