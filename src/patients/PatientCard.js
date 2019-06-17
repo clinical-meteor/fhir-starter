@@ -188,7 +188,7 @@ export class PatientCard extends React.Component {
           <img 
             id='avatarImage' 
             className='avatarImage' 
-            onError={(e)=>{e.target.onerror = null; e.target.src = Meteor.absoluteUrl() + 'noAvatar.png' }}
+            onError={(e)=>{e.target.onerror = null; e.target.src = Meteor.absoluteUrl() + 'clinical_hl7-resource-patient/assets/noAvatar.png' }}
             src={ avatar } 
             style={ style.avatar} 
             />

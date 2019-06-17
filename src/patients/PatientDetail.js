@@ -156,7 +156,7 @@ const styles = {
     return shouldUpdate;
   }
   render() {
-    if(process.env.NODE_ENV === "test") console.log('PatientDetail.render()', this.state)
+    // if(process.env.NODE_ENV === "test") console.log('PatientDetail.render()', this.state)
     let formData = this.state.form;
 
     let formButtons;
@@ -171,6 +171,7 @@ const styles = {
             style={{marginRight: '20px'}}>Save</Button>
           <Button 
             id='deletePatientButton' 
+            className='deletePatientButton'
             variant="contained" 
             onClick={this.handleDeleteButton.bind(this)}>
             Delete
@@ -179,6 +180,7 @@ const styles = {
     } else {
       formButtons = <Button 
         id='savePatientButton'  
+        className='savePatientButton'
         variant="contained" 
         color="primary" 
         onClick={this.handleSaveButton.bind(this)}
