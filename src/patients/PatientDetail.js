@@ -363,21 +363,21 @@ const styles = {
     }
   }
   determineButtons(patientId){
-    if(this.props.buttons){
-      return this.props.buttons;
-    }
-    // if (patientId) {
-    //   return (
-    //     <div>
-    //       <RaisedButton id='updatePatientButton' className='updatePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} style={{marginRight: '20px'}} />
-    //       <RaisedButton id='deletePatientButton' label="Delete" onClick={this.handleDeleteButton.bind(this)} />
-    //     </div>
-    //   );
-    // } else {
-    //   return(
-    //     <RaisedButton id='savePatientButton'  className='savePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} />
-    //   );
+    // if(this.props.buttons){
+    //   return this.props.buttons;
     // }
+    if (patientId) {
+      return (
+        <div>
+          <RaisedButton id='updatePatientButton' className='updatePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} style={{marginRight: '20px'}} />
+          <RaisedButton id='deletePatientButton' label="Delete" onClick={this.handleDeleteButton.bind(this)} />
+        </div>
+      );
+    } else {
+      return(
+        <RaisedButton id='savePatientButton'  className='savePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} />
+      );
+    }
   }
 
   updateFormData(formData, field, textValue){
