@@ -3,7 +3,7 @@ import { FlatButton, Checkbox } from 'material-ui';
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
-// import { TableNoData } from './TableNoData'
+import { TableNoData } from '../components/TableNoData'
 import PropTypes from 'prop-types';
 
 import moment from 'moment-es6'
