@@ -1,4 +1,19 @@
-import { CardActions, CardText, DatePicker, Checkbox, RaisedButton, TextField } from 'material-ui';
+import { CardActions, CardText, DatePicker, Checkbox, TextField } from 'material-ui';
+
+// we need to enumerate components from Material 1.5.1+ explicitly (absolute path);
+// tedious, but it works.  see:
+// https://github.com/mui-org/material-ui/issues/10212
+import Button from '@material-ui/core/Button';
+
+// const ActionButton = styled(Button)({
+//   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+//   border: 0,
+//   borderRadius: 3,
+//   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//   color: 'white',
+//   height: 48,
+//   padding: '0 30px',
+// });
 
 // we can clean this up when lodash exports { get, set }
 // import { get, set } from 'lodash';
@@ -22,6 +37,7 @@ const styles = {
     marginTop: 16,
   }
 };
+
 
  export class PatientDetail extends React.Component {
   constructor(props) {
@@ -142,6 +158,34 @@ const styles = {
   render() {
     if(process.env.NODE_ENV === "test") console.log('PatientDetail.render()', this.state)
     let formData = this.state.form;
+
+    let formButtons;
+    if (get(this, 'state.patientId')) {
+      formButtons = <div>
+          <Button 
+            id='updatePatientButton' 
+            className='updatePatientButton' 
+            onClick={this.handleSaveButton.bind(this)} 
+            variant="contained" 
+            color="primary" 
+            style={{marginRight: '20px'}}>Save</Button>
+          <Button 
+            id='deletePatientButton' 
+            variant="contained" 
+            onClick={this.handleDeleteButton.bind(this)}>
+            Delete
+          </Button>
+        </div>
+    } else {
+      formButtons = <Button 
+        id='savePatientButton'  
+        variant="contained" 
+        color="primary" 
+        onClick={this.handleSaveButton.bind(this)}
+        style={{backgroundColor: '#2196f3'}}
+        >Save</Button>
+    }
+
 
     return (
       <div id={this.props.id} className="patientDetail">
@@ -327,7 +371,7 @@ const styles = {
 
         </CardText>
         <CardActions>
-          { this.determineButtons(this.state.patientId) }
+          { formButtons }
         </CardActions>
       </div>
     );
@@ -362,23 +406,7 @@ const styles = {
       );
     }
   }
-  determineButtons(patientId){
-    // if(this.props.buttons){
-    //   return this.props.buttons;
-    // }
-    if (patientId) {
-      return (
-        <div>
-          <RaisedButton id='updatePatientButton' className='updatePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} style={{marginRight: '20px'}} />
-          <RaisedButton id='deletePatientButton' label="Delete" onClick={this.handleDeleteButton.bind(this)} />
-        </div>
-      );
-    } else {
-      return(
-        <RaisedButton id='savePatientButton'  className='savePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} />
-      );
-    }
-  }
+
 
   updateFormData(formData, field, textValue){
     if(process.env.NODE_ENV === "test") console.log("PatientDetail.updateFormData", formData, field, textValue);

@@ -23,6 +23,11 @@ export default {
     babel({
       exclude: 'node_modules/**'
     }),
-    commonjs()
+    commonjs({
+      include: 'node_modules/**',
+      namedExports: {
+        'react-is': ['ForwardRef', 'isForwardRef', 'isValidElementType'],
+      },
+    })
   ]
 };
