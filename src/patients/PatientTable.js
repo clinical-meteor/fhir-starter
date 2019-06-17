@@ -94,7 +94,7 @@ export class PatientTable extends React.Component {
     }
   }
   renderRowAvatarHeader(){
-    if (get(Meteor, 'settings.public.defaults.avatars') && (this.props.showAvatars === true)) {
+    if (get(this, 'props.defaultAvatar') && (this.props.showAvatars === true)) {
       return (
         <th className='avatar'>photo</th>
       );
@@ -103,12 +103,12 @@ export class PatientTable extends React.Component {
   renderRowAvatar(patient, avatarStyle){
     //console.log('renderRowAvatar', patient, avatarStyle)
     
-    if (get(Meteor, 'settings.public.defaults.avatars') && (this.props.showAvatars === true)) {
+    if (get(this, 'props.defaultAvatar') && (this.props.showAvatars === true)) {
       return (
         <td className='avatar'>
           <img 
             src={patient.photo} 
-            onError={(e)=>{e.target.onerror = null; e.target.src = Meteor.absoluteUrl() + 'noAvatar.png'}}
+            onError={(e)=>{e.target.onerror = null; e.target.src = get(this, 'props.defaultAvatar')}}
             style={avatarStyle}
           />
         </td>
@@ -394,7 +394,8 @@ PatientTable.propTypes = {
   onRowClick: PropTypes.func,
   onMetaClick: PropTypes.func,
   onActionButtonClick: PropTypes.func,
-  actionButtonLabel: PropTypes.string
+  actionButtonLabel: PropTypes.string,
+  defaultAvatar: PropTypes.string
 };
 
 export default PatientTable;

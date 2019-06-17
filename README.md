@@ -112,8 +112,9 @@ Please refer to each component's documentation page to see how they should be im
 ## Component Demos and API Examples      
 
 [PatientCard](https://codesandbox.io/s/material-ui-on-fhir-demo-e9vc0)    
+[PatientTable](https://codesandbox.io/s/patienttable-ks1k8)
 
-[PatientTable](./fhir-components/patients/PatientTable.jsx)    
+
 [PatientDetail](./fhir-components/patients/PatientDetail.jsx)    
 
 

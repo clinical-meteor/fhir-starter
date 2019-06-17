@@ -1,4 +1,4 @@
-import { CardActions, CardText, DatePicker, Toggle, RaisedButton, TextField } from 'material-ui';
+import { CardActions, CardText, DatePicker, Checkbox, RaisedButton, TextField } from 'material-ui';
 
 // we can clean this up when lodash exports { get, set }
 // import { get, set } from 'lodash';
@@ -149,8 +149,7 @@ const styles = {
           <Row>
             <Col md={4}>
               <TextField
-                id='mrnInput'
-                ref='identifier'
+                id='mrnInput'                
                 name='identifier'
                 floatingLabelText='Identifier (Medical Record Number)'
                 value={ get(formData, 'identifier', '')}
@@ -159,21 +158,20 @@ const styles = {
                 fullWidth
                 /><br/>
             </Col>
-            <Col md={3} mdOffset={5}>
+            {/* <Col md={3} mdOffset={5}>
               <br />
-              <Toggle
+              <Checkbox
                 label="Deceased"
                 labelPosition="right"
-                defaultToggled={false}
+                defaultChecked={false}
                 style={styles.toggle}
               />
-            </Col>
+            </Col> */}
           </Row>
           <Row>
             <Col md={1}>
               <TextField
-                id='prefixInput'
-                ref='prefix'
+                id='prefixInput'                
                 name='prefix'
                 floatingLabelText='Prefix'
                 value={ get(formData, 'prefix', '')}
@@ -185,8 +183,7 @@ const styles = {
             </Col>
             <Col md={5}>
               <TextField
-                id='givenInput'
-                ref='given'
+                id='givenInput'                
                 name='given'
                 floatingLabelText='Given Name'
                 hintText='Jane'
@@ -198,8 +195,7 @@ const styles = {
             </Col>
             <Col md={3}>
               <TextField
-                id='familyInput'
-                ref='family'
+                id='familyInput'                
                 name='family'
                 floatingLabelText='Family Name'
                 hintText='Doe'
@@ -212,8 +208,7 @@ const styles = {
             </Col>
             <Col md={3}>
               <TextField
-                id='suffixInput'
-                ref='suffix'
+                id='suffixInput'                
                 name='suffix'
                 floatingLabelText='Suffix / Maiden'
                 hintText=''
@@ -227,8 +222,7 @@ const styles = {
           <Row>
             <Col md={3}>
               <TextField
-                id='maritalStatusInput'
-                ref='maritalStatus'
+                id='maritalStatusInput'                
                 name='maritalStatus'
                 floatingLabelText='Marital Status'
                 hintText='single | maried | other'
@@ -241,8 +235,7 @@ const styles = {
             </Col>
             <Col md={3}>
               <TextField
-                id='genderInput'
-                ref='gender'
+                id='genderInput'                
                 name='gender'
                 floatingLabelText='Gender'
                 hintText='male | female | unknown'
@@ -257,8 +250,7 @@ const styles = {
               { this.renderDatePicker(true, get(formData, 'birthDate') ) } */}
 
               <TextField
-                id='birthDateInput'
-                ref='birthDate'
+                id='birthDateInput'                
                 name='birthDate'
                 type='date'
                 floatingLabelText='Birthdate'
@@ -269,21 +261,20 @@ const styles = {
                 fullWidth
                 /><br/>
             </Col>
-            <Col md={3} >
+            {/* <Col md={3} >
               <br />
-              <Toggle
+              <Checkbox
                 label="Multiple Birth"
-                defaultToggled={false}
+                defaultChecked={false}
                 labelPosition="right"
                 style={styles.toggle}
               />              
-            </Col>
+            </Col> */}
           </Row>
           <Row>
             <Col md={6}>
               <TextField
-                id='photoInput'
-                ref='photo'
+                id='photoInput'                
                 name='photo'
                 floatingLabelText='Photo'
                 hintText='http://somewhere.com/image.jpg'
@@ -295,8 +286,7 @@ const styles = {
             </Col>
             <Col md={3}>
               <TextField
-                id='speciesInput'
-                ref='species'
+                id='speciesInput'                
                 name='species'
                 floatingLabelText='Species'
                 value={ get(formData, 'species', '')}
@@ -308,8 +298,7 @@ const styles = {
             </Col>
             <Col md={3}>
               <TextField
-                id='languageInput'
-                ref='language'
+                id='languageInput'                
                 name='language'
                 floatingLabelText='Language'
                 value={ get(formData, 'language', '')}
@@ -323,8 +312,7 @@ const styles = {
           <Row>
             <Col md={6}>
               <TextField
-                id='smartphoneInput'
-                ref='smartphone'
+                id='smartphoneInput'                
                 name='smartphone'
                 floatingLabelText='Phone'
                 hintText='773-555-1234'
@@ -375,18 +363,21 @@ const styles = {
     }
   }
   determineButtons(patientId){
-    if (patientId) {
-      return (
-        <div>
-          <RaisedButton id='updatePatientButton' className='updatePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} style={{marginRight: '20px'}} />
-          <RaisedButton id='deletePatientButton' label="Delete" onClick={this.handleDeleteButton.bind(this)} />
-        </div>
-      );
-    } else {
-      return(
-        <RaisedButton id='savePatientButton'  className='savePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} />
-      );
+    if(this.props.buttons){
+      return this.props.buttons;
     }
+    // if (patientId) {
+    //   return (
+    //     <div>
+    //       <RaisedButton id='updatePatientButton' className='updatePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} style={{marginRight: '20px'}} />
+    //       <RaisedButton id='deletePatientButton' label="Delete" onClick={this.handleDeleteButton.bind(this)} />
+    //     </div>
+    //   );
+    // } else {
+    //   return(
+    //     <RaisedButton id='savePatientButton'  className='savePatientButton' label="Save" primary={true} onClick={this.handleSaveButton.bind(this)} />
+    //   );
+    // }
   }
 
   updateFormData(formData, field, textValue){
@@ -541,6 +532,7 @@ PatientDetail.propTypes = {
   onDelete: PropTypes.func,
   onUpsert: PropTypes.func,
   onSave: PropTypes.func,
-  onCancel: PropTypes.func
+  onCancel: PropTypes.func,
+  buttons: PropTypes.object
 };
 export default PatientDetail;
