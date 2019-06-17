@@ -113,11 +113,7 @@ Please refer to each component's documentation page to see how they should be im
 
 [PatientCard](https://codesandbox.io/s/material-ui-on-fhir-demo-e9vc0)    
 [PatientTable](https://codesandbox.io/s/patienttable-ks1k8)
-
-
-[PatientDetail](./fhir-components/patients/PatientDetail.jsx)    
-
-
+[PatientDetail](https://codesandbox.io/s/patientdetail-q4r34)    
 
 ## Examples
 
