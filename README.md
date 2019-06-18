@@ -10,7 +10,6 @@ We intend to track normative level resources only; which as of R4 are primarily 
 If you're interested in non-normative resources, feel free to peruse the `/client/react` directories of any of the `hl7-resource-*` repositories in the [clinical-meteor](https://github.com/clinical-meteor) organization.  
 
 
-
 ## Prerequisites
 
 [Fast Healthcare Interoperatbility Resources](https://www.hl7.org/fhir/resourcelist.html)  
@@ -111,21 +110,25 @@ Please refer to each component's documentation page to see how they should be im
 
 ## Component Demos and API Examples      
 
-[PatientCard](https://codesandbox.io/s/material-ui-on-fhir-demo-e9vc0)    
-[PatientTable](https://codesandbox.io/s/patienttable-ks1k8)
-[PatientDetail](https://codesandbox.io/s/patientdetail-q4r34)    
-
-## Examples
-
-Please see the [meteor-on-fhir](https://github.com/clinical-meteor/meteor-on-fhir) boilerplate for a base build of using Material FHIR components.
+[PatientCard](https://codesandbox.io/s/material-ui-on-fhir-demo-e9vc0)     
+[PatientTable](https://codesandbox.io/s/patienttable-ks1k8)    
+[PatientDetail](https://codesandbox.io/s/patientdetail-q4r34)     
 
 
 ## License
 This project is licensed under the terms of the
 [MIT license](https://github.com/callemall/material-ui/blob/master/LICENSE)
 
+## Conbtributing  
+If you would like to develop more FHIR components using this pattern, please take a look at the [material-fhir-demo], which is the minimalist Meteor rig we use to build these components.  We intend to move towards Chromatic and Storybook in the future.  
+
+https://github.com/meteor/chromatic/
+https://storybook.js.org/
+https://github.com/clinical-meteor/material-fhir-demo
+
 
 ## References  
 - https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396  
 - https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/  
-- https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562  
+- https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562   
+- https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a  

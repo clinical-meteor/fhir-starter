@@ -1,6 +1,6 @@
 {
   "name": "material-fhir-ui",
-  "version": "0.6.7",
+  "version": "0.6.9",
   "description": "Reausable and composable FHIR components built with React and Material UI.",
   "homepage": "http://github.com/clinical-meteor/material-fhir-ui",
   "repository": "clinical-meteor/material-fhir-ui",
