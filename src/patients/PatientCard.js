@@ -188,7 +188,7 @@ export class PatientCard extends React.Component {
           <img 
             id='avatarImage' 
             className='avatarImage' 
-            onError={(e)=>{e.target.onerror = null; e.target.src = Meteor.absoluteUrl() + 'clinical_hl7-resource-patient/assets/noAvatar.png' }}
+            onError={(e)=>{e.target.onerror = null; e.target.src = get(this, 'props.defaultAvatar') }}
             src={ avatar } 
             style={ style.avatar} 
             />
@@ -218,6 +218,7 @@ PatientCard.propTypes = {
   avatar: PropTypes.string,
   hideDetails: PropTypes.bool,
   overflowY: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  defaultAvatar: PropTypes.string
 };
 export default PatientCard;
