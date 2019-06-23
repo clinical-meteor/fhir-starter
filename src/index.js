@@ -13,11 +13,14 @@ import PatientCard from './patients/PatientCard';
 import PatientTable from './patients/PatientTable';
 import PatientDetail from './patients/PatientDetail';
 
-// import PatientDetail from './patients/PatientDetail.jsx';
-// import PatientTable from './patients/PatientTable.jsx';
+import ObservationTable from './observations/ObservationTable';
+import ObservationDetail from './observations/ObservationDetail';
 
 export default { 
   PatientCard,
   PatientTable,
-  PatientDetail
+  PatientDetail,
+
+  ObservationTable,
+  ObservationDetail
 };

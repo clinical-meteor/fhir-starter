@@ -3,15 +3,18 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 
+import { GlassCard, VerticalCanvas, Glass, DynamicSpacer } from 'meteor/clinical:glass-ui';
 import { Row, Col } from 'react-bootstrap';
 
 import React from 'react';
+import { ReactMeteorData } from 'meteor/react-meteor-data';
 import ReactMixin from 'react-mixin';
 import PropTypes from 'prop-types';
 
-import { ReactMeteorData } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
 import { get, set } from 'lodash';
+// import { setFlagsFromString } from 'v8';
 
 
 
@@ -484,80 +487,25 @@ export class ObservationDetail extends React.Component {
   
   // this could be a mixin
   handleSaveButton() {
-    if(process.env.NODE_ENV === "test") console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^&&')
-    console.log('Saving a new Observation...', this.state)
-
     let self = this;
-    let fhirObservationData = Object.assign({}, this.state.observation);
-
-    if(process.env.NODE_ENV === "test") console.log('fhirObservationData', fhirObservationData);
-
-
-    let observationValidator = ObservationSchema.newContext();
-    observationValidator.validate(fhirObservationData)
-
-    console.log('IsValid: ', observationValidator.isValid())
-    console.log('ValidationErrors: ', observationValidator.validationErrors());
-
-    if (this.data.observationId) {
-      if(process.env.NODE_ENV === "test") console.log("Updating observation...");
-      delete fhirObservationData._id;
-
-      Observations._collection.update({_id: this.data.observationId}, {$set: fhirObservationData },function(error, result){
-        if (error) {
-          if(process.env.NODE_ENV === "test") console.log("Observations.insert[error]", error);
-          console.log('error', error)
-          Bert.alert(error.reason, 'danger');
-        }
-        if (result) {
-          if(self.props.onUpdate){
-            self.props.onUpdate(self.data.observationId);
-          }
-          Bert.alert('Observation added!', 'success');
-        }
-      });
-    } else {
-      fhirObservationData.effectiveDateTime = new Date();
-      if (process.env.NODE_ENV === "test") console.log("create a new observation", fhirObservationData);
-
-      Observations._collection.insert(fhirObservationData, function(error, result){
-        if (error) {
-          if(process.env.NODE_ENV === "test") console.log("Observations.insert[error]", error);
-          console.log('error', error)
-          Bert.alert(error.reason, 'danger');
-        }
-        if (result) {
-          if(self.props.onInsert){
-            self.props.onInsert(self.data.observationId);
-          }
-          Bert.alert('Observation added!', 'success');
-        }
-      });
+    if(this.props.onUpsert){
+      this.props.onUpsert(self);
     }
   }
 
   // this could be a mixin
   handleCancelButton() {
+    let self = this;
     if(this.props.onCancel){
-      this.props.onCancel();
+      this.props.onCancel(self);
     }
   }
 
   handleDeleteButton() {
-    console.log('Delete observation...', this.data.observationId)
     let self = this;
-    Observations._collection.remove({_id: this.data.observationId}, function(error, result){
-      if (error) {
-        console.log('error', error)
-        Bert.alert(error.reason, 'danger');
-      }
-      if (result) {
-        if(this.props.onDelete){
-          this.props.onDelete(self.data.observationId);
-        }
-        Bert.alert('Observation deleted!', 'success');
-      }
-    })
+    if(this.props.onDelete){
+      this.props.onDelete(self);
+    }
   }
 }
 
@@ -569,7 +517,7 @@ ObservationDetail.propTypes = {
   showPatientInputs: PropTypes.bool,
   showHints: PropTypes.bool,
   onInsert: PropTypes.func,
-  onUpdate: PropTypes.func,
+  onUpsert: PropTypes.func,
   onRemove: PropTypes.func,
   onCancel: PropTypes.func
 };
