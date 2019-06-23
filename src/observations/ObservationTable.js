@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CardText, Checkbox } from 'material-ui';
+import { CardText } from 'material-ui';
+import Checkbox from '@material-ui/core/Checkbox';
 import { Table } from 'react-bootstrap';
 
 import moment from 'moment-es6'
@@ -10,7 +11,8 @@ let get = _.get;
 let set = _.set;
 
 import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
-import { GoTrashcan } from 'react-icons/go'
+import { GoTrashcan } from 'react-icons/go';
+
 
 let styles = {
   hideOnPhone: {
@@ -25,66 +27,16 @@ let styles = {
   },
   cell: {
     paddingTop: '16px'
+  },
+  root: {
+    padding: '0px',
+    position: 'relative'
   }
 }
 
 
-flattenObservation = function(observation){
-  let result = {
-    _id: '',
-    meta: '',
-    category: '',
-    code: '',
-    valueString: '',
-    value: '',
-    observationValue: '',
-    subject: '',
-    subjectId: '',
-    status: '',
-    device: '',
-    createdBy: '',
-    effectiveDateTime: '',
-    issued: '',
-    unit: ''
-  };
 
-  result._id =  get(observation, 'id') ? get(observation, 'id') : get(observation, '_id');
-  result.category = get(observation, 'category.text', '');
-  result.code = get(observation, 'code.text', '');
-  result.valueString = get(observation, 'valueString', '');
-  result.comparator = get(observation, 'valueQuantity.comparator', '');
-  result.observationValue = get(observation, 'valueQuantity.value', '');
-  result.unit = get(observation, 'valueQuantity.unit', '');
-  result.subject = get(observation, 'subject.display', '');
-  result.subjectId = get(observation, 'subject.reference', '');
-  result.device = get(observation, 'device.display', '');
-  result.status = get(observation, 'status', '');
-  
-  if(get(observation, 'effectiveDateTime')){
-    result.effectiveDateTime =  moment(get(observation, 'effectiveDateTime')).format("YYYY-MM-DD hh a");
-  }
-  if(get(observation, 'issued')){
-    result.effectiveDateTime =  moment(get(observation, 'issued')).format("YYYY-MM-DD hh a");    
-  }
-
-  result.meta = get(observation, 'category.text', '');
-
-  if(result.valueString.length > 0){
-    result.value = result.valueString;
-  } else {
-    if(result.comparator){
-      result.value = result.comparator + ' ';
-    } 
-    result.value = result.value + result.observationValue + ' ' + result.unit;
-  }
-
-  return result;
-}
-
-
-
-
-export class ObservationsTable extends React.Component {
+export class ObservationTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -92,56 +44,58 @@ export class ObservationsTable extends React.Component {
       observations: []
     }
   }
-  getMeteorData() {
-
-    // this should all be handled by props
-    // or a mixin!
-    let data = {
-      style: {
-        text: Glass.darkroom()
-      },
-      selected: [],
-      observations: []
+  flattenObservation(observation){
+    let result = {
+      _id: '',
+      meta: '',
+      category: '',
+      code: '',
+      valueString: '',
+      value: '',
+      observationValue: '',
+      subject: '',
+      subjectId: '',
+      status: '',
+      device: '',
+      createdBy: '',
+      effectiveDateTime: '',
+      issued: '',
+      unit: ''
     };
-
-
-    if(this.props.data){
-      console.log('this.props.data', this.props.data);
-
-      if(this.props.data.length > 0){              
-        this.props.data.forEach(function(observation){
-          data.observations.push(flattenObservation(observation));
-        });  
-      }
+  
+    result._id =  get(observation, 'id') ? get(observation, 'id') : get(observation, '_id');
+    result.category = get(observation, 'category.text', '');
+    result.code = get(observation, 'code.text', '');
+    result.valueString = get(observation, 'valueString', '');
+    result.comparator = get(observation, 'valueQuantity.comparator', '');
+    result.observationValue = get(observation, 'valueQuantity.value', '');
+    result.unit = get(observation, 'valueQuantity.unit', '');
+    result.subject = get(observation, 'subject.display', '');
+    result.subjectId = get(observation, 'subject.reference', '');
+    result.device = get(observation, 'device.display', '');
+    result.status = get(observation, 'status', '');
+    
+    if(get(observation, 'effectiveDateTime')){
+      result.effectiveDateTime =  moment(get(observation, 'effectiveDateTime')).format("YYYY-MM-DD hh a");
+    }
+    if(get(observation, 'issued')){
+      result.effectiveDateTime =  moment(get(observation, 'issued')).format("YYYY-MM-DD hh a");    
+    }
+  
+    result.meta = get(observation, 'category.text', '');
+  
+    if(result.valueString.length > 0){
+      result.value = result.valueString;
     } else {
-      let query = {};
-      if(this.props.query){
-        query = this.props.query
-      }
-      if(this.props.hideEnteredInError){
-        query['verificationStatus'] = {
-          $nin: ['entered-in-error']  // unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
-        }
-      }
-
-      data.observations = Observations.find(query).map(function(observation){
-        return flattenObservation(observation);
-      });
+      if(result.comparator){
+        result.value = result.comparator + ' ';
+      } 
+      result.value = result.value + result.observationValue + ' ' + result.unit;
     }
 
-    // // this could be another mixin
-    // if (Session.get('glassBlurEnabled')) {
-    //   data.style.filter = "blur(3px)";
-    //   data.style.WebkitFilter = "blur(3px)";
-    // }
-
-    // // this could be another mixin
-    // if (Session.get('backgroundBlurEnabled')) {
-    //   data.style.backdropFilter = "blur(5px)";
-    // }
-
-    if(process.env.NODE_ENV === "test") console.log("ObservationsTable[data]", data);
-    return data;
+    console.log('flattedObservations', result)
+  
+    return result;
   }
   handleChange(row, key, value) {
     const source = this.state.source;
@@ -167,10 +121,14 @@ export class ObservationsTable extends React.Component {
   noChange(){
     return "";
   }
-  rowClick(id){
-    Session.set("selectedObservationId", id);
-    Session.set('observationPageTabIndex', 2);
-    Session.set('observationDetailState', false);
+  rowClick(_id){
+    let self = this;
+    if(this.props.onRowClick){
+      this.props.onRowClick(self, _id);
+    }
+    // Session.set("selectedObservationId", _id);
+    // Session.set('observationPageTabIndex', 2);
+    // Session.set('observationDetailState', false);
   }
   renderActionIconsHeader(){
     if (!this.props.hideActionIcons) {
@@ -184,7 +142,7 @@ export class ObservationsTable extends React.Component {
       let iconStyle = {
         marginLeft: '4px', 
         marginRight: '4px', 
-        marginTop: '4px', 
+        marginTop: '2px', 
         fontSize: '120%'
       }
 
@@ -203,12 +161,12 @@ export class ObservationsTable extends React.Component {
     }
   }
   onActionButtonClick(id){
-    if(typeof this.props.onActionButtonClick === "function"){
+    if(this.props.onActionButtonClick){
       this.props.onActionButtonClick(id);
     }
   }
   cellClick(id){
-    if(typeof this.props.onCellClick === "function"){
+    if(this.props.onCellClick){
       this.props.onCellClick(id);
     }
   }
@@ -354,6 +312,9 @@ export class ObservationsTable extends React.Component {
         <td className="toggle" style={{width: '60px'}}>
             <Checkbox
               defaultChecked={true}
+              classes={{
+                root: styles.root
+              }}
             />
           </td>
       );
@@ -363,6 +324,7 @@ export class ObservationsTable extends React.Component {
   render () {
     let tableRows = [];
     let footer;
+    let self = this;
 
     if(this.props.appWidth){
       if (this.props.appWidth < 768) {
@@ -382,7 +344,7 @@ export class ObservationsTable extends React.Component {
     if(this.props.observations){
       if(this.props.observations.length > 0){              
         this.props.observations.forEach(function(observation){
-          observationsToRender.push(flattenObservation(observation));
+          observationsToRender.push(self.flattenObservation(observation));
         });  
       }
     }
@@ -430,7 +392,7 @@ export class ObservationsTable extends React.Component {
 
     return(
       <CardText>
-        <Table id="observationsTable" hover >
+        <Table id="ObservationTable" hover >
           <thead>
             <tr>
               { this.renderToggleHeader() }
@@ -454,7 +416,7 @@ export class ObservationsTable extends React.Component {
   }
 }
 
-ObservationsTable.propTypes = {
+ObservationTable.propTypes = {
   barcodes: PropTypes.bool,
   observations: PropTypes.array,
   query: PropTypes.object,
@@ -479,4 +441,4 @@ ObservationsTable.propTypes = {
 };
 
 
-export default ObservationsTable; 
+export default ObservationTable; 

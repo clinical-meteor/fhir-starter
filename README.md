@@ -114,6 +114,9 @@ Please refer to each component's documentation page to see how they should be im
 [PatientTable](https://codesandbox.io/s/patienttable-ks1k8)    
 [PatientDetail](https://codesandbox.io/s/patientdetail-q4r34)     
 
+[ObservationTable](https://codesandbox.io/s/observationtable-tpi8v)     
+
+
 
 ## License
 This project is licensed under the terms of the
@@ -122,13 +125,15 @@ This project is licensed under the terms of the
 ## Conbtributing  
 If you would like to develop more FHIR components using this pattern, please take a look at the [material-fhir-demo], which is the minimalist Meteor rig we use to build these components.  We intend to move towards Chromatic and Storybook in the future.  
 
-https://github.com/meteor/chromatic/
-https://storybook.js.org/
-https://github.com/clinical-meteor/material-fhir-demo
+https://github.com/meteor/chromatic/  
+https://storybook.js.org/  
+https://github.com/clinical-meteor/material-fhir-demo  
 
 
 ## References  
-- https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396  
-- https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/  
-- https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562   
-- https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a  
+
+- [Building and publishing a module with typescript and rollup.js](https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396)  
+- [Publishing an NPM package with rollup and babel](https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/)  
+- [How to publish a JS library to NPM with rollup and typescript](https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562)     
+- [The crucial tool for modern frontend engineers](https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a)    
+
