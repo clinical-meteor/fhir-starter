@@ -136,4 +136,4 @@ https://github.com/clinical-meteor/material-fhir-demo
 - [Publishing an NPM package with rollup and babel](https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/)  
 - [How to publish a JS library to NPM with rollup and typescript](https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562)     
 - [The crucial tool for modern frontend engineers](https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a)    
-
+- [Design Systems for Developers](https://www.learnstorybook.com/design-systems-for-developers/?utm_source=discover-meteor&utm_medium=email&utm_campaign=launch)
