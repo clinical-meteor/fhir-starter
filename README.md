@@ -130,7 +130,15 @@ https://storybook.js.org/
 https://github.com/clinical-meteor/material-fhir-demo  
 
 
-## Deployment  
+## Development  
+
+```js
+// LOCAL DEVELOPMENT
+git clone https://github.com/clinical-meteor/material-fhir-ui packages/material-fhir-ui
+meteor npm link packages/material-fhir-ui
+```
+
+## Deployment
 
 - [Building and publishing a module with typescript and rollup.js](https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396)  
 - [Publishing an NPM package with rollup and babel](https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/)  
@@ -138,15 +146,20 @@ https://github.com/clinical-meteor/material-fhir-demo
 - [The crucial tool for modern frontend engineers](https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a)    
 
 
-
 ```js
-// QUICKSTART
-meteor npm install rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-node-resolve --only=dev 
-
+// PUBLISHING THE PACKAGE
 cd packages/material-fhir-ui
+rm -rf node_modules
+
+npm update
+
+npm install rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-node-resolve --only=dev 
+
 rollup -c
 
+npm login
 
+npm publish
 ```
 
 ## Other References
