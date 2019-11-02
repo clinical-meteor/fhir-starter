@@ -130,10 +130,25 @@ https://storybook.js.org/
 https://github.com/clinical-meteor/material-fhir-demo  
 
 
-## References  
+## Deployment  
 
 - [Building and publishing a module with typescript and rollup.js](https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396)  
 - [Publishing an NPM package with rollup and babel](https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/)  
 - [How to publish a JS library to NPM with rollup and typescript](https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562)     
 - [The crucial tool for modern frontend engineers](https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a)    
+
+
+
+```js
+// QUICKSTART
+meteor npm install rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-node-resolve --only=dev 
+
+cd packages/material-fhir-ui
+rollup -c
+
+
+```
+
+## Other References
+
 - [Design Systems for Developers](https://www.learnstorybook.com/design-systems-for-developers/?utm_source=discover-meteor&utm_medium=email&utm_campaign=launch)
