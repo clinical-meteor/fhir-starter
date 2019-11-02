@@ -21,7 +21,8 @@ export default {
   plugins: [
     resolve(),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      presets: ['@babel/env', '@babel/preset-react']
     }),
     commonjs({
       include: 'node_modules/**',

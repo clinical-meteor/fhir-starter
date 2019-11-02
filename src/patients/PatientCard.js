@@ -66,8 +66,6 @@ export class PatientCard extends React.Component {
   }
 
   render() {
-    // console.log('PatientCard.render', this.props)
-
     let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = this.props;
 
     fullName = get(this, 'props.patient.name[0].text', '');
@@ -81,36 +79,6 @@ export class PatientCard extends React.Component {
         
     let details;
     if(!this.props.hideDetails){
-      // details = <div style={style.content}>
-      // <TextField
-      //   name='identifier'
-      //   type='text'
-      //   floatingLabelText='Identifier'
-      //   floatingLabelFixed={true}
-      //   value={identifier}
-      //   /><br />
-      // <TextField
-      //   name='fullName'
-      //   type='text'
-      //   floatingLabelText='Full Name'
-      //   floatingLabelFixed={true}
-      //   value={fullName}
-      //   /><br />
-      // <TextField
-      //   name='birthdate'
-      //   type='text'
-      //   floatingLabelText='Birthdate'
-      //   floatingLabelFixed={true}
-      //   value={birthdate}
-      //   /><br />
-      // <TextField
-      //   name='gender'
-      //   type='text'
-      //   floatingLabelText='Gender'
-      //   floatingLabelFixed={true}
-      //   value={gender}
-      //   /><br />
-      // </div>
         details = <div id='profileDemographicsPane' style={{position: 'relative'}}>
                   <Row style={ style.synopsis} >
                     <Col md={6}>
@@ -119,8 +87,7 @@ export class PatientCard extends React.Component {
                         name='given'
                         type='text'
                         floatingLabelText='given name'
-                        value={ givenName }
-                        //onChange={ this.props.updateGivenName ? this.props.updateGivenName.bind(this) : null }
+                        value={ givenName }                        
                         fullWidth
                         /><br/>
                     </Col>
@@ -130,8 +97,7 @@ export class PatientCard extends React.Component {
                         name='family'
                         type='text'
                         floatingLabelText='family name'
-                        value={ familyName }
-                        //onChange={ this.props.updateFamilyName ? this.props.updateFamilyName.bind(this) : null }
+                        value={ familyName }                        
                         fullWidth
                         /><br/>
                     </Col>
@@ -144,8 +110,7 @@ export class PatientCard extends React.Component {
                         type='date'
                         floatingLabelText='date of birth'
                         floatingLabelFixed={true}
-                        value={ moment(birthdate).format('YYYY-MM-DD') }                          
-                        //onChange={ this.props.updateBirthdate ? this.props.updateBirthdate.bind(this) : null }
+                        value={ moment(birthdate).format('YYYY-MM-DD') }                                                  
                         fullWidth
                         /><br/>
                     </Col>
@@ -155,8 +120,7 @@ export class PatientCard extends React.Component {
                         name='gender'
                         type='text'
                         floatingLabelText='gender'
-                        value={ gender }
-                        //onChange={ this.props.updateGender ? this.props.updateGender.bind(this) : null }
+                        value={ gender }                        
                         fullWidth
                         /><br/>
 
@@ -167,8 +131,7 @@ export class PatientCard extends React.Component {
                         name='avatar'
                         type='text'
                         floatingLabelText='avatar'
-                        value={ avatar }
-                        //onChange={ this.props.updateAvatar ? this.props.updateAvatar.bind(this) : null }
+                        value={ avatar }                        
                         fullWidth
                         /><br/>
 

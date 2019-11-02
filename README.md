@@ -140,22 +140,20 @@ meteor npm link packages/material-fhir-ui
 
 ## Deployment
 
-- [Building and publishing a module with typescript and rollup.js](https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396)  
+- [How I set-up a React component library with Rollup](https://medium.com/grandata-engineering/how-i-set-up-a-react-component-library-with-rollup-be6ccb700333)- [Building and publishing a module with typescript and rollup.js](https://hackernoon.com/building-and-publishing-a-module-with-typescript-and-rollup-js-faa778c85396)  
 - [Publishing an NPM package with rollup and babel](https://www.grzegorowski.com/publishing-npm-package-with-rollup-babel-and/)  
 - [How to publish a JS library to NPM with rollup and typescript](https://medium.com/@ali.dev/how-to-publish-a-js-library-to-npm-with-rollup-typescript-8b51ede8f562)     
 - [The crucial tool for modern frontend engineers](https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a)    
 
-
 ```js
-// PUBLISHING THE PACKAGE
 cd packages/material-fhir-ui
 rm -rf node_modules
 
 npm update
 
-npm install rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-node-resolve --only=dev 
+npm install rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-babel rollup-plugin-commonjs rollup-plugin-node-resolve rollup-plugin-replace rollup-plugin-progress @babel/core @babel/preset-env --only=dev 
 
-rollup -c
+yarn rollup --config
 
 npm login
 
