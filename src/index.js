@@ -7,18 +7,20 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import TableNoData from './components/TableNoData';
+// import TableNoData from './components/TableNoData';
 
 import PatientCard from './patients/PatientCard';
 import PatientTable from './patients/PatientTable';
 import PatientDetail from './patients/PatientDetail';
 
-import ObservationTable from './observations/ObservationTable';
+// import ObservationTable from './observations/ObservationTable';
+
+import Foo from './components/Foo';
 
 export default { 
+  Foo,
+
   PatientCard,
   PatientTable,
-  PatientDetail,
-
-  ObservationTable
+  PatientDetail
 };

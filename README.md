@@ -136,6 +136,22 @@ https://github.com/clinical-meteor/material-fhir-demo
 // LOCAL DEVELOPMENT
 git clone https://github.com/clinical-meteor/material-fhir-ui packages/material-fhir-ui
 meteor npm link packages/material-fhir-ui
+
+cd packages/material-fhir-ui
+
+yarn add rollup
+
+// bump the material-fhir-ui/package.json version number
+nano package.json
+
+// bump the application's dependency on material-fhir-ui
+nano ../../package.json
+
+// get rollup working
+yarn rollup --config rollup.config.js
+
+// once you get the above working, use --watch to automatically recompile on file change
+yarn rollup --config --watch
 ```
 
 ## Deployment
@@ -153,6 +169,7 @@ npm update
 
 npm install rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-babel rollup-plugin-commonjs rollup-plugin-node-resolve rollup-plugin-replace rollup-plugin-progress @babel/core @babel/preset-env --only=dev 
 
+// typical rollupt
 yarn rollup --config
 
 npm login

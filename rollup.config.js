@@ -16,7 +16,8 @@ export default {
     'react', 
     'react-dom',
     'prop-types',
-    'react-proptypes'
+    'react-proptypes',
+    '@material-ui/core'
   ],
   plugins: [
     resolve(),
@@ -27,7 +28,7 @@ export default {
     commonjs({
       include: 'node_modules/**',
       namedExports: {
-        'react-is': ['ForwardRef', 'isForwardRef', 'isValidElementType'],
+        'react-is': ['ForwardRef', 'isForwardRef', 'isValidElementType']
       },
     })
   ]
