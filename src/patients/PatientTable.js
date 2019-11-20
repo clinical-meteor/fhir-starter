@@ -72,7 +72,7 @@ import { GoTrashcan } from 'react-icons/go'
 // export class PatientTable extends React.Component {
 //   constructor(props) {
 //     super(props);
-//     this.state = {
+//      state = {
 //       selected: [],
 //       patients: []
 //     }
@@ -142,7 +142,7 @@ import { GoTrashcan } from 'react-icons/go'
 //     if (props.showActionButton === true) {
 //       return (
 //         <TableCell className='ActionButton' style={styles.hideOnPhone}>
-//           <FlatButton label="send" onClick={this.onActionButtonClick.bind('this', patientsToRender[i]._id)}/>
+//           <FlatButton label="send" onClick={ onActionButtonClick.bind('this', patientsToRender[i]._id)}/>
 //         </TableCell>
 //       );
 //     }
@@ -201,8 +201,8 @@ import { GoTrashcan } from 'react-icons/go'
 
 //       return (
 //         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-//           <FaTags style={iconStyle} onClick={this.onMetaClick.bind(this, patient)} />
-//           <GoTrashcan style={iconStyle} onClick={this.removeRecord.bind(this, patient._id)} />  
+//           <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} />
+//           <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
 //         </TableCell>
 //       );
 //     }
@@ -302,24 +302,24 @@ import { GoTrashcan } from 'react-icons/go'
 //         }
 
 //         tableRows.push(
-//           <tr key={i} className="patientRow" style={rowStyle} onClick={this.selectPatientRow.bind(this, patientsToRender[i]._id )} >
+//           <tr key={i} className="patientRow" style={rowStyle} onClick={ selectPatientRow.bind(this, patientsToRender[i]._id )} >
   
-//             {/* { this.renderCheckbox(patientsToRender[i]) } */}
-//             { this.renderActionIcons(patientsToRender[i]) }
+//             {/* { renderCheckbox(patientsToRender[i]) } */}
+//             { renderActionIcons(patientsToRender[i]) }
 
-//             { this.renderRowAvatar(patientsToRender[i], styles.avatar) }
-//             { this.renderIdentifier(patientsToRender[i].identifier)}
+//             { renderRowAvatar(patientsToRender[i], styles.avatar) }
+//             { renderIdentifier(patientsToRender[i].identifier)}
 
-//             <TableCell className='name' onClick={ this.cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].name }</TableCell>
-//             <TableCell className='gender' onClick={ this.cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].gender}</TableCell>
-//             <TableCell className='birthDate' onClick={ this.cellClick.bind(this, patientsToRender[i]._id)} style={{minWidth: '100px', paddingTop: '16px'}}>{patientsToRender[i].birthDate }</TableCell>
+//             <TableCell className='name' onClick={ cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].name }</TableCell>
+//             <TableCell className='gender' onClick={ cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].gender}</TableCell>
+//             <TableCell className='birthDate' onClick={ cellClick.bind(this, patientsToRender[i]._id)} style={{minWidth: '100px', paddingTop: '16px'}}>{patientsToRender[i].birthDate }</TableCell>
 
-//             { this.renderMaritalStatus(patientsToRender[i]) }
-//             { this.renderLanguage(patientsToRender[i]) }
+//             { renderMaritalStatus(patientsToRender[i]) }
+//             { renderLanguage(patientsToRender[i]) }
 
-//             { this.renderIsActive(patientsToRender[i].active) }
-//             {/* { this.renderSpecies(patientsToRender[i]) } */}
-//             { this.renderActionButton(patientsToRender[i], styles.avatar) }
+//             { renderIsActive(patientsToRender[i].active) }
+//             {/* { renderSpecies(patientsToRender[i]) } */}
+//             { renderActionButton(patientsToRender[i], styles.avatar) }
 //           </tr>
 //         );
 //       }
@@ -332,20 +332,20 @@ import { GoTrashcan } from 'react-icons/go'
 //         <Table id='patientsTable' hover >
 //           <TableHeadead>
 //             <tr>
-//               {/* { this.renderCheckboxHeader() } */}
-//               { this.renderActionIconsHeader() }
-//               { this.renderRowAvatarHeader() }
-//               {this.renderIdentifierHeader() }
+//               {/* {  renderCheckboxHeader() } */}
+//               {  renderActionIconsHeader() }
+//               {  renderRowAvatarHeader() }
+//               { renderIdentifierHeader() }
 
 //               <TableHead className='name'>Name</TableHead>
 //               <TableHead className='gender'>Gender</TableHead>
 //               <TableHead className='birthdate' style={{minWidth: '100px'}}>Birthdate</TableHead>
 
-//               { this.renderMaritalStatusHeader(patientsToRender[i]) }
-//               { this.renderLanguageHeader(patientsToRender[i]) }              
-//               { this.renderIsActiveHeader() }
-//               {/* { this.renderSpeciesHeader(props.hideSpecies) } */}
-//               { this.renderActionButtonHeader() }
+//               {  renderMaritalStatusHeader(patientsToRender[i]) }
+//               {  renderLanguageHeader(patientsToRender[i]) }              
+//               {  renderIsActiveHeader() }
+//               {/* {  renderSpeciesHeader(props.hideSpecies) } */}
+//               {  renderActionButtonHeader() }
 //             </tr>
 //           </thead>
 //           <tbody>
@@ -485,7 +485,7 @@ function PatientTable(props){
     if (props.showActionButton === true) {
       return (
         <TableCell className='ActionButton' style={styles.hideOnPhone}>
-          <FlatButton label="send" onClick={this.onActionButtonClick.bind('this', patientsToRender[i]._id)}/>
+          <FlatButton label="send" onClick={ onActionButtonClick.bind('this', patientsToRender[i]._id)}/>
         </TableCell>
       );
     }
@@ -524,8 +524,8 @@ function PatientTable(props){
 
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-          <FaTags style={iconStyle} onClick={this.onMetaClick.bind(this, patient)} />
-          <GoTrashcan style={iconStyle} onClick={this.removeRecord.bind(this, patient._id)} />  
+          <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} />
+          <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
         </TableCell>
       );
     }
