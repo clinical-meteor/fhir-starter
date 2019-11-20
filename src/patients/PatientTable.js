@@ -42,29 +42,28 @@ let set = _.set;
 import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
 import { GoTrashcan } from 'react-icons/go'
 
-// let styles = {
-//   hideOnPhone: {
-//     visibility: 'visible',
-//     display: 'table'
-//   },
-//   cellHideOnPhone: {
-//     visibility: 'visible',
-//     display: 'table',
-//     paddingTop: '16px',
-//     maxWidth: '120px'
-//   },
-//   cell: {
-//     paddingTop: '16px'
-//   },
-//   avatar: {
-//     // color: rgb(255, 255, 255);
-//     backgroundColor: 'rgb(188, 188, 188)',
-//     userSelect: 'none',
-//     borderRadius: '2px',
-//     height: '40px',
-//     width: '40px'
-//   }
-// },
+let styles = {
+  hideOnPhone: {
+    visibility: 'visible',
+    display: 'table'
+  },
+  cellHideOnPhone: {
+    visibility: 'visible',
+    display: 'table',
+    paddingTop: '16px',
+    maxWidth: '120px'
+  },
+  cell: {
+    paddingTop: '16px'
+  },
+  avatar: {
+    backgroundColor: 'rgb(188, 188, 188)',
+    userSelect: 'none',
+    borderRadius: '2px',
+    height: '40px',
+    width: '40px'
+  }
+};
 
 
 
@@ -513,6 +512,13 @@ function PatientTable(props){
       );
     }
   }
+  function removeRecord(_id){
+    console.log('Remove patient ', _id)
+    if(props.onRemoveRecord){
+      props.onRemoveRecord();
+    }
+    // Patients._collection.remove({_id: _id})
+  }
   function renderActionIcons(patient ){
     if (!props.hideActionIcons) {
       let iconStyle = {
@@ -524,19 +530,19 @@ function PatientTable(props){
 
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-          <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} />
+          {/* <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} /> */}
           <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
         </TableCell>
       );
     }
   } 
 
-  function onMetaClick(patient){
-    let self = this;
-    if(props.onMetaClick){
-      props.onMetaClick(self, patient);
-    }
-  }
+  // function onMetaClick(patient){
+  //   let self = this;
+  //   if(props.onMetaClick){
+  //     props.onMetaClick(self, patient);
+  //   }
+  // }
   function renderMaritalStatusHeader(){
     if (!props.hideMaritalStatus) {
       return (
