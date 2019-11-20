@@ -39,8 +39,8 @@ let set = _.set;
 
 // import moment from 'moment-es6'
 
-// import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
-// import { GoTrashcan } from 'react-icons/go'
+import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
+import { GoTrashcan } from 'react-icons/go'
 
 // let styles = {
 //   hideOnPhone: {
