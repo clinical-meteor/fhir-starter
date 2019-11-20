@@ -2,16 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { 
-  CssBaseline,
-  Grid, 
-  Container,
-  Divider,
   Card,
   CardHeader,
   CardContent,
-  Tab, 
-  Tabs 
+  Grid,
+  Paper,
+  TextField,
+  Checkbox
 } from '@material-ui/core';
+
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  }
+}));
+
+import _ from 'lodash';
+let get = _.get;
+let set = _.set;
 
 // we need to enumerate components from Material 1.5.1+ explicitly (absolute path);
 // tedious, but it works.  see:
@@ -38,16 +48,6 @@ import {
 
 // import moment from 'moment-es6'
 
-
-
-const styles = {
-  block: {
-    maxWidth: 250,
-  },
-  toggle: {
-    marginTop: 16,
-  }
-};
 
 
 //  export class PatientDetail extends React.Component {
@@ -203,185 +203,6 @@ const styles = {
 //     return (
 //       <div id={this.props.id} className="patientDetail">
 //         <CardText>
-//           <Row>
-//             <Col md={4}>
-//               <TextField
-//                 id='mrnInput'                
-//                 name='identifier'
-//                 floatingLabelText='Identifier (Medical Record Number)'
-//                 value={ get(formData, 'identifier', '')}
-//                 onChange={ this.changeState.bind(this, 'identifier')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             {/* <Col md={3} mdOffset={5}>
-//               <br />
-//               <Checkbox
-//                 label="Deceased"
-//                 labelPosition="right"
-//                 defaultChecked={false}
-//                 style={styles.toggle}
-//               />
-//             </Col> */}
-//           </Row>
-//           <Row>
-//             <Col md={1}>
-//               <TextField
-//                 id='prefixInput'                
-//                 name='prefix'
-//                 floatingLabelText='Prefix'
-//                 value={ get(formData, 'prefix', '')}
-//                 onChange={ this.changeState.bind(this, 'prefix')}
-//                 hintText=''
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             <Col md={5}>
-//               <TextField
-//                 id='givenInput'                
-//                 name='given'
-//                 floatingLabelText='Given Name'
-//                 hintText='Jane'
-//                 value={ get(formData, 'given', '')}
-//                 onChange={ this.changeState.bind(this, 'given')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             <Col md={3}>
-//               <TextField
-//                 id='familyInput'                
-//                 name='family'
-//                 floatingLabelText='Family Name'
-//                 hintText='Doe'
-//                 value={ get(formData, 'family', '')}
-//                 onChange={ this.changeState.bind(this, 'family')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-
-//             </Col>
-//             <Col md={3}>
-//               <TextField
-//                 id='suffixInput'                
-//                 name='suffix'
-//                 floatingLabelText='Suffix / Maiden'
-//                 hintText=''
-//                 value={ get(formData, 'suffix', '')}
-//                 onChange={ this.changeState.bind(this, 'suffix')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//           </Row>
-//           <Row>
-//             <Col md={3}>
-//               <TextField
-//                 id='maritalStatusInput'                
-//                 name='maritalStatus'
-//                 floatingLabelText='Marital Status'
-//                 hintText='single | maried | other'
-//                 value={ get(formData, 'maritalStatus', '')}
-//                 onChange={ this.changeState.bind(this, 'maritalStatus')}
-//                 floatingLabelFixed={false}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             <Col md={3}>
-//               <TextField
-//                 id='genderInput'                
-//                 name='gender'
-//                 floatingLabelText='Gender'
-//                 hintText='male | female | unknown'
-//                 value={ get(formData, 'gender', '')}
-//                 onChange={ this.changeState.bind(this, 'gender')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             <Col md={3}>
-//               {/* <br />
-//               { this.renderDatePicker(true, get(formData, 'birthDate') ) } */}
-
-//               <TextField
-//                 id='birthDateInput'                
-//                 name='birthDate'
-//                 type='date'
-//                 floatingLabelText='Birthdate'
-//                 // hintText='YYYY-MM-DD'
-//                 value={ get(formData, 'birthDate', '')}
-//                 onChange={ this.changeState.bind(this, 'birthDate')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             {/* <Col md={3} >
-//               <br />
-//               <Checkbox
-//                 label="Multiple Birth"
-//                 defaultChecked={false}
-//                 labelPosition="right"
-//                 style={styles.toggle}
-//               />              
-//             </Col> */}
-//           </Row>
-//           <Row>
-//             <Col md={6}>
-//               <TextField
-//                 id='photoInput'                
-//                 name='photo'
-//                 floatingLabelText='Photo'
-//                 hintText='http://somewhere.com/image.jpg'
-//                 value={ get(formData, 'photo', '')}
-//                 onChange={ this.changeState.bind(this, 'photo')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             <Col md={3}>
-//               <TextField
-//                 id='speciesInput'                
-//                 name='species'
-//                 floatingLabelText='Species'
-//                 value={ get(formData, 'species', '')}
-//                 hintText='Human'
-//                 onChange={ this.changeState.bind(this, 'species')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//             <Col md={3}>
-//               <TextField
-//                 id='languageInput'                
-//                 name='language'
-//                 floatingLabelText='Language'
-//                 value={ get(formData, 'language', '')}
-//                 onChange={ this.changeState.bind(this, 'language')}
-//                 hintText='English'
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//           </Row>
-//           <Row>
-//             <Col md={6}>
-//               <TextField
-//                 id='smartphoneInput'                
-//                 name='smartphone'
-//                 floatingLabelText='Phone'
-//                 hintText='773-555-1234'
-//                 value={ get(formData, 'smartphone', '')}
-//                 onChange={ this.changeState.bind(this, 'smartphone')}
-//                 floatingLabelFixed={true}
-//                 fullWidth
-//                 /><br/>
-//             </Col>
-//           </Row>
-
-
 //         </CardText>
 //         <CardActions>
 //           { formButtons }
@@ -541,42 +362,223 @@ const styles = {
 //   }
 
 
-//   // this could be a mixin
-//   handleSaveButton(){
-//     //console.log('handleSaveButton')
-//     let self = this;
-//     if(this.props.onUpsert){
-//       this.props.onUpsert(self);
-//     }
-//   }
 
-//   handleCancelButton(){
-//     let self = this;
-//     if(this.props.onCancel){
-//       this.props.onCancel(self);
-//     }
-//   }
-
-//   handleDeleteButton(){
-//     let self = this;
-//     if(this.props.onDelete){
-//       this.props.onDelete(self);
-//     }
-//   }
-// }
 
 function PatientDetail(props){
+
+  let classes = useStyles();
+
+  // // this could be a mixin
+  // function handleSaveButton(){
+  //   //console.log('handleSaveButton')
+  //   if(props.onUpsert){
+  //     props.onUpsert(self);
+  //   }
+  // }
+
+  // function handleCancelButton(){
+  //   if(props.onCancel){
+  //     props.onCancel(self);
+  //   }
+  // }
+
+  // function handleDeleteButton(){
+  //   if(props.onDelete){
+  //     props.onDelete(self);
+  //   }
+  // }
+
   return(
     <div className='PatientDetail'>
       <Card>
         <CardHeader title="Jane Doe" />
         <CardContent>
-          PatientDetail
+          <Grid container spacing={3}>
+
+            <Grid item xs={9}>
+              <TextField
+                id='mrnInput'                
+                name='identifier'
+                label='Identifier (Medical Record Number)'
+                margin='normal'
+                fullWidth
+                // value={ get(formData, 'identifier', '')}
+                // onChange={ this.changeState.bind(this, 'identifier')}
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              {/* <Checkbox
+                label="Deceased"
+                labelPosition="right"
+                defaultChecked={false}
+                style={styles.toggle}
+              /> */}
+            </Grid>
+
+            <Grid item xs={1}>
+              <TextField
+                id='prefixInput'                
+                name='prefix'
+                label='Prefix'
+                margin='normal'
+                fullWidth
+                //value={ get(formData, 'prefix', '')}
+                //onChange={ this.changeState.bind(this, 'prefix')}
+                /><br/>
+            </Grid>
+            <Grid item xs={5}>
+              <TextField
+                id='givenInput'                
+                name='given'
+                label='Given Name'
+                placeholder='Jane'
+                margin='normal'
+                fullWidth
+                // value={ get(formData, 'given', '')}
+                // onChange={ this.changeState.bind(this, 'given')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id='familyInput'                
+                name='family'
+                label='Family Name'
+                placeholder='Doe'
+                margin='normal'
+                fullWidth
+                // value={ get(formData, 'family', '')}
+                // onChange={ this.changeState.bind(this, 'family')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id='suffixInput'                
+                name='suffix'
+                label='Suffix / Maiden'
+                placeholder=''
+                margin='normal'
+                // value={ get(formData, 'suffix', '')}
+                // onChange={ this.changeState.bind(this, 'suffix')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+
+
+
+            <Grid item xs={3}>
+              <TextField
+                id='maritalStatusInput'                
+                name='maritalStatus'
+                label='Marital Status'
+                placeholder='single | maried | other'
+                // value={ get(formData, 'maritalStatus', '')}
+                // onChange={ this.changeState.bind(this, 'maritalStatus')}
+                // floatingLabelFixed={false}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id='genderInput'                
+                name='gender'
+                label='Gender'
+                placeholder='male | female | unknown'
+                // value={ get(formData, 'gender', '')}
+                // onChange={ this.changeState.bind(this, 'gender')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id='birthDateInput'                
+                name='birthDate'
+                type='date'
+                // label='Birthdate'
+                // placeholder='YYYY-MM-DD'
+                // value={ get(formData, 'birthDate', '')}
+                // onChange={ this.changeState.bind(this, 'birthDate')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              <br />
+              {/* <Checkbox
+                label="Multiple Birth"
+                defaultChecked={false}
+                labelPosition="right"
+              />     */}
+            </Grid>
+
+            <Grid item xs={6}>
+              <TextField
+                id='photoInput'                
+                name='photo'
+                label='Photo'
+                placeholder='http://somewhere.com/image.jpg'
+                // value={ get(formData, 'photo', '')}
+                // onChange={ this.changeState.bind(this, 'photo')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id='speciesInput'                
+                name='species'
+                label='Species'
+                // value={ get(formData, 'species', '')}
+                // placeholder='Human'
+                // onChange={ this.changeState.bind(this, 'species')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id='languageInput'                
+                name='language'
+                label='Language'
+                // value={ get(formData, 'language', '')}
+                // onChange={ this.changeState.bind(this, 'language')}
+                // placeholder='English'
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+
+            <Grid item xs={3}>
+              <TextField
+                id='smartphoneInput'                
+                name='smartphone'
+                label='Phone'
+                placeholder='773-555-1234'
+                // value={ get(formData, 'smartphone', '')}
+                // onChange={ this.changeState.bind(this, 'smartphone')}
+                // floatingLabelFixed={true}
+                // fullWidth
+                /><br/>
+            </Grid>
+
+            {/* <CardActions>
+              { formButtons }
+            </CardActions> */}
+
+          </Grid>
         </CardContent>
       </Card>
     </div>
   );
 }
+
+  
 
 PatientDetail.propTypes = {
   id: PropTypes.string,

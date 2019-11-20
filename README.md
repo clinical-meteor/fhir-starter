@@ -139,7 +139,8 @@ meteor npm link packages/material-fhir-ui
 
 cd packages/material-fhir-ui
 
-yarn add rollup
+yarn add rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-babel rollup-plugin-commonjs rollup-plugin-node-resolve rollup-plugin-replace rollup-plugin-progress @babel/core @babel/preset-env --only=dev 
+
 
 // bump the material-fhir-ui/package.json version number
 nano package.json
@@ -152,6 +153,16 @@ yarn rollup --config rollup.config.js
 
 // once you get the above working, use --watch to automatically recompile on file change
 yarn rollup --config --watch
+
+
+// resync
+// sometimes you need to resync the package
+yarn rollup --config
+meteor reset
+rm -rf node_modules
+meteor npm install
+meteor npm link packages/material-fhir-ui
+
 ```
 
 ## Deployment
@@ -167,7 +178,6 @@ rm -rf node_modules
 
 npm update
 
-npm install rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-babel rollup-plugin-commonjs rollup-plugin-node-resolve rollup-plugin-replace rollup-plugin-progress @babel/core @babel/preset-env --only=dev 
 
 // typical rollupt
 yarn rollup --config

@@ -9,20 +9,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { 
-  CssBaseline,
-  Grid, 
-  Container,
-  Divider,
   Card,
   CardHeader,
   CardContent,
-  Tab, 
-  Tabs 
+  CardMedia,
+  Typography
 } from '@material-ui/core';
 
-// import { TextField, Card, CardTitle, CardText } from 'material-ui';
+import _ from 'lodash';
+let get = _.get;
+let set = _.set;
 
-// import { Grid, Col, Row } from 'react-bootstrap';
+import { ThemeProvider, makeStyles, useTheme } from '@material-ui/styles';
+
+const useStyles = makeStyles(theme => ({
+  card: {
+    display: 'flex',
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  content: {
+    flex: '1 0 auto',
+  },
+  cover: {
+    width: 151,
+  },
+  controls: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  },
+  playIcon: {
+    height: 38,
+    width: 38,
+  },
+}));
 
 // import { get } from 'lodash-es';
 // import moment from 'moment-es6'
@@ -187,15 +211,44 @@ import {
 
 function PatientCard(props){
 
-  let fullName = "Jane Doe";
+  let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = props;
+
+  fullName = get(props, 'patient.name[0].text', '');
+  familyName = get(props, 'patient.name[0].family[0]', '');        
+  givenName = get(props, 'patient.name[0].given[0]', '');
+  email = get(props, 'patient.contact[0].value', '');
+  birthdate = get(props, 'patient.birthDate', '');
+  gender = get(props, 'patient.gender', '');
+  avatar = get(props, 'patient.photo[0].url', '');
+  identifier = get(props, 'patient.identifier[0].value', '');
+
+  const classes = useStyles();
+  const theme = useTheme();
 
   return(
   <div className='patientCard'>
     <Card>
       <CardHeader title={fullName} />
-      <CardContent>
-        PatientCard
-      </CardContent>
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+          <Typography component="subtitle1" variant="h5">
+            { birthdate } 
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary">
+            { gender }
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary">
+            { identifier }
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary">
+            { email }
+          </Typography>
+        </CardContent>
+      </div>
+      <CardMedia
+        className={classes.cover}
+        image={avatar}
+      />
     </Card>
   </div>
   );

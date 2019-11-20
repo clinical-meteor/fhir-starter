@@ -17,7 +17,8 @@ export default {
     'react-dom',
     'prop-types',
     'react-proptypes',
-    '@material-ui/core'
+    '@material-ui/core',
+    '@material-ui/styles'
   ],
   plugins: [
     resolve(),
