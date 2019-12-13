@@ -20,7 +20,7 @@ import _ from 'lodash';
 let get = _.get;
 let set = _.set;
 
-import { ThemeProvider, makeStyles, useTheme } from '@material-ui/styles';
+import { makeStyles, useTheme } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -211,6 +211,8 @@ const useStyles = makeStyles(theme => ({
 
 function PatientCard(props){
 
+  console.log('PatientCard v0.7.22')
+
   let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = props;
 
   fullName = get(props, 'patient.name[0].text', '');
@@ -231,16 +233,16 @@ function PatientCard(props){
       <CardHeader title={fullName} />
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography component="subtitle1" variant="h5">
+          <Typography variant="h5" color="textSecondary">
             { birthdate } 
           </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
+          <Typography color="textSecondary">
             { gender }
           </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
+          <Typography color="textSecondary">
             { identifier }
           </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
+          <Typography color="textSecondary">
             { email }
           </Typography>
         </CardContent>

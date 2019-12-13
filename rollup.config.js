@@ -21,16 +21,21 @@ export default {
     '@material-ui/styles'
   ],
   plugins: [
-    resolve(),
     babel({
+      babelrc: false,
+      presets: [['@babel/preset-env', { modules: false }], '@babel/preset-react'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       exclude: 'node_modules/**',
-      presets: ['@babel/env', '@babel/preset-react']
     }),
     commonjs({
       include: 'node_modules/**',
       namedExports: {
         'react-is': ['ForwardRef', 'isForwardRef', 'isValidElementType']
       },
+    }),
+    resolve({
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+      preferBuiltins: false,
     })
   ]
 };

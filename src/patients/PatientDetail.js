@@ -6,9 +6,7 @@ import {
   CardHeader,
   CardContent,
   Grid,
-  Paper,
-  TextField,
-  Checkbox
+  TextField
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/styles';
