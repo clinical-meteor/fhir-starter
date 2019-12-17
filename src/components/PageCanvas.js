@@ -6,9 +6,16 @@ let get = _.get;
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    paddingLeft: '100px', 
+    paddingRight: '100px',
+    verticalAlign: 'top',
+    display: 'inline-block', 
+    height: '100%',
+    width: '100%'
   }
 });
+
 
 function PageCanvas(props){
   console.log('PageCanvas.props', props);

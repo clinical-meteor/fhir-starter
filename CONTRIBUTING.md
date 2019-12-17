@@ -1,6 +1,6 @@
-## Contributing to Babel Starter Kit
+## Contributing to Material FHIR UI
 
-♥ [Babel Starter Kit](https://www.kriasoft.com/babel-starter-kit) and want to get involved? Thanks!
+♥ [material-fhir-ui](https://github.com/clinical-meteor/material-fhir-ui) and want to get involved? Thanks!
 There are plenty of ways you can help!
 
 Please take a moment to review this document in order to make the contribution process easy and
@@ -78,6 +78,10 @@ of the merits of this feature. Please provide as much detail and context as poss
 Good pull requests - patches, improvements, new features - are a fantastic help. They should remain
 focused in scope and avoid containing unrelated commits.
 
+
+
+
+
 **Please ask first** before embarking on any significant pull request (e.g. implementing features,
 refactoring code, porting to a different language), otherwise you risk spending a lot of time
 working on something that the project's developers might not want to merge into the project.
@@ -92,9 +96,11 @@ Adhering to the following process is the best way to get your work included in t
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/babel-starter-kit.git
+   git clone https://github.com/<your-username>/material-fhir-ui.git
+
    # Navigate to the newly cloned directory
-   cd babel-starter-kit
+   cd material-fhir-ui
+
    # Assign the original repo to a remote called "upstream"
    git remote add upstream https://github.com/kriasoft/babel-starter-kit.git
    ```
@@ -134,3 +140,49 @@ Adhering to the following process is the best way to get your work included in t
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project owners to license your work
 under the terms of the [MIT License](LICENSE.txt).
+
+
+
+
+## Updating the NPM Package  
+
+
+- Open Code Editor, two terminal windows, and a web browser.
+
+
+- In terminal 1, run the following.
+
+```bash
+# rollup will watch the file system for changes to the npm package and compile as needed
+yarn rollup -c --watch
+```
+
+- In terminal 2, run the following:
+
+```bash
+# install npm dependencies
+meteor npm install  
+
+# link the npm package you're locally working on
+meteor npm link packages/material-fhir-ui  
+
+# run the app with your local version
+# meteor will watch the file system for changes
+meteor run --settings configs/settings.localhost.json  
+```
+
+If set up correctly, you should be able to change code of the NPM package in your code editor, rollup will see the changes and recompile the package code, and then meteor will see the new package and recompile the app; after which, the web browser will see the new app and redraw the screen.  When working correctly, one change to your code should kick of refreshes in three other screens in a compile pipeline.  Change code, one, two, three, check if it rendered correctly.  
+
+If you like what you see and are satisfied, then publish it.  
+
+```bash
+# submit a pull request
+git push origin my-feature-branch
+
+# publish the npm package
+npm publish
+```
+
+Now you can add your component to an Atmosphere package, and develop on it.  
+
+
