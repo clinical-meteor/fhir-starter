@@ -1,6 +1,6 @@
 {
   "name": "material-fhir-ui",
-  "version": "0.8.0",
+  "version": "0.8.3",
   "description": "Reausable and composable FHIR components built with React and Material UI.",
   "homepage": "http://github.com/clinical-meteor/material-fhir-ui",
   "repository": "clinical-meteor/material-fhir-ui",
@@ -45,7 +45,7 @@
     "react-bootstrap": "^0.32.4",
     "react-mixin": "^4.0.0",
     "react-proptypes": "^1.0.0",
-    "rollup": "^1.26.3",
+    "rollup": "^1.27.13",
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.24.3",
     "typescript": "^3.6.4"
@@ -79,10 +79,10 @@
     "styled-jsx": "^3.2.1"
   },
   "peerDependencies": {
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
     "@material-ui/core": "4.5.1",
-    "material-ui": "0.20.1"
+    "material-ui": "0.20.1",
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
   },
   "scripts": {
     "lint": "eslint src test tools",

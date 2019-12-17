@@ -1,0 +1,36 @@
+import React from 'react';
+import { withStyles } from '@material-ui/core';
+
+import _ from 'lodash';
+let get = _.get;
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  }
+});
+
+function PageCanvas(props){
+  console.log('PageCanvas.props', props);
+
+  const {children, ...otherProps } = props;
+
+  console.log('props.classes', props.classes)
+
+  let headerHeight = 0;
+  if(get(props, 'headerHeight')){
+    headerHeight = get(props, 'headerHeight')
+  }
+
+  if(get(Meteor, 'settings.public.defaults.prominantHeader', false)){
+    headerHeight = "64px";
+  }
+
+  return(
+    <div className={ props.classes.root } {...otherProps} style={{ paddingTop: headerHeight }}>
+      { children }
+    </div>
+  );
+}
+
+export default withStyles(styles)(PageCanvas);
