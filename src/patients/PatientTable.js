@@ -251,7 +251,7 @@ function PatientTable(props){
       }
     }
 
-    console.log('flattened', result)
+    // console.log('flattened', result)
     return result;
   }
 
