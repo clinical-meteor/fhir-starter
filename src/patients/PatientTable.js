@@ -427,60 +427,60 @@ function PatientTable(props){
       );
     }
   }
-  function renderCounts(){
+  function renderCounts(cursors){
     let counts = "";
 
-    if(typeof Patients === "object"){
-      counts = Patients.find().count()
+    if(typeof cursors.Patients === "object"){
+      counts = cursors.Patients.find().count()
     }
 
-    if(typeof AllergyIntolerances === "object"){
-      counts = counts + "-" + AllergyIntolerances.find().count()
+    if(typeof cursors.AllergyIntolerances === "object"){
+      counts = counts + "-" + cursors.AllergyIntolerances.find().count()
     }
-    if(typeof Bundles === "object"){
-      counts = counts + "-" + Bundles.find().count()
+    if(typeof cursors.Bundles === "object"){
+      counts = counts + "-" + cursors.Bundles.find().count()
     }
-    if(typeof CarePlans === "object"){
-      counts = counts + "-" + CarePlans.find().count()
+    if(typeof cursors.CarePlans === "object"){
+      counts = counts + "-" + cursors.CarePlans.find().count()
     }
-    if(typeof Conditions === "object"){
-      counts = counts + "-" + Conditions.find().count()
+    if(typeof cursors.Conditions === "object"){
+      counts = counts + "-" + cursors.Conditions.find().count()
     }
-    if(typeof Claims === "object"){
-      counts = counts + "-" + Claims.find().count()
+    if(typeof cursors.Claims === "object"){
+      counts = counts + "-" + cursors.Claims.find().count()
     }
-    if(typeof Devices === "object"){
-      counts = counts + "-" + Devices.find().count()
+    if(typeof cursors.Devices === "object"){
+      counts = counts + "-" + cursors.Devices.find().count()
     }
-    if(typeof Encounters === "object"){
-      counts = counts + "-" + Encounters.find().count()
+    if(typeof cursors.Encounters === "object"){
+      counts = counts + "-" + cursors.Encounters.find().count()
     }
-    if(typeof Goals === "object"){
-      counts = counts + "-" + Goals.find().count()
+    if(typeof cursors.Goals === "object"){
+      counts = counts + "-" + cursors.Goals.find().count()
     }
-    if(typeof Immunizations === "object"){
-      counts = counts + "-" + Immunizations.find().count()
+    if(typeof cursors.Immunizations === "object"){
+      counts = counts + "-" + cursors.Immunizations.find().count()
     }
-    if(typeof Medications === "object"){
-      counts = counts + "-" + Medications.find().count()
+    if(typeof cursors.Medications === "object"){
+      counts = counts + "-" + cursors.Medications.find().count()
     }
-    if(typeof MedicationStatements === "object"){
-      counts = counts + "-" + MedicationStatements.find().count()
+    if(typeof cursors.MedicationStatements === "object"){
+      counts = counts + "-" + cursors.MedicationStatements.find().count()
     }
-    if(typeof MedicationOrders === "object"){
-      counts = counts + "-" + MedicationOrders.find().count()
+    if(typeof cursors.MedicationOrders === "object"){
+      counts = counts + "-" + cursors.MedicationOrders.find().count()
     }
-    if(typeof Persons === "object"){
-      counts = counts + "-" + Persons.find().count()
+    if(typeof cursors.Persons === "object"){
+      counts = counts + "-" + cursors.Persons.find().count()
     }
-    if(typeof RelatedPersons === "object"){
-      counts = counts + "-" + RelatedPersons.find().count()
+    if(typeof cursors.RelatedPersons === "object"){
+      counts = counts + "-" + cursors.RelatedPersons.find().count()
     }
-    if(typeof Practitioners === "object"){
-      counts = counts + "-" + Practitioners.find().count()
+    if(typeof cursors.Practitioners === "object"){
+      counts = counts + "-" + cursors.Practitioners.find().count()
     }
-    if(typeof Procedures === "object"){
-      counts = counts + "-" + Practitioners.find().count()
+    if(typeof cursors.Procedures === "object"){
+      counts = counts + "-" + cursors.Practitioners.find().count()
     }
 
     if (props.showCounts) {
@@ -539,7 +539,7 @@ function PatientTable(props){
           { renderIsActive(patientsToRender[i].active) }
           { renderActionButton(patientsToRender[i], styles.avatar) }
 
-          { renderCounts() }
+          { renderCounts(props.cursors) }
 
         </TableRow>
       );
@@ -627,14 +627,28 @@ PatientTable.propTypes = {
   defaultAvatar: PropTypes.string,
   disablePagination: PropTypes.bool,
   paginationCount: PropTypes.number,
-  showCounts: PropTypes.bool
+  showCounts: PropTypes.bool,
+  cursors: PropTypes.shape({
+    Patients: PropTypes.object,
+    AllergyIntolerances: PropTypes.object,
+    Bundles: PropTypes.object,
+    Conditions: PropTypes.object,
+    Claims: PropTypes.object,
+    Devices: PropTypes.object,
+    Encounters: PropTypes.object,
+    Goals: PropTypes.object,
+    Immunizations: PropTypes.object,
+    Medications: PropTypes.object,
+    MedicationStatements: PropTypes.object,
+    MedicationOrders: PropTypes.object,
+    Persons: PropTypes.object,
+    RelatedPersons: PropTypes.object,
+    Practitioners: PropTypes.object,
+    Procedures: PropTypes.object
+  })
 };
 
 export default PatientTable;
-
-
-
-
 
 
 
