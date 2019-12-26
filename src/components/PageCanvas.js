@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 
 
+
 import _ from 'lodash';
 let get = _.get;
 
@@ -21,19 +22,13 @@ const styles = theme => ({
 function PageCanvas(props){
   console.log('PageCanvas.props', props);
 
-  const {children, ...otherProps } = props;
+  const {children, headerHeight, ...otherProps } = props;
 
   console.log('props.classes', props.classes)
 
-  let headerHeight = 0;
-  if(get(Meteor, 'settings.public.defaults.prominantHeader', false)){
-    headerHeight = 128;
-  } else {
-    headerHeight = 64;
-  }
-
-  if(get(props, 'headerHeight')){
-    headerHeight = get(props, 'headerHeight')
+  let paddingTop = 0;
+  if(headerHeight){
+    paddingTop = headerHeight;
   }
 
   return(

@@ -420,6 +420,25 @@ function PatientTable(props){
   }
 
 
+  function renderCountsHeader(){
+    if (props.showCounts) {
+      return (
+        <TableCell className="counts">Counts</TableCell>
+      );
+    }
+  }
+  function renderCounts(){
+    let counts = "0-0-0-0-0-0-0-0-0-0-0";
+    if (props.showCounts) {
+      return (
+        <TableCell className='counts'>
+          {counts}
+        </TableCell>
+      );
+    }
+  }
+
+
   //================================================================
   // Table
   const classes = useStyles();
@@ -465,6 +484,9 @@ function PatientTable(props){
           { renderLanguage(patientsToRender[i]) }
           { renderIsActive(patientsToRender[i].active) }
           { renderActionButton(patientsToRender[i], styles.avatar) }
+
+          { renderCounts() }
+
         </TableRow>
       );
     }
@@ -513,6 +535,8 @@ function PatientTable(props){
             { renderIsActiveHeader() }
             { renderActionButtonHeader() }
 
+            { renderCountsHeader() }
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -548,7 +572,8 @@ PatientTable.propTypes = {
   actionButtonLabel: PropTypes.string,
   defaultAvatar: PropTypes.string,
   disablePagination: PropTypes.bool,
-  paginationCount: PropTypes.number
+  paginationCount: PropTypes.number,
+  showCounts: PropTypes.bool
 };
 
 export default PatientTable;
