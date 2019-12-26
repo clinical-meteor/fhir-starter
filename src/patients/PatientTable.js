@@ -428,7 +428,61 @@ function PatientTable(props){
     }
   }
   function renderCounts(){
-    let counts = "0-0-0-0-0-0-0-0-0-0-0";
+    let counts = "";
+
+    if(typeof Patients === "object"){
+      counts = Patients.find().count()
+    }
+
+    if(typeof AllergyIntolerances === "object"){
+      counts = counts + "-" + AllergyIntolerances.find().count()
+    }
+    if(typeof Bundles === "object"){
+      counts = counts + "-" + Bundles.find().count()
+    }
+    if(typeof CarePlans === "object"){
+      counts = counts + "-" + CarePlans.find().count()
+    }
+    if(typeof Conditions === "object"){
+      counts = counts + "-" + Conditions.find().count()
+    }
+    if(typeof Claims === "object"){
+      counts = counts + "-" + Claims.find().count()
+    }
+    if(typeof Devices === "object"){
+      counts = counts + "-" + Devices.find().count()
+    }
+    if(typeof Encounters === "object"){
+      counts = counts + "-" + Encounters.find().count()
+    }
+    if(typeof Goals === "object"){
+      counts = counts + "-" + Goals.find().count()
+    }
+    if(typeof Immunizations === "object"){
+      counts = counts + "-" + Immunizations.find().count()
+    }
+    if(typeof Medications === "object"){
+      counts = counts + "-" + Medications.find().count()
+    }
+    if(typeof MedicationStatements === "object"){
+      counts = counts + "-" + MedicationStatements.find().count()
+    }
+    if(typeof MedicationOrders === "object"){
+      counts = counts + "-" + MedicationOrders.find().count()
+    }
+    if(typeof Persons === "object"){
+      counts = counts + "-" + Persons.find().count()
+    }
+    if(typeof RelatedPersons === "object"){
+      counts = counts + "-" + RelatedPersons.find().count()
+    }
+    if(typeof Practitioners === "object"){
+      counts = counts + "-" + Practitioners.find().count()
+    }
+    if(typeof Procedures === "object"){
+      counts = counts + "-" + Practitioners.find().count()
+    }
+
     if (props.showCounts) {
       return (
         <TableCell className='counts'>
