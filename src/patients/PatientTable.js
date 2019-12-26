@@ -443,62 +443,62 @@ function PatientTable(props){
     let counts = "";
 
     if(cursors){
-      if(typeof cursors.Patients === "object"){
+      if(typeof cursors.Patients !== "null"){
         counts = cursors.Patients.find().count()
       }
   
-      if(typeof cursors.AllergyIntolerances === "object"){
+      if(typeof cursors.AllergyIntolerances !== "null"){
         counts = counts + "-" + cursors.AllergyIntolerances.find().count()
       }
-      if(typeof cursors.Bundles === "object"){
+      if(typeof cursors.Bundles !== "null"){
         counts = counts + "-" + cursors.Bundles.find().count()
       }
-      if(typeof cursors.CarePlans === "object"){
+      if(typeof cursors.CarePlans !== "null"){
         counts = counts + "-" + cursors.CarePlans.find().count()
       }
-      if(typeof cursors.Conditions === "object"){
+      if(typeof cursors.Conditions !== "null"){
         counts = counts + "-" + cursors.Conditions.find().count()
       }
-      if(typeof cursors.Claims === "object"){
+      if(typeof cursors.Claims !== "null"){
         counts = counts + "-" + cursors.Claims.find().count()
       }
-      if(typeof cursors.Devices === "object"){
+      if(typeof cursors.Devices !== "null"){
         counts = counts + "-" + cursors.Devices.find().count()
       }
-      if(typeof cursors.Encounters === "object"){
+      if(typeof cursors.Encounters !== "null"){
         counts = counts + "-" + cursors.Encounters.find().count()
       }
-      if(typeof cursors.Goals === "object"){
+      if(typeof cursors.Goals !== "null"){
         counts = counts + "-" + cursors.Goals.find().count()
       }
-      if(typeof cursors.Immunizations === "object"){
+      if(typeof cursors.Immunizations !== "null"){
         counts = counts + "-" + cursors.Immunizations.find().count()
       }
-      if(typeof cursors.Medications === "object"){
+      if(typeof cursors.Medications !== "null"){
         counts = counts + "-" + cursors.Medications.find().count()
       }
-      if(typeof cursors.MedicationStatements === "object"){
+      if(typeof cursors.MedicationStatements !== "null"){
         counts = counts + "-" + cursors.MedicationStatements.find().count()
       }
-      if(typeof cursors.MedicationOrders === "object"){
+      if(typeof cursors.MedicationOrders !== "null"){
         counts = counts + "-" + cursors.MedicationOrders.find().count()
       }
-      if(typeof cursors.Observations === "object"){
+      if(typeof cursors.Observations !== "null"){
         counts = counts + "-" + cursors.Observations.find().count()
       }
-      if(typeof cursors.Organizations === "object"){
+      if(typeof cursors.Organizations !== "null"){
         counts = counts + "-" + cursors.Organizations.find().count()
       }
-      if(typeof cursors.Persons === "object"){
+      if(typeof cursors.Persons !== "null"){
         counts = counts + "-" + cursors.Persons.find().count()
       }
-      if(typeof cursors.RelatedPersons === "object"){
+      if(typeof cursors.RelatedPersons !== "null"){
         counts = counts + "-" + cursors.RelatedPersons.find().count()
       }
-      if(typeof cursors.Practitioners === "object"){
+      if(typeof cursors.Practitioners !== "null"){
         counts = counts + "-" + cursors.Practitioners.find().count()
       }
-      if(typeof cursors.Procedures === "object"){
+      if(typeof cursors.Procedures !== "null"){
         counts = counts + "-" + cursors.Practitioners.find().count()
       }
     }
