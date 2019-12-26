@@ -427,60 +427,74 @@ function PatientTable(props){
       );
     }
   }
+
+  // the idea behind this function is that we want a column in the table
+  // that displays the counts of all the cursors that are associated with the Patient object
+  // usually, this involves the $everything operation
+  // where the entire patient chart is returned in a Bundle
+  // the different resources in the Bundle are parsed, and stored in cursors
+  // to get a summary of all that data into a column
+  // we need to serialize it into a string
+  // so we use a bitmask type operation to create the string
+  // this is inspired by old school Morse code and TCP/IP network addresses
+  // and pipe deliminated messaging
+
   function renderCounts(cursors){
     let counts = "";
 
-    if(typeof cursors.Patients === "object"){
-      counts = cursors.Patients.find().count()
-    }
-
-    if(typeof cursors.AllergyIntolerances === "object"){
-      counts = counts + "-" + cursors.AllergyIntolerances.find().count()
-    }
-    if(typeof cursors.Bundles === "object"){
-      counts = counts + "-" + cursors.Bundles.find().count()
-    }
-    if(typeof cursors.CarePlans === "object"){
-      counts = counts + "-" + cursors.CarePlans.find().count()
-    }
-    if(typeof cursors.Conditions === "object"){
-      counts = counts + "-" + cursors.Conditions.find().count()
-    }
-    if(typeof cursors.Claims === "object"){
-      counts = counts + "-" + cursors.Claims.find().count()
-    }
-    if(typeof cursors.Devices === "object"){
-      counts = counts + "-" + cursors.Devices.find().count()
-    }
-    if(typeof cursors.Encounters === "object"){
-      counts = counts + "-" + cursors.Encounters.find().count()
-    }
-    if(typeof cursors.Goals === "object"){
-      counts = counts + "-" + cursors.Goals.find().count()
-    }
-    if(typeof cursors.Immunizations === "object"){
-      counts = counts + "-" + cursors.Immunizations.find().count()
-    }
-    if(typeof cursors.Medications === "object"){
-      counts = counts + "-" + cursors.Medications.find().count()
-    }
-    if(typeof cursors.MedicationStatements === "object"){
-      counts = counts + "-" + cursors.MedicationStatements.find().count()
-    }
-    if(typeof cursors.MedicationOrders === "object"){
-      counts = counts + "-" + cursors.MedicationOrders.find().count()
-    }
-    if(typeof cursors.Persons === "object"){
-      counts = counts + "-" + cursors.Persons.find().count()
-    }
-    if(typeof cursors.RelatedPersons === "object"){
-      counts = counts + "-" + cursors.RelatedPersons.find().count()
-    }
-    if(typeof cursors.Practitioners === "object"){
-      counts = counts + "-" + cursors.Practitioners.find().count()
-    }
-    if(typeof cursors.Procedures === "object"){
-      counts = counts + "-" + cursors.Practitioners.find().count()
+    if(cursors){
+      if(typeof cursors.Patients === "object"){
+        counts = cursors.Patients.find().count()
+      }
+  
+      if(typeof cursors.AllergyIntolerances === "object"){
+        counts = counts + "-" + cursors.AllergyIntolerances.find().count()
+      }
+      if(typeof cursors.Bundles === "object"){
+        counts = counts + "-" + cursors.Bundles.find().count()
+      }
+      if(typeof cursors.CarePlans === "object"){
+        counts = counts + "-" + cursors.CarePlans.find().count()
+      }
+      if(typeof cursors.Conditions === "object"){
+        counts = counts + "-" + cursors.Conditions.find().count()
+      }
+      if(typeof cursors.Claims === "object"){
+        counts = counts + "-" + cursors.Claims.find().count()
+      }
+      if(typeof cursors.Devices === "object"){
+        counts = counts + "-" + cursors.Devices.find().count()
+      }
+      if(typeof cursors.Encounters === "object"){
+        counts = counts + "-" + cursors.Encounters.find().count()
+      }
+      if(typeof cursors.Goals === "object"){
+        counts = counts + "-" + cursors.Goals.find().count()
+      }
+      if(typeof cursors.Immunizations === "object"){
+        counts = counts + "-" + cursors.Immunizations.find().count()
+      }
+      if(typeof cursors.Medications === "object"){
+        counts = counts + "-" + cursors.Medications.find().count()
+      }
+      if(typeof cursors.MedicationStatements === "object"){
+        counts = counts + "-" + cursors.MedicationStatements.find().count()
+      }
+      if(typeof cursors.MedicationOrders === "object"){
+        counts = counts + "-" + cursors.MedicationOrders.find().count()
+      }
+      if(typeof cursors.Persons === "object"){
+        counts = counts + "-" + cursors.Persons.find().count()
+      }
+      if(typeof cursors.RelatedPersons === "object"){
+        counts = counts + "-" + cursors.RelatedPersons.find().count()
+      }
+      if(typeof cursors.Practitioners === "object"){
+        counts = counts + "-" + cursors.Practitioners.find().count()
+      }
+      if(typeof cursors.Procedures === "object"){
+        counts = counts + "-" + cursors.Practitioners.find().count()
+      }
     }
 
     if (props.showCounts) {
