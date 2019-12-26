@@ -446,58 +446,58 @@ function PatientTable(props){
     }
 
     if(cursors.AllergyIntolerances){
-      counts = counts + "-" + cursors.AllergyIntolerances
+      counts = counts + "-" + cursors.AllergyIntolerances;
     }
     if(cursors.Bundles){
-      counts = counts + "-" + cursors.Bundles
+      counts = counts + "-" + cursors.Bundles;
     }
     if(cursors.CarePlans){
-      counts = counts + "-" + cursors.CarePlans
+      counts = counts + "-" + cursors.CarePlans;
     }
     if(cursors.Conditions){
-      counts = counts + "-" + cursors.Conditions
+      counts = counts + "-" + cursors.Conditions;
     }
     if(cursors.Claims){
-      counts = counts + "-" + cursors.Claims
+      counts = counts + "-" + cursors.Claims;
     }
     if(cursors.Devices){
-      counts = counts + "-" + cursors.Devices
+      counts = counts + "-" + cursors.Devices;
     }
     if(cursors.Encounters){
-      counts = counts + "-" + cursors.Encounters
+      counts = counts + "-" + cursors.Encounters;
     }
     if(cursors.Goals){
-      counts = counts + "-" + cursors.Goals
+      counts = counts + "-" + cursors.Goals;
     }
     if(cursors.Immunizations){
-      counts = counts + "-" + cursors.Immunizations
+      counts = counts + "-" + cursors.Immunizations;
     }
     if(cursors.Medications){
-      counts = counts + "-" + cursors.Medications
+      counts = counts + "-" + cursors.Medications;
     }
     if(cursors.MedicationStatements){
-      counts = counts + "-" + cursors.MedicationStatements
+      counts = counts + "-" + cursors.MedicationStatements;
     }
     if(cursors.MedicationOrders){
-      counts = counts + "-" + cursors.MedicationOrders
+      counts = counts + "-" + cursors.MedicationOrders;
     }
     if(cursors.Observations){
-      counts = counts + "-" + cursors.Observations
+      counts = counts + "-" + cursors.Observations;
     }
     if(cursors.Organizations){
-      counts = counts + "-" + cursors.Organizations
+      counts = counts + "-" + cursors.Organizations;
     }
     if(cursors.Persons){
-      counts = counts + "-" + cursors.Persons
+      counts = counts + "-" + cursors.Persons;
     }
     if(cursors.RelatedPersons){
-      counts = counts + "-" + cursors.RelatedPersons
+      counts = counts + "-" + cursors.RelatedPersons;
     }
     if(cursors.Practitioners){
-      counts = counts + "-" + cursors.Practitioners
+      counts = counts + "-" + cursors.Practitioners;
     }
     if(cursors.Procedures){
-      counts = counts + "-" + cursors.Practitioners
+      counts = counts + "-" + cursors.Practitioners;
     }
     return counts;
   }
@@ -507,6 +507,7 @@ function PatientTable(props){
 
     if(Array.isArray(cursors)){
       serializedCounts = serializeCounts(cursors[index])
+      console.log('serializedCounts', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
     }
