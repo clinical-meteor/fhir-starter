@@ -656,26 +656,7 @@ PatientTable.propTypes = {
   disablePagination: PropTypes.bool,
   paginationCount: PropTypes.number,
   showCounts: PropTypes.bool,
-  cursors: PropTypes.shape({
-    Patients: PropTypes.object,
-    AllergyIntolerances: PropTypes.object,
-    Bundles: PropTypes.object,
-    Conditions: PropTypes.object,
-    Claims: PropTypes.object,
-    Devices: PropTypes.object,
-    Encounters: PropTypes.object,
-    Goals: PropTypes.object,
-    Immunizations: PropTypes.object,
-    Medications: PropTypes.object,
-    MedicationStatements: PropTypes.object,
-    MedicationOrders: PropTypes.object,
-    Observations: PropTypes.object,
-    Organizations: PropTypes.object,
-    Persons: PropTypes.object,
-    RelatedPersons: PropTypes.object,
-    Practitioners: PropTypes.object,
-    Procedures: PropTypes.object
-  })
+  cursors: PropTypes.array
 };
 
 export default PatientTable;
