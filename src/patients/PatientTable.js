@@ -443,63 +443,63 @@ function PatientTable(props){
     let counts = "";
 
     if(cursors){
-      if(typeof cursors.Patients !== "null"){
-        counts = cursors.Patients.find().count()
+      if(cursors.Patients){
+        counts = cursors.Patients
       }
   
-      if(typeof cursors.AllergyIntolerances !== "null"){
-        counts = counts + "-" + cursors.AllergyIntolerances.find().count()
+      if(cursors.AllergyIntolerances){
+        counts = counts + "-" + cursors.AllergyIntolerances
       }
-      if(typeof cursors.Bundles !== "null"){
-        counts = counts + "-" + cursors.Bundles.find().count()
+      if(cursors.Bundles){
+        counts = counts + "-" + cursors.Bundles
       }
-      if(typeof cursors.CarePlans !== "null"){
-        counts = counts + "-" + cursors.CarePlans.find().count()
+      if(cursors.CarePlans){
+        counts = counts + "-" + cursors.CarePlans
       }
-      if(typeof cursors.Conditions !== "null"){
-        counts = counts + "-" + cursors.Conditions.find().count()
+      if(cursors.Conditions){
+        counts = counts + "-" + cursors.Conditions
       }
-      if(typeof cursors.Claims !== "null"){
-        counts = counts + "-" + cursors.Claims.find().count()
+      if(cursors.Claims){
+        counts = counts + "-" + cursors.Claims
       }
-      if(typeof cursors.Devices !== "null"){
-        counts = counts + "-" + cursors.Devices.find().count()
+      if(cursors.Devices){
+        counts = counts + "-" + cursors.Devices
       }
-      if(typeof cursors.Encounters !== "null"){
-        counts = counts + "-" + cursors.Encounters.find().count()
+      if(cursors.Encounters){
+        counts = counts + "-" + cursors.Encounters
       }
-      if(typeof cursors.Goals !== "null"){
-        counts = counts + "-" + cursors.Goals.find().count()
+      if(cursors.Goals){
+        counts = counts + "-" + cursors.Goals
       }
-      if(typeof cursors.Immunizations !== "null"){
-        counts = counts + "-" + cursors.Immunizations.find().count()
+      if(cursors.Immunizations){
+        counts = counts + "-" + cursors.Immunizations
       }
-      if(typeof cursors.Medications !== "null"){
-        counts = counts + "-" + cursors.Medications.find().count()
+      if(cursors.Medications){
+        counts = counts + "-" + cursors.Medications
       }
-      if(typeof cursors.MedicationStatements !== "null"){
-        counts = counts + "-" + cursors.MedicationStatements.find().count()
+      if(cursors.MedicationStatements){
+        counts = counts + "-" + cursors.MedicationStatements
       }
-      if(typeof cursors.MedicationOrders !== "null"){
-        counts = counts + "-" + cursors.MedicationOrders.find().count()
+      if(cursors.MedicationOrders){
+        counts = counts + "-" + cursors.MedicationOrders
       }
-      if(typeof cursors.Observations !== "null"){
-        counts = counts + "-" + cursors.Observations.find().count()
+      if(cursors.Observations){
+        counts = counts + "-" + cursors.Observations
       }
-      if(typeof cursors.Organizations !== "null"){
-        counts = counts + "-" + cursors.Organizations.find().count()
+      if(cursors.Organizations){
+        counts = counts + "-" + cursors.Organizations
       }
-      if(typeof cursors.Persons !== "null"){
-        counts = counts + "-" + cursors.Persons.find().count()
+      if(cursors.Persons){
+        counts = counts + "-" + cursors.Persons
       }
-      if(typeof cursors.RelatedPersons !== "null"){
-        counts = counts + "-" + cursors.RelatedPersons.find().count()
+      if(cursors.RelatedPersons){
+        counts = counts + "-" + cursors.RelatedPersons
       }
-      if(typeof cursors.Practitioners !== "null"){
-        counts = counts + "-" + cursors.Practitioners.find().count()
+      if(cursors.Practitioners){
+        counts = counts + "-" + cursors.Practitioners
       }
-      if(typeof cursors.Procedures !== "null"){
-        counts = counts + "-" + cursors.Practitioners.find().count()
+      if(cursors.Procedures){
+        counts = counts + "-" + cursors.Practitioners
       }
     }
 
