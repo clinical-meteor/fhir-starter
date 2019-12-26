@@ -439,74 +439,82 @@ function PatientTable(props){
   // this is inspired by old school Morse code and TCP/IP network addresses
   // and pipe deliminated messaging
 
-  function renderCounts(cursors){
+  function serializeCounts(cursors){
     let counts = "";
+    if(cursors.Patients){
+      counts = cursors.Patients
+    }
 
-    if(cursors){
-      if(cursors.Patients){
-        counts = cursors.Patients
-      }
-  
-      if(cursors.AllergyIntolerances){
-        counts = counts + "-" + cursors.AllergyIntolerances
-      }
-      if(cursors.Bundles){
-        counts = counts + "-" + cursors.Bundles
-      }
-      if(cursors.CarePlans){
-        counts = counts + "-" + cursors.CarePlans
-      }
-      if(cursors.Conditions){
-        counts = counts + "-" + cursors.Conditions
-      }
-      if(cursors.Claims){
-        counts = counts + "-" + cursors.Claims
-      }
-      if(cursors.Devices){
-        counts = counts + "-" + cursors.Devices
-      }
-      if(cursors.Encounters){
-        counts = counts + "-" + cursors.Encounters
-      }
-      if(cursors.Goals){
-        counts = counts + "-" + cursors.Goals
-      }
-      if(cursors.Immunizations){
-        counts = counts + "-" + cursors.Immunizations
-      }
-      if(cursors.Medications){
-        counts = counts + "-" + cursors.Medications
-      }
-      if(cursors.MedicationStatements){
-        counts = counts + "-" + cursors.MedicationStatements
-      }
-      if(cursors.MedicationOrders){
-        counts = counts + "-" + cursors.MedicationOrders
-      }
-      if(cursors.Observations){
-        counts = counts + "-" + cursors.Observations
-      }
-      if(cursors.Organizations){
-        counts = counts + "-" + cursors.Organizations
-      }
-      if(cursors.Persons){
-        counts = counts + "-" + cursors.Persons
-      }
-      if(cursors.RelatedPersons){
-        counts = counts + "-" + cursors.RelatedPersons
-      }
-      if(cursors.Practitioners){
-        counts = counts + "-" + cursors.Practitioners
-      }
-      if(cursors.Procedures){
-        counts = counts + "-" + cursors.Practitioners
-      }
+    if(cursors.AllergyIntolerances){
+      counts = counts + "-" + cursors.AllergyIntolerances
+    }
+    if(cursors.Bundles){
+      counts = counts + "-" + cursors.Bundles
+    }
+    if(cursors.CarePlans){
+      counts = counts + "-" + cursors.CarePlans
+    }
+    if(cursors.Conditions){
+      counts = counts + "-" + cursors.Conditions
+    }
+    if(cursors.Claims){
+      counts = counts + "-" + cursors.Claims
+    }
+    if(cursors.Devices){
+      counts = counts + "-" + cursors.Devices
+    }
+    if(cursors.Encounters){
+      counts = counts + "-" + cursors.Encounters
+    }
+    if(cursors.Goals){
+      counts = counts + "-" + cursors.Goals
+    }
+    if(cursors.Immunizations){
+      counts = counts + "-" + cursors.Immunizations
+    }
+    if(cursors.Medications){
+      counts = counts + "-" + cursors.Medications
+    }
+    if(cursors.MedicationStatements){
+      counts = counts + "-" + cursors.MedicationStatements
+    }
+    if(cursors.MedicationOrders){
+      counts = counts + "-" + cursors.MedicationOrders
+    }
+    if(cursors.Observations){
+      counts = counts + "-" + cursors.Observations
+    }
+    if(cursors.Organizations){
+      counts = counts + "-" + cursors.Organizations
+    }
+    if(cursors.Persons){
+      counts = counts + "-" + cursors.Persons
+    }
+    if(cursors.RelatedPersons){
+      counts = counts + "-" + cursors.RelatedPersons
+    }
+    if(cursors.Practitioners){
+      counts = counts + "-" + cursors.Practitioners
+    }
+    if(cursors.Procedures){
+      counts = counts + "-" + cursors.Practitioners
+    }
+    return counts;
+  }
+
+  function renderCounts(cursors, index){
+    let serializedCounts = "";
+
+    if(Array.isArray(cursors)){
+      serializedCounts = serializeCounts(cursors[index])
+    } else {
+      serializedCounts = serializeCounts(cursors)
     }
 
     if (props.showCounts) {
       return (
         <TableCell className='counts'>
-          {counts}
+          {serializedCounts}
         </TableCell>
       );
     }
@@ -559,7 +567,7 @@ function PatientTable(props){
           { renderIsActive(patientsToRender[i].active) }
           { renderActionButton(patientsToRender[i], styles.avatar) }
 
-          { renderCounts(props.cursors) }
+          { renderCounts(props.cursors, i) }
 
         </TableRow>
       );
