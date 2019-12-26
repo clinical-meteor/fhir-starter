@@ -483,6 +483,12 @@ function PatientTable(props){
       if(typeof cursors.MedicationOrders === "object"){
         counts = counts + "-" + cursors.MedicationOrders.find().count()
       }
+      if(typeof cursors.Observations === "object"){
+        counts = counts + "-" + cursors.Observations.find().count()
+      }
+      if(typeof cursors.Organizations === "object"){
+        counts = counts + "-" + cursors.Organizations.find().count()
+      }
       if(typeof cursors.Persons === "object"){
         counts = counts + "-" + cursors.Persons.find().count()
       }
@@ -655,6 +661,8 @@ PatientTable.propTypes = {
     Medications: PropTypes.object,
     MedicationStatements: PropTypes.object,
     MedicationOrders: PropTypes.object,
+    Observations: PropTypes.object,
+    Organizations: PropTypes.object,
     Persons: PropTypes.object,
     RelatedPersons: PropTypes.object,
     Practitioners: PropTypes.object,
