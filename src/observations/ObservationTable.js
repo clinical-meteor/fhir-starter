@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CardText } from 'material-ui';
-import Checkbox from '@material-ui/core/Checkbox';
+// import { CardText } from 'material-ui';
+import { Checkbox, CardContent } from '@material-ui/core/Checkbox';
 import { Table } from 'react-bootstrap';
 
 import moment from 'moment-es6'
@@ -391,7 +391,7 @@ export class ObservationTable extends React.Component {
 
 
     return(
-      <CardText>
+      <CardContent>
         <Table id="ObservationTable" hover >
           <thead>
             <tr>
@@ -411,7 +411,7 @@ export class ObservationTable extends React.Component {
             { tableRows }
           </tbody>
         </Table>
-      </CardText>
+      </CardContent>
     );
   }
 }

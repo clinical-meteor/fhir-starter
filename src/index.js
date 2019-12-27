@@ -15,15 +15,11 @@ import PatientDetail from './patients/PatientDetail';
 
 // import ObservationTable from './observations/ObservationTable';
 
-import Foo from './components/Foo';
-
 import TableNoData from './components/TableNoData';
 import StyledCard from './components/StyledCard';
 import PageCanvas from './components/PageCanvas';
 
 export default { 
-  Foo,
-
   PatientCard,
   PatientTable,
   PatientDetail,
