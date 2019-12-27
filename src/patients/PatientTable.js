@@ -504,12 +504,14 @@ function PatientTable(props){
 
   function renderCounts(cursors, index){
     let serializedCounts = "";
+    console.log('renderCounts', cursors)
 
     if(Array.isArray(cursors)){
       serializedCounts = serializeCounts(cursors[index])
-      console.log('serializedCounts', serializedCounts, index, cursors[index])
+      console.log('serializedCounts.array', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
+      console.log('serializedCounts', serializedCounts)
     }
 
     if (props.showCounts) {
