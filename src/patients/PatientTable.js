@@ -439,73 +439,75 @@ function PatientTable(props){
   // this is inspired by old school Morse code and TCP/IP network addresses
   // and pipe deliminated messaging
 
-  function serializeCounts(cursors){
-    let counts = "";
-    if(cursors.Patients){
-      counts = cursors.Patients
-    }
-
-    if(cursors.AllergyIntolerances){
-      counts = counts + "-" + cursors.AllergyIntolerances;
-    }
-    if(cursors.Bundles){
-      counts = counts + "-" + cursors.Bundles;
-    }
-    if(cursors.CarePlans){
-      counts = counts + "-" + cursors.CarePlans;
-    }
-    if(cursors.Conditions){
-      counts = counts + "-" + cursors.Conditions;
-    }
-    if(cursors.Claims){
-      counts = counts + "-" + cursors.Claims;
-    }
-    if(cursors.Devices){
-      counts = counts + "-" + cursors.Devices;
-    }
-    if(cursors.Encounters){
-      counts = counts + "-" + cursors.Encounters;
-    }
-    if(cursors.Goals){
-      counts = counts + "-" + cursors.Goals;
-    }
-    if(cursors.Immunizations){
-      counts = counts + "-" + cursors.Immunizations;
-    }
-    if(cursors.Medications){
-      counts = counts + "-" + cursors.Medications;
-    }
-    if(cursors.MedicationStatements){
-      counts = counts + "-" + cursors.MedicationStatements;
-    }
-    if(cursors.MedicationOrders){
-      counts = counts + "-" + cursors.MedicationOrders;
-    }
-    if(cursors.Observations){
-      counts = counts + "-" + cursors.Observations;
-    }
-    if(cursors.Organizations){
-      counts = counts + "-" + cursors.Organizations;
-    }
-    if(cursors.Persons){
-      counts = counts + "-" + cursors.Persons;
-    }
-    if(cursors.RelatedPersons){
-      counts = counts + "-" + cursors.RelatedPersons;
-    }
-    if(cursors.Practitioners){
-      counts = counts + "-" + cursors.Practitioners;
-    }
-    if(cursors.Procedures){
-      counts = counts + "-" + cursors.Practitioners;
-    }
-    return counts;
-  }
+  
 
   function renderCounts(cursors, index){
     let serializedCounts = "";
     console.log('renderCounts', cursors)
 
+    function serializeCounts(cursors){
+      let counts = "";
+      if(typeof cursors.Patients !== "undefined"){
+        counts = cursors.Patients
+      }
+  
+      if(typeof cursors.AllergyIntolerances !== "undefined"){
+        counts = counts + "-" + cursors.AllergyIntolerances;
+      }
+      if(typeof cursors.Bundles !== "undefined"){
+        counts = counts + "-" + cursors.Bundles;
+      }
+      if(typeof cursors.CarePlans !== "undefined"){
+        counts = counts + "-" + cursors.CarePlans;
+      }
+      if(typeof cursors.Conditions !== "undefined"){
+        counts = counts + "-" + cursors.Conditions;
+      }
+      if(typeof cursors.Claims !== "undefined"){
+        counts = counts + "-" + cursors.Claims;
+      }
+      if(typeof cursors.Devices !== "undefined"){
+        counts = counts + "-" + cursors.Devices;
+      }
+      if(typeof cursors.Encounters !== "undefined"){
+        counts = counts + "-" + cursors.Encounters;
+      }
+      if(typeof cursors.Goals !== "undefined"){
+        counts = counts + "-" + cursors.Goals;
+      }
+      if(typeof cursors.Immunizations !== "undefined"){
+        counts = counts + "-" + cursors.Immunizations;
+      }
+      if(typeof cursors.Medications !== "undefined"){
+        counts = counts + "-" + cursors.Medications;
+      }
+      if(typeof cursors.MedicationStatements !== "undefined"){
+        counts = counts + "-" + cursors.MedicationStatements;
+      }
+      if(typeof cursors.MedicationOrders !== "undefined"){
+        counts = counts + "-" + cursors.MedicationOrders;
+      }
+      if(typeof cursors.Observations !== "undefined"){
+        counts = counts + "-" + cursors.Observations;
+      }
+      if(typeof cursors.Organizations !== "undefined"){
+        counts = counts + "-" + cursors.Organizations;
+      }
+      if(typeof cursors.Persons !== "undefined"){
+        counts = counts + "-" + cursors.Persons;
+      }
+      if(typeof cursors.RelatedPersons !== "undefined"){
+        counts = counts + "-" + cursors.RelatedPersons;
+      }
+      if(typeof cursors.Practitioners !== "undefined"){
+        counts = counts + "-" + cursors.Practitioners;
+      }
+      if(typeof cursors.Procedures !== "undefined"){
+        counts = counts + "-" + cursors.Practitioners;
+      }
+      return counts;
+    }
+    
     if(Array.isArray(cursors)){
       serializedCounts = serializeCounts(cursors[index])
       console.log('serializedCounts.array', serializedCounts, index, cursors[index])
@@ -523,13 +525,10 @@ function PatientTable(props){
     }
   }
 
-
   //================================================================
   // Table
   const classes = useStyles();
 
-
-  
   let patientsToRender = [];
   if(props.patients){
     if(props.patients.length > 0){            
