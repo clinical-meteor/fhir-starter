@@ -443,7 +443,7 @@ function PatientTable(props){
 
   function renderCounts(cursors, index){
     let serializedCounts = "";
-    console.log('renderCounts', cursors)
+    // console.log('renderCounts', cursors)
 
     function serializeCounts(cursors){
       let counts = "";
@@ -503,7 +503,7 @@ function PatientTable(props){
         counts = counts + "-" + cursors.Practitioners;
       }
       if(typeof cursors.Procedures !== "undefined"){
-        counts = counts + "-" + cursors.Practitioners;
+        counts = counts + "-" + cursors.Procedures;
       }
       return counts;
     }
