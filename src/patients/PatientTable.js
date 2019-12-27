@@ -496,6 +496,9 @@ function PatientTable(props){
       if(typeof cursors.Persons !== "undefined"){
         counts = counts + "-" + cursors.Persons;
       }
+      if(typeof cursors.Practitioners !== "undefined"){
+        counts = counts + "-" + cursors.Practitioners;
+      }
       if(typeof cursors.RelatedPersons !== "undefined"){
         counts = counts + "-" + cursors.RelatedPersons;
       }
