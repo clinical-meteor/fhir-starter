@@ -19,7 +19,7 @@ const styles = theme => ({
 function StyledCard(props){
   console.log('StyledCard.props', props);
 
-  let {children, style, padding, ...otherProps } = props;
+  let {children, style, padding, scrollable, margin, ...otherProps } = props;
 
   console.log('props.classes', props.classes)
 
@@ -53,11 +53,11 @@ function StyledCard(props){
     style.height = (window.innerHeight - headerHeight - ((cardsInLayout + 1 ) * paddingHeight) - footerHeight) + "px";
   }
 
-  if(get(props, 'scrollable') === true){
+  if(scrollable === true){
     style.overflowY = "scroll";
   }
 
-  if(get(props, 'margin')){
+  if(margin){
     style.marginTop = get(props, 'margin', 0) + 'px';
   }
 

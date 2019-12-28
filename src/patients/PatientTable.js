@@ -513,10 +513,10 @@ function PatientTable(props){
     
     if(Array.isArray(cursors)){
       serializedCounts = serializeCounts(cursors[index])
-      console.log('serializedCounts.array', serializedCounts, index, cursors[index])
+      // console.log('serializedCounts.array', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
-      console.log('serializedCounts', serializedCounts)
+      // console.log('serializedCounts', serializedCounts)
     }
 
     if (props.showCounts) {
@@ -570,9 +570,9 @@ function PatientTable(props){
           { renderMaritalStatus(patientsToRender[i]) }
           { renderLanguage(patientsToRender[i]) }
           { renderIsActive(patientsToRender[i].active) }
-          { renderActionButton(patientsToRender[i], styles.avatar) }
 
           { renderCounts(props.cursors, i) }
+          { renderActionButton(patientsToRender[i], styles.avatar) }
 
         </TableRow>
       );
@@ -620,9 +620,9 @@ function PatientTable(props){
             { renderMaritalStatusHeader(patientsToRender[i]) }
             { renderLanguageHeader(patientsToRender[i]) }              
             { renderIsActiveHeader() }
-            { renderActionButtonHeader() }
 
             { renderCountsHeader() }
+            { renderActionButtonHeader() }
 
           </TableRow>
         </TableHead>
