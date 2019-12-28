@@ -316,7 +316,7 @@ function PatientTable(props){
   function renderActionButtonHeader(){
     if (props.showActionButton === true) {
       return (
-        <TableCell className='ActionButton' style={styles.hideOnPhone}></TableCell>
+        <TableCell className='ActionButton' >Action</TableCell>
       );
     }
   }
