@@ -8,7 +8,6 @@ let get = _.get;
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing(2),
     textAlign: 'left',
     color: theme.palette.paper.contrastText,
     backgroundColor: theme.palette.paper.main

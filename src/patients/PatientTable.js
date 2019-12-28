@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { 
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -323,7 +324,7 @@ function PatientTable(props){
     if (props.showActionButton === true) {
       return (
         <TableCell className='ActionButton' style={styles.hideOnPhone}>
-          <FlatButton label="send" onClick={ onActionButtonClick.bind('this', patientsToRender[i]._id)}/>
+          <Button onClick={ onActionButtonClick.bind('this', patientsToRender[i]._id)}>{ get(props, "actionButtonLabel", "") }</Button>
         </TableCell>
       );
     }
