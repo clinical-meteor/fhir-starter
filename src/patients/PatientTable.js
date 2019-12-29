@@ -448,67 +448,71 @@ function PatientTable(props){
 
     function serializeCounts(cursors){
       let counts = "";
-      if(typeof cursors.Patients !== "undefined"){
-        counts = cursors.Patients
+
+      if(cursor){
+        if(typeof cursors.Patients !== "undefined"){
+          counts = cursors.Patients
+        }
+    
+        if(typeof cursors.AllergyIntolerances !== "undefined"){
+          counts = counts + "-" + cursors.AllergyIntolerances;
+        }
+        if(typeof cursors.Bundles !== "undefined"){
+          counts = counts + "-" + cursors.Bundles;
+        }
+        if(typeof cursors.CarePlans !== "undefined"){
+          counts = counts + "-" + cursors.CarePlans;
+        }
+        if(typeof cursors.Conditions !== "undefined"){
+          counts = counts + "-" + cursors.Conditions;
+        }
+        if(typeof cursors.Claims !== "undefined"){
+          counts = counts + "-" + cursors.Claims;
+        }
+        if(typeof cursors.Devices !== "undefined"){
+          counts = counts + "-" + cursors.Devices;
+        }
+        if(typeof cursors.Encounters !== "undefined"){
+          counts = counts + "-" + cursors.Encounters;
+        }
+        if(typeof cursors.Goals !== "undefined"){
+          counts = counts + "-" + cursors.Goals;
+        }
+        if(typeof cursors.Immunizations !== "undefined"){
+          counts = counts + "-" + cursors.Immunizations;
+        }
+        if(typeof cursors.Medications !== "undefined"){
+          counts = counts + "-" + cursors.Medications;
+        }
+        if(typeof cursors.MedicationStatements !== "undefined"){
+          counts = counts + "-" + cursors.MedicationStatements;
+        }
+        if(typeof cursors.MedicationOrders !== "undefined"){
+          counts = counts + "-" + cursors.MedicationOrders;
+        }
+        if(typeof cursors.Observations !== "undefined"){
+          counts = counts + "-" + cursors.Observations;
+        }
+        if(typeof cursors.Organizations !== "undefined"){
+          counts = counts + "-" + cursors.Organizations;
+        }
+        if(typeof cursors.Persons !== "undefined"){
+          counts = counts + "-" + cursors.Persons;
+        }
+        if(typeof cursors.Practitioners !== "undefined"){
+          counts = counts + "-" + cursors.Practitioners;
+        }
+        if(typeof cursors.RelatedPersons !== "undefined"){
+          counts = counts + "-" + cursors.RelatedPersons;
+        }
+        if(typeof cursors.Practitioners !== "undefined"){
+          counts = counts + "-" + cursors.Practitioners;
+        }
+        if(typeof cursors.Procedures !== "undefined"){
+          counts = counts + "-" + cursors.Procedures;
+        }
       }
-  
-      if(typeof cursors.AllergyIntolerances !== "undefined"){
-        counts = counts + "-" + cursors.AllergyIntolerances;
-      }
-      if(typeof cursors.Bundles !== "undefined"){
-        counts = counts + "-" + cursors.Bundles;
-      }
-      if(typeof cursors.CarePlans !== "undefined"){
-        counts = counts + "-" + cursors.CarePlans;
-      }
-      if(typeof cursors.Conditions !== "undefined"){
-        counts = counts + "-" + cursors.Conditions;
-      }
-      if(typeof cursors.Claims !== "undefined"){
-        counts = counts + "-" + cursors.Claims;
-      }
-      if(typeof cursors.Devices !== "undefined"){
-        counts = counts + "-" + cursors.Devices;
-      }
-      if(typeof cursors.Encounters !== "undefined"){
-        counts = counts + "-" + cursors.Encounters;
-      }
-      if(typeof cursors.Goals !== "undefined"){
-        counts = counts + "-" + cursors.Goals;
-      }
-      if(typeof cursors.Immunizations !== "undefined"){
-        counts = counts + "-" + cursors.Immunizations;
-      }
-      if(typeof cursors.Medications !== "undefined"){
-        counts = counts + "-" + cursors.Medications;
-      }
-      if(typeof cursors.MedicationStatements !== "undefined"){
-        counts = counts + "-" + cursors.MedicationStatements;
-      }
-      if(typeof cursors.MedicationOrders !== "undefined"){
-        counts = counts + "-" + cursors.MedicationOrders;
-      }
-      if(typeof cursors.Observations !== "undefined"){
-        counts = counts + "-" + cursors.Observations;
-      }
-      if(typeof cursors.Organizations !== "undefined"){
-        counts = counts + "-" + cursors.Organizations;
-      }
-      if(typeof cursors.Persons !== "undefined"){
-        counts = counts + "-" + cursors.Persons;
-      }
-      if(typeof cursors.Practitioners !== "undefined"){
-        counts = counts + "-" + cursors.Practitioners;
-      }
-      if(typeof cursors.RelatedPersons !== "undefined"){
-        counts = counts + "-" + cursors.RelatedPersons;
-      }
-      if(typeof cursors.Practitioners !== "undefined"){
-        counts = counts + "-" + cursors.Practitioners;
-      }
-      if(typeof cursors.Procedures !== "undefined"){
-        counts = counts + "-" + cursors.Procedures;
-      }
+
       return counts;
     }
     
