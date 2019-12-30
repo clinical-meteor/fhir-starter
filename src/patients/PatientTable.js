@@ -449,7 +449,7 @@ function PatientTable(props){
     function serializeCounts(cursors){
       let counts = "";
 
-      if(cursor){
+      if(cursors){
         if(typeof cursors.Patients !== "undefined"){
           counts = cursors.Patients
         }
