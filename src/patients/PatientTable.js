@@ -323,7 +323,7 @@ function PatientTable(props){
   function renderActionButton(patient, avatarStyle){
     if (props.showActionButton === true) {
       return (
-        <TableCell className='ActionButton' style={styles.hideOnPhone}>
+        <TableCell className='ActionButton' >
           <Button onClick={ onActionButtonClick.bind('this', patientsToRender[i]._id)}>{ get(props, "actionButtonLabel", "") }</Button>
         </TableCell>
       );
@@ -450,6 +450,9 @@ function PatientTable(props){
       let counts = "";
 
       if(cursors){
+        
+        // Pa-AI-B-CP-Co-Cl-D-E-G-I-M-MS-MO-Ob-Or-Pe-Pra-RP-Pro
+
         if(typeof cursors.Patients !== "undefined"){
           counts = cursors.Patients
         }
@@ -505,9 +508,6 @@ function PatientTable(props){
         if(typeof cursors.RelatedPersons !== "undefined"){
           counts = counts + "-" + cursors.RelatedPersons;
         }
-        if(typeof cursors.Practitioners !== "undefined"){
-          counts = counts + "-" + cursors.Practitioners;
-        }
         if(typeof cursors.Procedures !== "undefined"){
           counts = counts + "-" + cursors.Procedures;
         }
@@ -517,7 +517,9 @@ function PatientTable(props){
     }
     
     if(Array.isArray(cursors)){
-      serializedCounts = serializeCounts(cursors[index])
+      let paginatedIndex = ((page * rowsPerPageToRender) - 1) + index;
+
+      serializedCounts = serializeCounts(cursors[paginatedIndex])
       // console.log('serializedCounts.array', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
@@ -963,3 +965,12 @@ export default PatientTable;
 //     );
 //   }
 // }
+
+
+
+// 
+
+
+
+
+
