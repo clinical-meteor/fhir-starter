@@ -517,7 +517,7 @@ function PatientTable(props){
     }
     
     if(Array.isArray(cursors)){
-      let paginatedIndex = ((page * rowsPerPageToRender) - 1) + index;
+      let paginatedIndex = (page * rowsPerPageToRender) + index;
 
       serializedCounts = serializeCounts(cursors[paginatedIndex])
       // console.log('serializedCounts.array', serializedCounts, index, cursors[index])
