@@ -20,8 +20,6 @@ function StyledCard(props){
 
   let {children, style, padding, scrollable, margin, ...otherProps } = props;
 
-  // console.log('props.classes', props.classes)
-
   if(typeof style === "undefined"){
     style = {};
   }

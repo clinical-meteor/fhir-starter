@@ -45,7 +45,7 @@
     "react-bootstrap": "^0.32.4",
     "react-mixin": "^4.0.0",
     "react-proptypes": "^1.0.0",
-    "rollup": "^1.27.14",
+    "rollup": "^1.29.0",
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.24.3",
     "typescript": "^3.6.4"

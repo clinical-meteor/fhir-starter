@@ -1,8 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 
-
-
 import _ from 'lodash';
 let get = _.get;
 
@@ -20,11 +18,9 @@ const styles = theme => ({
 
 
 function PageCanvas(props){
-  console.log('PageCanvas.props', props);
+  // console.log('PageCanvas.props', props);
 
   const {children, headerHeight, ...otherProps } = props;
-
-  console.log('props.classes', props.classes)
 
   let paddingTop = 0;
   if(headerHeight){

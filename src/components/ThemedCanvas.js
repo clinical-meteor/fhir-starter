@@ -90,11 +90,9 @@ const styles = theme => ({
 
 
 function PageCanvas(props){
-  console.log('PageCanvas.props', props);
+  // console.log('PageCanvas.props', props);
 
   const {children, ...otherProps } = props;
-
-  console.log('props.classes', props.classes)
 
   let headerHeight = 0;
   if(get(props, 'headerHeight')){
