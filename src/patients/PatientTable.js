@@ -170,7 +170,7 @@ const useStyles2 = makeStyles({
 
 
 function PatientTable(props){
-  console.log('PatientTable', props)
+  // console.log('PatientTable', props)
 
   let tableRows = [];
   let footer;
@@ -444,7 +444,7 @@ function PatientTable(props){
 
   function renderCounts(cursors, index){
     let serializedCounts = "";
-    console.log('renderCounts', cursors)
+    // console.log('renderCounts', cursors)
 
     function serializeCounts(cursors){
       let counts = "";
@@ -520,10 +520,10 @@ function PatientTable(props){
       let paginatedIndex = (page * rowsPerPageToRender) + index + 1;
 
       serializedCounts = serializeCounts(cursors[paginatedIndex])
-      console.log('PatientTable.serializedCounts.array', serializedCounts, index, cursors[index])
+      // console.log('PatientTable.serializedCounts.array', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
-      console.log('PatientTable.serializedCounts', serializedCounts)
+      // console.log('PatientTable.serializedCounts', serializedCounts)
     }
 
     if (props.showCounts) {
