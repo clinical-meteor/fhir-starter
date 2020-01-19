@@ -16,11 +16,11 @@ const styles = theme => ({
 
 
 function StyledCard(props){
-  console.log('StyledCard.props', props);
+  // console.log('StyledCard.props', props);
 
   let {children, style, padding, scrollable, margin, ...otherProps } = props;
 
-  console.log('props.classes', props.classes)
+  // console.log('props.classes', props.classes)
 
   if(typeof style === "undefined"){
     style = {};

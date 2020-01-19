@@ -444,7 +444,7 @@ function PatientTable(props){
 
   function renderCounts(cursors, index){
     let serializedCounts = "";
-    // console.log('renderCounts', cursors)
+    console.log('renderCounts', cursors)
 
     function serializeCounts(cursors){
       let counts = "";
@@ -454,7 +454,7 @@ function PatientTable(props){
         // Pa-AI-B-CP-Co-Cl-D-E-G-I-M-MS-MO-Ob-Or-Pe-Pra-RP-Pro
 
         if(typeof cursors.Patients !== "undefined"){
-          counts = cursors.Patients
+          counts = cursors.Patients;
         }
     
         if(typeof cursors.AllergyIntolerances !== "undefined"){
@@ -517,13 +517,13 @@ function PatientTable(props){
     }
     
     if(Array.isArray(cursors)){
-      let paginatedIndex = (page * rowsPerPageToRender) + index;
+      let paginatedIndex = (page * rowsPerPageToRender) + index + 1;
 
       serializedCounts = serializeCounts(cursors[paginatedIndex])
-      // console.log('serializedCounts.array', serializedCounts, index, cursors[index])
+      console.log('PatientTable.serializedCounts.array', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
-      // console.log('serializedCounts', serializedCounts)
+      console.log('PatientTable.serializedCounts', serializedCounts)
     }
 
     if (props.showCounts) {
