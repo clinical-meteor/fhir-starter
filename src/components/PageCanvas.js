@@ -22,24 +22,25 @@ function PageCanvas(props){
 
   const {children, headerHeight, paddingLeft, paddingRight, style, ...otherProps } = props;
 
-  let paddingTop = 0;
+  let returnedHeaderHeight = 0;
+  let returnedStyle = {};
 
-  if(!style){
-    style = {};
+  if(style){
+    returnedStyle = Object.assign(returnedStyle, style);
   }
 
   if(headerHeight > 0){
-    style.paddingTop = headerHeight + 'px';
+    returnedStyle.paddingTop = headerHeight + 'px';
   }
   if(paddingLeft > 0){
-    style.paddingLeft = paddingLeft + 'px';
+    returnedStyle.paddingLeft = paddingLeft + 'px';
   }
   if(paddingRight > 0){
-    style.paddingRight = paddingRight + 'px';
+    returnedStyle.paddingRight = paddingRight + 'px';
   }
 
   return(
-    <div className={ props.classes.root } {...otherProps} style={style} >
+    <div className={ props.classes.root } {...otherProps} style={returnedStyle} >
       { children }
     </div>
   );
