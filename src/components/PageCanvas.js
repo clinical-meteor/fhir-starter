@@ -24,6 +24,10 @@ function PageCanvas(props){
 
   let paddingTop = 0;
 
+  if(!style){
+    style = {};
+  }
+
   if(headerHeight > 0){
     style.paddingTop = headerHeight + 'px';
   }
