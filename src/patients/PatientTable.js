@@ -458,58 +458,58 @@ function PatientTable(props){
         }
     
         if(typeof cursors.AllergyIntolerances !== "undefined"){
-          counts = counts + "-" + cursors.AllergyIntolerances;
+          counts = counts + " " + (cursors.AllergyIntolerances ? cursors.AllergyIntolerances : "-");
         }
         if(typeof cursors.Bundles !== "undefined"){
-          counts = counts + "-" + cursors.Bundles;
+          counts = counts + " " + (cursors.Bundles ? cursors.Bundles : "-");
         }
         if(typeof cursors.CarePlans !== "undefined"){
-          counts = counts + "-" + cursors.CarePlans;
+          counts = counts + " " + (cursors.CarePlans ? cursors.CarePlans : "-");
         }
         if(typeof cursors.Conditions !== "undefined"){
-          counts = counts + "-" + cursors.Conditions;
+          counts = counts + " " + (cursors.Conditions ? cursors.Conditions : "-");
         }
         if(typeof cursors.Claims !== "undefined"){
-          counts = counts + "-" + cursors.Claims;
+          counts = counts + " " + (cursors.Claims ? cursors.Claims : "-");
         }
         if(typeof cursors.Devices !== "undefined"){
-          counts = counts + "-" + cursors.Devices;
+          counts = counts + " " + (cursors.Devices ? cursors.Devices : "-");
         }
         if(typeof cursors.Encounters !== "undefined"){
-          counts = counts + "-" + cursors.Encounters;
+          counts = counts + " " + (cursors.Encounters ? cursors.Encounters : "-");
         }
         if(typeof cursors.Goals !== "undefined"){
-          counts = counts + "-" + cursors.Goals;
+          counts = counts + " " + (cursors.Goals ? cursors.Goals : "-");
         }
         if(typeof cursors.Immunizations !== "undefined"){
-          counts = counts + "-" + cursors.Immunizations;
+          counts = counts + " " + (cursors.Immunizations ? cursors.Immunizations : "-");
         }
         if(typeof cursors.Medications !== "undefined"){
-          counts = counts + "-" + cursors.Medications;
+          counts = counts + " " + (cursors.Medications ? cursors.Medications : "-");
         }
         if(typeof cursors.MedicationStatements !== "undefined"){
-          counts = counts + "-" + cursors.MedicationStatements;
+          counts = counts + " " + (cursors.MedicationStatements ? cursors.MedicationStatements : "-");
         }
         if(typeof cursors.MedicationOrders !== "undefined"){
-          counts = counts + "-" + cursors.MedicationOrders;
+          counts = counts + " " + (cursors.MedicationOrders ? cursors.MedicationOrders : "-");
         }
         if(typeof cursors.Observations !== "undefined"){
-          counts = counts + "-" + cursors.Observations;
+          counts = counts + " " + (cursors.Observations ? cursors.Observations : "-");
         }
         if(typeof cursors.Organizations !== "undefined"){
-          counts = counts + "-" + cursors.Organizations;
+          counts = counts + " " + (cursors.Organizations ? cursors.Organizations : "-");
         }
         if(typeof cursors.Persons !== "undefined"){
-          counts = counts + "-" + cursors.Persons;
+          counts = counts + " " + (cursors.Persons ? cursors.Persons : "-");
         }
         if(typeof cursors.Practitioners !== "undefined"){
-          counts = counts + "-" + cursors.Practitioners;
+          counts = counts + " " + (cursors.Practitioners ? cursors.Practitioners : "-");
         }
         if(typeof cursors.RelatedPersons !== "undefined"){
-          counts = counts + "-" + cursors.RelatedPersons;
+          counts = counts + " " + (cursors.RelatedPersons ? cursors.RelatedPersons : "-");
         }
         if(typeof cursors.Procedures !== "undefined"){
-          counts = counts + "-" + cursors.Procedures;
+          counts = counts + " " + (cursors.Procedures ? cursors.Procedures : "-");
         }
       }
 
