@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import { CardText } from 'material-ui';
-import { Checkbox, CardContent } from '@material-ui/core/Checkbox';
-import { Table } from 'react-bootstrap';
+import { 
+  Checkbox, 
+  CardContent,  
+  Table,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableHeader
+} from '@material-ui/core/Checkbox';
 
 import moment from 'moment-es6'
 import _ from 'lodash';
@@ -147,10 +153,10 @@ export class ObservationTable extends React.Component {
       }
 
       return (
-        <td className='actionIcons' style={{minWidth: '120px'}}>
+        <TableCell className='actionIcons' style={{minWidth: '120px'}}>
           <FaTags style={iconStyle} onClick={this.onMetaClick.bind(this, observation)} />
           <GoTrashcan style={iconStyle} onClick={this.removeRecord.bind(this, observation._id)} />  
-        </td>
+        </TableCell>
       );
     }
   } 
@@ -180,7 +186,7 @@ export class ObservationTable extends React.Component {
   renderBarcode(id){
     if (!this.props.hideBarcodes) {
       return (
-        <td><span className="barcode">{id}</span></td>
+        <TableCell><span className="barcode">{id}</span></TableCell>
       );
     }
   }
@@ -194,7 +200,7 @@ export class ObservationTable extends React.Component {
   renderSubject(id){
     if (!this.props.hideSubjects) {
       return (
-        <td className='name'>{ id }</td>
+        <TableCell className='name'>{ id }</TableCell>
       );
     }
   }
@@ -208,7 +214,7 @@ export class ObservationTable extends React.Component {
   renderDevice(device){
     if (!this.props.hideDevices) {
       return (
-        <td className='device.display'>{device }</td>
+        <TableCell className='device.display'>{device }</TableCell>
       );
     }
   }
@@ -223,7 +229,7 @@ export class ObservationTable extends React.Component {
   renderValue(valueString){
     if (!this.props.hideValue) {
       return (
-        <td className='value'>{ valueString }</td>
+        <TableCell className='value'>{ valueString }</TableCell>
       );
     }
   }
@@ -245,13 +251,13 @@ export class ObservationTable extends React.Component {
   renderCode(code, value){
     if (!this.props.hideCode) {
       if(this.props.multiline){
-        return (<td className='code'>
+        return (<TableCell className='code'>
           <span style={{fontWeight: 400}}>{code }</span> <br />
           { value }
-        </td>)
+        </TableCell>)
       } else {
         return (
-          <td className='category'>{ code }</td>
+          <TableCell className='category'>{ code }</TableCell>
         );  
       }
     }
@@ -266,7 +272,7 @@ export class ObservationTable extends React.Component {
   renderCategory(category){
     if (this.props.multiline === false) {
       return (
-        <td className='category'>{ category }</td>
+        <TableCell className='category'>{ category }</TableCell>
       );
     }
   }
@@ -274,7 +280,7 @@ export class ObservationTable extends React.Component {
   renderValueString(valueString){
     if (!this.props.hideValue) {
       return (
-        <td className='value'>{ valueString }</td>
+        <TableCell className='value'>{ valueString }</TableCell>
       );
     }
   }
@@ -288,7 +294,7 @@ export class ObservationTable extends React.Component {
   renderComparator(comparator){
     if (!this.props.hideComparator) {
       return (
-        <td className='comparator'>{ comparator }</td>
+        <TableCell className='comparator'>{ comparator }</TableCell>
       );
     }
   }
@@ -309,14 +315,14 @@ export class ObservationTable extends React.Component {
   renderToggle(){
     if (!this.props.hideCheckboxes) {
       return (
-        <td className="toggle" style={{width: '60px'}}>
+        <TableCell className="toggle" style={{width: '60px'}}>
             <Checkbox
               defaultChecked={true}
               classes={{
                 root: styles.root
               }}
             />
-          </td>
+          </TableCell>
       );
     }
   }
@@ -350,40 +356,40 @@ export class ObservationTable extends React.Component {
     }
 
     if(observationsToRender.length === 0){
-      console.log('No observations to render');
+      logger.trace('ObservationTable:  No observations to render.');
       // footer = <TableNoData noDataPadding={ this.props.noDataMessagePadding } />
     } else {
       for (var i = 0; i < observationsToRender.length; i++) {
         if(this.props.multiline){
           tableRows.push(
-            <tr className="observationRow" key={i} onClick={ this.rowClick.bind(this, observationsToRender[i]._id)} >
+            <TableRow className="observationRow" key={i} onClick={ this.rowClick.bind(this, observationsToRender[i]._id)} >
               { this.renderToggle() }
               { this.renderActionIcons(observationsToRender[i]) }
               { this.renderCategory(observationsToRender[i].category) }
               { this.renderCode(observationsToRender[i].code, observationsToRender[i].value) }
               {this.renderValue(observationsToRender[i].value)}
               {this.renderSubject(observationsToRender[i].subject)}
-              <td className='status' >{observationsToRender[i].status }</td>
+              <TableCell className='status' >{observationsToRender[i].status }</TableCell>
               {this.renderDevice(observationsToRender[i].device)}
-              <td className='date' style={{minWidth: '140px'}}>{observationsToRender[i].effectiveDateTime }</td>
+              <TableCell className='date' style={{minWidth: '140px'}}>{observationsToRender[i].effectiveDateTime }</TableCell>
               {this.renderBarcode(observationsToRender[i]._id)}
-            </tr>
+            </TableRow>
           );    
   
         } else {
           tableRows.push(
-            <tr className="observationRow" key={i} onClick={ this.rowClick.bind(this, observationsToRender[i]._id)} >            
+            <TableRow className="observationRow" key={i} onClick={ this.rowClick.bind(this, observationsToRender[i]._id)} >            
               { this.renderToggle() }
               { this.renderActionIcons(observationsToRender[i]) }
               { this.renderCategory(observationsToRender[i].category) }
               { this.renderCode(observationsToRender[i].code) }
-              {this.renderValue(observationsToRender[i].value)}
-              {this.renderSubject(observationsToRender[i].subject)}
-              <td className='status' >{observationsToRender[i].status }</td>
-              {this.renderDevice(observationsToRender[i].device)}
-              <td className='date' style={{minWidth: '140px'}}>{observationsToRender[i].effectiveDateTime }</td>
-              {this.renderBarcode(observationsToRender[i]._id)}
-            </tr>
+              { this.renderValue(observationsToRender[i].value)}
+              { this.renderSubject(observationsToRender[i].subject)}
+              <TableCell className='status' >{observationsToRender[i].status }</TableCell>
+              { this.renderDevice(observationsToRender[i].device)}
+              <TableCell className='date' style={{minWidth: '140px'}}>{observationsToRender[i].effectiveDateTime }</TableCell>
+              { this.renderBarcode(observationsToRender[i]._id)}                            
+            </TableRow>
           );    
         }
       }
@@ -393,8 +399,8 @@ export class ObservationTable extends React.Component {
     return(
       <CardContent>
         <Table id="ObservationTable" hover >
-          <thead>
-            <tr>
+          <TableHeader>
+            <TableRow>
               { this.renderToggleHeader() }
               { this.renderActionIconsHeader() }
               {this.renderCategoryHeader() }
@@ -405,11 +411,11 @@ export class ObservationTable extends React.Component {
               {this.renderDeviceHeader() }
               <th className='date' style={{minWidth: '140px'}}>Date</th>
               {this.renderBarcodeHeader() }
-            </tr>
-          </thead>
-          <tbody>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             { tableRows }
-          </tbody>
+          </TableBody>
         </Table>
       </CardContent>
     );

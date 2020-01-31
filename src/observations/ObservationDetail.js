@@ -3,7 +3,6 @@
 // import DatePicker from 'material-ui/DatePicker';
 // import TextField from 'material-ui/TextField';
 
-// import { GlassCard, VerticalCanvas, Glass, DynamicSpacer } from 'meteor/clinical:glass-ui';
 // import { Row, Col } from 'react-bootstrap';
 
 // import React from 'react';

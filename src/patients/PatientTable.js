@@ -25,7 +25,7 @@ import TableNoData from '../components/TableNoData';
 import { useTheme } from '@material-ui/styles';
 
 
-// import moment from 'moment-es6'
+import moment from 'moment-es6'
 import _ from 'lodash';
 let get = _.get;
 let set = _.set;

@@ -27,7 +27,7 @@ npm install material-fhir-ui
 
 To save the package to your Meteor app's `package.json` file, run the following:
 ```sh
-meteor npm install --save material-fhir-ui
+meteor npm install --save material-fhir-ui winston
 ```
 
 
@@ -117,6 +117,62 @@ Please refer to each component's documentation page to see how they should be im
 [ObservationTable](https://codesandbox.io/s/observationtable-tpi8v)     
 
 
+## Logging  
+Material FHIR UI has a peer dependency on the `winston` library.  The idea is that we wanted to slowly migrate away from using `console.log` messages.  While widely supported, they cause security and performance problems.  Our general approach in this refactor has been to attach the winston `logger` object on the global window scope, in essentially the same place that `console` is located.  The idea is that if the code could do a `console.log` it will also be able to do a `logger.log`.  Which begins our refactor.  Eventually, we plan on passing the `logger` object down through the render tree via the `props` object.  
+
+```js
+
+  // if you don't use winston, or otherwise wish to simply disable logging, 
+  // attach the following to the global scope
+  window.logger = {
+    error: function(){},
+    warn: function(){},
+    info: function(){},
+    verbose: function(){},
+    debug: function(){},
+    trace: function(){},
+    data: function(){},
+    log: function(){}
+  }
+
+  // otherwise, we import the necessary objects form winston
+  import { createLogger, addColors, format, transports, config } from 'winston';
+
+   // lets create a global logger
+   const logger = createLogger({
+    level: get(Meteor, 'settings.public.loggingThreshold') ,
+    levels: {
+      error: 0, 
+      warn: 1, 
+      info: 2, 
+      verbose: 3, 
+      debug: 4, 
+      trace: 5, 
+      data: 6 
+    },
+    transports: [
+      new transports.Console({
+        colorize: true,
+        format: format.combine(
+          hideDataLogLevel(),
+          format.colorize(),
+          format.simple(),
+          format.splat(),
+          format.timestamp()
+        )
+      })
+    ],
+    exitOnError: false
+  });
+
+  // introspection for the win
+  logger.info('Starting the Winston Logging Service');
+  logger.data('Winston Logging Service', {data: logger}, {source: "AppContainer.jsx"});
+
+  // attaching to the global scope is not generally recommended
+  // logging is one debatable exception to the general rule, however
+  window.logger = global.logger = logger;
+```
 
 ## License
 This project is licensed under the terms of the
