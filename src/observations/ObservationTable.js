@@ -16,8 +16,13 @@ import _ from 'lodash';
 let get = _.get;
 let set = _.set;
 
-import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
-import { GoTrashcan } from 'react-icons/go';
+// import { FaTags  } from 'react-icons-kit/fa';
+// import { GoTrashcan } from 'react-icons-kit/go';
+
+import Icon from 'react-icons-kit'
+import {tag} from 'react-icons-kit/fa/tag'
+import {trashO} from 'react-icons-kit/fa/trashO'
+
 
 
 let styles = {
@@ -154,8 +159,12 @@ export class ObservationTable extends React.Component {
 
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-          <FaTags style={iconStyle} onClick={this.onMetaClick.bind(this, observation)} />
-          <GoTrashcan style={iconStyle} onClick={this.removeRecord.bind(this, observation._id)} />  
+          {/* <FaTags style={iconStyle} onClick={this.onMetaClick.bind(this, observation)} />
+          <GoTrashcan style={iconStyle} onClick={this.removeRecord.bind(this, observation._id)} />   */}
+
+          <Icon icon={tag} style={iconStyle} onClick={this.onMetaClick.bind(this, observation)} /> 
+          <Icon icon={trashO} style={iconStyle} onClick={this.removeRecord.bind(this, observation._id)}  /> 
+
         </TableCell>
       );
     }

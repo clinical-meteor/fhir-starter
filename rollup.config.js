@@ -30,7 +30,8 @@ export default {
     commonjs({
       include: 'node_modules/**',
       namedExports: {
-        'react-is': ['ForwardRef', 'isForwardRef', 'isValidElementType']
+        'react-is': ['ForwardRef', 'isForwardRef', 'isValidElementType'],
+        'react-icons-kit/index.js': ['Icon']
       },
     }),
     resolve({

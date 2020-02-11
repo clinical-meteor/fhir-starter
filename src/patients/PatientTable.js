@@ -18,12 +18,15 @@ import {
 } from '@material-ui/core';
 
 // import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
-import { GoTrashcan } from 'react-icons/go';
+// import { GoTrashcan } from 'react-icons/go';
+
+import Icon from 'react-icons-kit'
+import { tag } from 'react-icons-kit/fa/tag'
+import { trashO } from 'react-icons-kit/fa/trashO'
+
 import TableNoData from '../components/TableNoData';
 
-
 import { useTheme } from '@material-ui/styles';
-
 
 import moment from 'moment-es6'
 import _ from 'lodash';
@@ -371,7 +374,8 @@ function PatientTable(props){
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
           {/* <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} /> */}
-          <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
+          {/* <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />   */}
+          <Icon icon={trash0} style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />
         </TableCell>
       );
     }
