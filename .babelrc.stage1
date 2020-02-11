@@ -10,5 +10,5 @@
       }
     ]
   ],
-  "plugins": ["external-helpers"]
+  "plugins": ["external-helpers", "@babel/plugin-proposal-export-default-from"]
 }

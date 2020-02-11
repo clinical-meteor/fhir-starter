@@ -20,7 +20,7 @@ const styles = theme => ({
 function PageCanvas(props){
   // console.log('PageCanvas.props', props);
 
-  const {children, headerHeight, paddingLeft, paddingRight, style, ...otherProps } = props;
+  const {children, classes, headerHeight, paddingLeft, paddingRight, style, ...otherProps } = props;
 
   let returnedHeaderHeight = 0;
   let returnedStyle = {};
