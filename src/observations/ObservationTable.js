@@ -8,10 +8,10 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TableHeader
-} from '@material-ui/core/Checkbox';
+  TableHead
+} from '@material-ui/core';
 
-import moment from 'moment-es6'
+import moment from 'moment'
 import _ from 'lodash';
 let get = _.get;
 let set = _.set;
@@ -408,7 +408,7 @@ export class ObservationTable extends React.Component {
     return(
       <CardContent>
         <Table id="ObservationTable" hover >
-          <TableHeader>
+          <TableHead>
             <TableRow>
               { this.renderToggleHeader() }
               { this.renderActionIconsHeader() }
@@ -421,7 +421,7 @@ export class ObservationTable extends React.Component {
               <th className='date' style={{minWidth: '140px'}}>Date</th>
               {this.renderBarcodeHeader() }
             </TableRow>
-          </TableHeader>
+          </TableHead>
           <TableBody>
             { tableRows }
           </TableBody>

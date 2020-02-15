@@ -13,7 +13,7 @@ import PatientCard from './patients/PatientCard';
 import PatientTable from './patients/PatientTable';
 import PatientDetail from './patients/PatientDetail';
 
-// import ObservationTable from './observations/ObservationTable';
+import ObservationTable from './observations/ObservationTable';
 
 import TableNoData from './components/TableNoData';
 import StyledCard from './components/StyledCard';
@@ -23,6 +23,8 @@ export default {
   PatientCard,
   PatientTable,
   PatientDetail,
+
+  ObservationTable,
 
   TableNoData,
   StyledCard,
