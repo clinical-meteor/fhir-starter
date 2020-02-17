@@ -44,7 +44,7 @@ let set = _.set;
 // let get = _.get;
 // let set = _.set;
 
-// import moment from 'moment-es6'
+// import moment from 'moment'
 
 
 

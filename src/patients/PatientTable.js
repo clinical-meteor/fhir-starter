@@ -17,12 +17,10 @@ import {
   LastPageIcon
 } from '@material-ui/core';
 
-// import { FaTags, FaCode, FaPuzzlePiece, FaLock  } from 'react-icons/fa';
-// import { GoTrashcan } from 'react-icons/go';
 
 import Icon from 'react-icons-kit'
 import { tag } from 'react-icons-kit/fa/tag'
-import { trashO } from 'react-icons-kit/fa/trashO'
+import { trash0 } from 'react-icons-kit/fa/trash0'
 
 import TableNoData from '../components/TableNoData';
 

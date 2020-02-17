@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // import { get } from 'lodash-es';
-// import moment from 'moment-es6'
+// import moment from 'moment'
 
 // const style = {
 //   avatar: {
