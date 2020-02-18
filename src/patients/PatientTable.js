@@ -8,7 +8,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TableFooter,
   TablePagination,
   IconButton,
   FirstPageIcon,
