@@ -16,10 +16,12 @@ import {
   LastPageIcon
 } from '@material-ui/core';
 
+import { FaTags  } from 'react-icons/fa';
+import { GoTrashcan } from 'react-icons/go';
 
-import Icon from 'react-icons-kit'
-import { tag } from 'react-icons-kit/fa/tag'
-import { trash0 } from 'react-icons-kit/fa/trash0'
+// import Icon from 'react-icons-kit'
+// import { tag } from 'react-icons-kit/fa/tag'
+// import { trash0 } from 'react-icons-kit/fa/trash0'
 
 import TableNoData from '../components/TableNoData';
 
@@ -371,9 +373,9 @@ function PatientTable(props){
 
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-          {/* <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} /> */}
-          {/* <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />   */}
-          <Icon icon={trash0} style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />
+          <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} />
+          <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
+          {/* <Icon icon={trash0} style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} /> */}
         </TableCell>
       );
     }
