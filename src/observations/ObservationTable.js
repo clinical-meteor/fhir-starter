@@ -22,6 +22,7 @@ import { GoTrashcan } from 'react-icons/go';
 // import Icon from 'react-icons-kit'
 // import {tag} from 'react-icons-kit/fa/tag'
 // import {trashO} from 'react-icons-kit/fa/trashO'
+// import {iosTrashOutline} from 'react-icons-kit/ionicons/iosTrashOutline'
 
 
 

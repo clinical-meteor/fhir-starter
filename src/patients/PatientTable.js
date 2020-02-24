@@ -21,7 +21,7 @@ import { GoTrashcan } from 'react-icons/go';
 
 // import Icon from 'react-icons-kit'
 // import { tag } from 'react-icons-kit/fa/tag'
-// import { trash0 } from 'react-icons-kit/fa/trash0'
+// import {iosTrashOutline} from 'react-icons-kit/ionicons/iosTrashOutline'
 
 import TableNoData from '../components/TableNoData';
 
@@ -358,7 +358,7 @@ function PatientTable(props){
   function removeRecord(_id){
     console.log('Remove patient ', _id)
     if(props.onRemoveRecord){
-      props.onRemoveRecord();
+      props.onRemoveRecord(_id);
     }
     // Patients._collection.remove({_id: _id})
   }
@@ -375,7 +375,7 @@ function PatientTable(props){
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
           <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} />
           <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
-          {/* <Icon icon={trash0} style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} /> */}
+          {/* <Icon icon={iosTrashOutline} style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} /> */}
         </TableCell>
       );
     }
@@ -430,6 +430,12 @@ function PatientTable(props){
       return (
         <TableCell className="counts">Counts</TableCell>
       );
+    }
+  }
+
+  function onMetaClick(patient){
+    if(props.onMetaClick){
+      props.onMetaClick(patient);
     }
   }
 
