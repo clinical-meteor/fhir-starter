@@ -175,6 +175,8 @@ const useStyles2 = makeStyles({
 function PatientTable(props){
   // console.log('PatientTable', props)
 
+  const { children, ...otherProps } = props;
+
   let tableRows = [];
   let footer;
   let rowsPerPageToRender = 5;
@@ -623,7 +625,7 @@ function PatientTable(props){
 
   return(
     <div>
-      <Table size="small" aria-label="a dense table">
+      <Table size="small" aria-label="a dense table" { ...otherProps } >
         <TableHead>
           <TableRow>
             { renderActionIconsHeader() }
