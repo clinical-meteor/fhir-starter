@@ -201,10 +201,10 @@ function PatientTable(props){
   if(props.rowsPerPage){
     // if we receive an override as a prop, render that many rows
     // best to use rowsPerPage with disablePagination
-    rowsPerPageToRender = props.rowsPerPage;
+    setRowsPerPageToRender(props.rowsPerPage);
   } else {
     // otherwise default to the user selection
-    rowsPerPageToRender = rowsPerPage;
+    setRowsPerPageToRender(props.rowsPerPage);
   }
 
   if(props.paginationCount){
