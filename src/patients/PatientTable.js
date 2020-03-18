@@ -139,23 +139,8 @@ function createData(name, calories, fat) {
   return { name, calories, fat };
 }
 
-// const rows = [
-//   createData('Cupcake', 305, 3.7),
-//   createData('Donut', 452, 25.0),
-//   createData('Eclair', 262, 16.0),
-//   createData('Frozen yoghurt', 159, 6.0),
-//   createData('Gingerbread', 356, 16.0),
-//   createData('Honeycomb', 408, 3.2),
-//   createData('Ice cream sandwich', 237, 9.0),
-//   createData('Jelly Bean', 375, 0.0),
-//   createData('KitKat', 518, 26.0),
-//   createData('Lollipop', 392, 0.2),
-//   createData('Marshmallow', 318, 0),
-//   createData('Nougat', 360, 19.0),
-//   createData('Oreo', 437, 18.0),
-// ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
-const rows = [];
+
 
 const useStyles2 = makeStyles({
   root: {
@@ -175,16 +160,43 @@ const useStyles2 = makeStyles({
 function PatientTable(props){
   // console.log('PatientTable', props)
 
-  const { children, ...otherProps } = props;
+  const { 
+    children, 
+    id,
+    patients,
+    fhirVersion,
+    showActionButton,
+    hideCheckbox,
+    hideActionIcons,
+    hideIdentifier,
+    hideActive,
+    hideMaritalStatus,
+    hideLanguage,
+    hideSpecies,
+    appWidth,
+    noDataMessagePadding,
+    rowsPerPage,
+    onCellClick,
+    onRowClick,
+    onMetaClick, 
+    onActionButtonClick,
+    actionButtonLabel,
+    defaultAvatar,
+    disablePagination,
+    paginationCount,
+    showCounts,
+    cursors, 
+    ...otherProps 
+  } = props;
 
   let tableRows = [];
   let footer;
-  let rowsPerPageToRender = 5;
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPageToRender, setRowsPerPageToRender] = useState(5);
+  const [rows, setRows] = useState([]);
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPageToRender - Math.min(rowsPerPageToRender, rows.length - page * rowsPerPageToRender);
 
   if(props.rowsPerPage){
     // if we receive an override as a prop, render that many rows
@@ -195,9 +207,8 @@ function PatientTable(props){
     rowsPerPageToRender = rowsPerPage;
   }
 
-  let paginationCount = 101;
-  if(props.count){
-    paginationCount = props.count;
+  if(props.paginationCount){
+    paginationCount = props.paginationCount;
   } else {
     paginationCount = rows.length;
   }
@@ -208,7 +219,7 @@ function PatientTable(props){
   };
 
   const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPageToRender(parseInt(event.target.value, 10));
     setPage(0);
   };
 
@@ -329,12 +340,12 @@ function PatientTable(props){
     if (props.showActionButton === true) {
       return (
         <TableCell className='ActionButton' >
-          <Button onClick={ onActionButtonClick.bind('this', patientsToRender[i]._id)}>{ get(props, "actionButtonLabel", "") }</Button>
+          <Button onClick={ handleActionButtonClick.bind('this', patientsToRender[i]._id)}>{ get(props, "actionButtonLabel", "") }</Button>
         </TableCell>
       );
     }
   }
-  function onActionButtonClick(id){
+  function handleActionButtonClick(id){
     if(typeof props.onActionButtonClick === "function"){
       props.onActionButtonClick(id);
     }
@@ -375,7 +386,7 @@ function PatientTable(props){
 
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-          <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} />
+          <FaTags style={iconStyle} onClick={ handleMetaClick.bind(this, patient)} />
           <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
           {/* <Icon icon={iosTrashOutline} style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} /> */}
         </TableCell>
@@ -435,7 +446,7 @@ function PatientTable(props){
     }
   }
 
-  function onMetaClick(patient){
+  function handleMetaClick(patient){
     if(props.onMetaClick){
       props.onMetaClick(patient);
     }
@@ -682,306 +693,11 @@ PatientTable.propTypes = {
   showCounts: PropTypes.bool,
   cursors: PropTypes.array
 };
+PatientTable.defaultProps = {
+  paginationCount: 100
+}
 
 export default PatientTable;
-
-
-
-
-
-// export class PatientTable extends React.Component {
-//   constructor(props) {
-//     super(props);
-//      state = {
-//       selected: [],
-//       patients: []
-//     }
-//   }
-//   renderRowAvatarHeader(){
-//     if (get(this, 'props.defaultAvatar') && (props.showAvatars === true)) {
-//       return (
-//         <TableHead className='avatar'>photo</TableHead>
-//       );
-//     }
-//   }
-//   renderRowAvatar(patient, avatarStyle){
-//     //console.log('renderRowAvatar', patient, avatarStyle)
-    
-//     if (get(this, 'props.defaultAvatar') && (props.showAvatars === true)) {
-//       return (
-//         <TableCell className='avatar'>
-//           <img 
-//             src={patient.photo} 
-//             onError={(e)=>{e.target.onerror = null; e.target.src = get(this, 'props.defaultAvatar')}}
-//             style={avatarStyle}
-//           />
-//         </TableCell>
-//       );
-//     }
-//   }
-//   renderIdentifier(identifier){
-//     if (!props.hideIdentifier) {
-//       return (
-//         <TableCell className="identifier hidden-on-phone">{ identifier }</TableCell>
-//       );
-//     }
-//   }
-//   renderIdentifierHeader(){
-//     if (!props.hideIdentifier) {
-//       return (
-//         <TableHead className="identifier hidden-on-phone">identifier</TableHead>
-//       );
-//     }
-//   }
-
-//   renderSpeciesHeader(){
-//     if(!props.hideSpecies || (props.fhirVersion === "R4")){
-//       return (
-//         <TableHead className='species'>Species</TableHead>
-//       );
-//     }
-//   }
-//   renderSpecies(patient){
-//     if(!props.hideSpecies || (props.fhirVersion === "R4")){
-//       return (
-//         <TableCell className='species' style={styles.cellHideOnPhone}>
-//           {patient.species}
-//         </TableCell>
-//       );
-//     }
-
-//   }
-//   renderActionButtonHeader(){
-//     if (props.showActionButton === true) {
-//       return (
-//         <TableHead className='ActionButton' style={styles.hideOnPhone}></TableHead>
-//       );
-//     }
-//   }
-//   renderActionButton(patient, avatarStyle){
-//     if (props.showActionButton === true) {
-//       return (
-//         <TableCell className='ActionButton' style={styles.hideOnPhone}>
-//           <FlatButton label="send" onClick={ onActionButtonClick.bind('this', patientsToRender[i]._id)}/>
-//         </TableCell>
-//       );
-//     }
-//   }
-//   onActionButtonClick(id){
-//     if(typeof props.onActionButtonClick === "function"){
-//       props.onActionButtonClick(id);
-//     }
-//   }
-//   cellClick(id){
-//     if(typeof props.onCellClick === "function"){
-//       props.onCellClick(id);
-//     }
-//   }
-//   selectPatientRow(patientId){
-//     console.log('Selecting a new Patient...');
-//     // console.log('patientId', patientId, foo, bar)
-//     if(typeof props.onRowClick  === "function"){
-//       // console.log('Apparently we received an onRowClick() as a prop')
-//       props.onRowClick(patientId);
-//     }
-//   }
-//   // renderCheckboxHeader(){
-//   //   if (!props.hideCheckbox) {
-//   //     return (
-//   //       <TableHead className="checkbox" style={{width: '60px'}} >Checkbox</TableHead>
-//   //     );
-//   //   }
-//   // }
-//   // renderCheckbox(){
-//   //   if (!props.hideCheckbox) {
-//   //     return (
-//   //       <TableCell className="checkbox" style={{width: '60px'}}>
-//   //           <Checkbox
-//   //             defaultChecked={true}
-//   //           />
-//   //         </TableCell>
-//   //     );
-//   //   }
-//   // }
-//   renderActionIconsHeader(){
-//     if (!props.hideActionIcons) {
-//       return (
-//         <TableHead className='actionIcons' style={{minWidth: '120px'}}>Actions</TableHead>
-//       );
-//     }
-//   }
-//   renderActionIcons(patient ){
-//     if (!props.hideActionIcons) {
-//       let iconStyle = {
-//         marginLeft: '4px', 
-//         marginRight: '4px', 
-//         marginTop: '4px', 
-//         fontSize: '120%'
-//       }
-
-//       return (
-//         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-//           <FaTags style={iconStyle} onClick={ onMetaClick.bind(this, patient)} />
-//           <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
-//         </TableCell>
-//       );
-//     }
-//   } 
-
-//   onMetaClick(patient){
-//     let self = this;
-//     if(props.onMetaClick){
-//       props.onMetaClick(self, patient);
-//     }
-//   }
-//   renderMaritalStatusHeader(){
-//     if (!props.hideMaritalStatus) {
-//       return (
-//         <TableHead className="maritalStatus">Marital Status</TableHead>
-//       );
-//     }
-//   }
-//   renderMaritalStatus(patient){
-//     if (!props.hideMaritalStatus) {
-//       return (
-//         <TableCell className='maritalStatus'>{patient.maritalStatus}</TableCell>
-//       );
-//     }
-//   }
-
-//   renderLanguageHeader(){
-//     if (!props.hideLanguage) {
-//       return (
-//         <TableHead className="language">Language</TableHead>
-//       );
-//     }
-//   }
-//   renderLanguage(patient){
-//     if (!props.hideLanguage) {
-//       return (
-//         <TableCell className='language'>{patient.language}</TableCell>
-//       );
-//     }
-//   }
-//   renderIsActiveHeader(){
-//     if (!props.hideActive) {
-//       return (
-//         <TableHead className="isActive">Active</TableHead>
-//       );
-//     }
-//   }
-//   renderIsActive(isActive){
-//     if (!props.hideActive) {
-//       return (
-//         <TableCell className='isActive'>{isActive}</TableCell>
-//       );
-//     }
-//   }
-//   removeRecord(_id){
-//     console.log('Remove patient ', _id)
-//     Patients._collection.remove({_id: _id})
-//   }
-
-//   render () {
-//     let tableRows = [];
-//     let footer;
-
-//     if(props.appWidth){
-//       if (props.appWidth < 768) {
-//         styles.hideOnPhone.visibility = 'hidden';
-//         styles.hideOnPhone.display = 'none';
-//         styles.cellHideOnPhone.visibility = 'hidden';
-//         styles.cellHideOnPhone.display = 'none';
-//       } else {
-//         styles.hideOnPhone.visibility = 'visible';
-//         styles.hideOnPhone.display = 'table-cell';
-//         styles.cellHideOnPhone.visibility = 'visible';
-//         styles.cellHideOnPhone.display = 'table-cell';
-//       }  
-//     }
-
-//     let patientsToRender = [];
-//     if(props.patients){
-//       if(props.patients.length > 0){              
-//         props.patients.forEach(function(patient){
-//           patientsToRender.push(flattenPatient(patient));
-//         });  
-//       }
-//     }
-
-//     if(patientsToRender.length === 0){
-//       // footer = <TableNoData noDataPadding={ props.noDataMessagePadding } />
-//     } else {
-//       for (var i = 0; i < patientsToRender.length; i++) {
-
-//         let rowStyle = {
-//           cursor: 'pointer'
-//         }
-//         if(get(patientsToRender[i], 'modifierExtension[0]')){
-//           rowStyle.color = "orange";
-//         }
-
-//         tableRows.push(
-//           <tr key={i} className="patientRow" style={rowStyle} onClick={ selectPatientRow.bind(this, patientsToRender[i]._id )} >
-  
-//             {/* { renderCheckbox(patientsToRender[i]) } */}
-//             { renderActionIcons(patientsToRender[i]) }
-
-//             { renderRowAvatar(patientsToRender[i], styles.avatar) }
-//             { renderIdentifier(patientsToRender[i].identifier)}
-
-//             <TableCell className='name' onClick={ cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].name }</TableCell>
-//             <TableCell className='gender' onClick={ cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].gender}</TableCell>
-//             <TableCell className='birthDate' onClick={ cellClick.bind(this, patientsToRender[i]._id)} style={{minWidth: '100px', paddingTop: '16px'}}>{patientsToRender[i].birthDate }</TableCell>
-
-//             { renderMaritalStatus(patientsToRender[i]) }
-//             { renderLanguage(patientsToRender[i]) }
-
-//             { renderIsActive(patientsToRender[i].active) }
-//             {/* { renderSpecies(patientsToRender[i]) } */}
-//             { renderActionButton(patientsToRender[i], styles.avatar) }
-//           </tr>
-//         );
-//       }
-//     }
-    
-
-
-//     return(
-//       <div>
-//         <Table id='patientsTable' hover >
-//           <TableHeadead>
-//             <tr>
-//               {/* {  renderCheckboxHeader() } */}
-//               {  renderActionIconsHeader() }
-//               {  renderRowAvatarHeader() }
-//               { renderIdentifierHeader() }
-
-//               <TableHead className='name'>Name</TableHead>
-//               <TableHead className='gender'>Gender</TableHead>
-//               <TableHead className='birthdate' style={{minWidth: '100px'}}>Birthdate</TableHead>
-
-//               {  renderMaritalStatusHeader(patientsToRender[i]) }
-//               {  renderLanguageHeader(patientsToRender[i]) }              
-//               {  renderIsActiveHeader() }
-//               {/* {  renderSpeciesHeader(props.hideSpecies) } */}
-//               {  renderActionButtonHeader() }
-//             </tr>
-//           </thead>
-//           <tbody>
-//             { tableRows }
-//           </tbody>
-//         </Table>
-//         { footer }
-//       </div>
-//     );
-//   }
-// }
-
-
-
-// 
-
 
 
 
