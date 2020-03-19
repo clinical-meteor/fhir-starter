@@ -160,7 +160,7 @@ const useStyles2 = makeStyles({
 function PatientTable(props){
   // console.log('PatientTable', props)
 
-  const { 
+  let { 
     children, 
     id,
     patients,
