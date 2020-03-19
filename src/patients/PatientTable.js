@@ -135,24 +135,6 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
-
-
-
-const useStyles2 = makeStyles({
-  root: {
-    width: '100%',
-  },
-  table: {
-    minWidth: 500,
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-});
 
 
 
@@ -193,19 +175,11 @@ function PatientTable(props){
   let footer;
 
   const [page, setPage] = useState(0);
-  const [rowsPerPageToRender, setRowsPerPageToRender] = useState(5);
+  const [rowsPerPageToRender, setRowsPerPageToRender] = useState(rowsPerPage);
   const [rows, setRows] = useState([]);
 
   const emptyRows = rowsPerPageToRender - Math.min(rowsPerPageToRender, rows.length - page * rowsPerPageToRender);
 
-  if(props.rowsPerPage){
-    // if we receive an override as a prop, render that many rows
-    // best to use rowsPerPage with disablePagination
-    setRowsPerPageToRender(props.rowsPerPage);
-  } else {
-    // otherwise default to the user selection
-    setRowsPerPageToRender(props.rowsPerPage);
-  }
 
   if(props.paginationCount){
     paginationCount = props.paginationCount;
@@ -694,7 +668,8 @@ PatientTable.propTypes = {
   cursors: PropTypes.array
 };
 PatientTable.defaultProps = {
-  paginationCount: 100
+  paginationCount: 100,
+  rowsPerPage: 5
 }
 
 export default PatientTable;
