@@ -16,8 +16,8 @@ import {
   LastPageIcon
 } from '@material-ui/core';
 
-import { FaTags  } from 'react-icons/fa';
-import { GoTrashcan } from 'react-icons/go';
+// import { FaTags  } from 'react-icons/fa';
+// import { GoTrashcan } from 'react-icons/go';
 
 // import Icon from 'react-icons-kit'
 // import { tag } from 'react-icons-kit/fa/tag'
@@ -155,6 +155,10 @@ function PatientTable(props){
     hideMaritalStatus,
     hideLanguage,
     hideSpecies,
+    hideAddress,
+    hideState,
+    hideZipCode,
+    hideCountry,
     appWidth,
     noDataMessagePadding,
     rowsPerPage,
@@ -360,13 +364,72 @@ function PatientTable(props){
 
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>
-          <FaTags style={iconStyle} onClick={ handleMetaClick.bind(this, patient)} />
-          <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />  
+          {/* <FaTags style={iconStyle} onClick={ handleMetaClick.bind(this, patient)} />
+          <GoTrashcan style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} />   */}
           {/* <Icon icon={iosTrashOutline} style={iconStyle} onClick={ removeRecord.bind(this, patient._id)} /> */}
         </TableCell>
       );
     }
   } 
+
+  function renderAddressHeader(){
+    if (!props.hideAddress) {
+      return (
+        <TableCell className="streetAddress">Address</TableCell>
+      );
+    }
+  }
+  function renderAddress(streetAddress){
+    if (!props.hideAddress) {
+      return (
+        <TableCell className='streetAddress'>{streetAddress}</TableCell>
+      );
+    }
+  }
+  function renderStateHeader(){
+    if (!props.hideState) {
+      return (
+        <TableCell className="state">State</TableCell>
+      );
+    }
+  }
+  function renderState(state){
+    if (!props.hideState) {
+      return (
+        <TableCell className='state'>{state}</TableCell>
+      );
+    }
+  }
+  function renderZipCodeHeader(){
+    if (!props.hideZipCode) {
+      return (
+        <TableCell className="zipCode">Zip Code</TableCell>
+      );
+    }
+  }
+  function renderZipCode(zipCode){
+    if (!props.hideZipCode) {
+      return (
+        <TableCell className='zipCode'>{zipCode}</TableCell>
+      );
+    }
+  }
+  function renderCountryHeader(){
+    if (!props.hideCountry) {
+      return (
+        <TableCell className="country">Country</TableCell>
+      );
+    }
+  }
+  function renderCountry(country){
+    if (!props.hideCountry) {
+      return (
+        <TableCell className='country'>{country}</TableCell>
+      );
+    }
+  }
+
+
   function renderMaritalStatusHeader(){
     if (!props.hideMaritalStatus) {
       return (
@@ -571,6 +634,11 @@ function PatientTable(props){
           <TableCell className='gender' onClick={ cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].gender}</TableCell>
           <TableCell className='birthDate' onClick={ cellClick.bind(this, patientsToRender[i]._id)} style={{minWidth: '100px', paddingTop: '16px'}}>{patientsToRender[i].birthDate }</TableCell>
 
+          { renderAddress(get(patientsToRender[i], 'address[0].street[0]') ) }
+          { renderState(get(patientsToRender[i], 'address[0].state')) }
+          { renderZipCode(get(patientsToRender[i], 'address[0].zipCode')) }
+          { renderCountry(get(patientsToRender[i], 'address[0].country')) }
+
           { renderMaritalStatus(patientsToRender[i]) }
           { renderLanguage(patientsToRender[i]) }
           { renderIsActive(patientsToRender[i].active) }
@@ -606,8 +674,6 @@ function PatientTable(props){
     />
   }
 
-
-
   return(
     <div>
       <Table size="small" aria-label="a dense table" { ...otherProps } >
@@ -620,6 +686,11 @@ function PatientTable(props){
             <TableCell className='name'>Name</TableCell>
             <TableCell className='gender'>Gender</TableCell>
             <TableCell className='birthdate' style={{minWidth: '100px'}}>Birthdate</TableCell>
+
+            { renderAddressHeader() }
+            { renderStateHeader() }
+            { renderZipCodeHeader() }
+            { renderCountryHeader() }
 
             { renderMaritalStatusHeader(patientsToRender[i]) }
             { renderLanguageHeader(patientsToRender[i]) }              
@@ -653,6 +724,10 @@ PatientTable.propTypes = {
   hideMaritalStatus: PropTypes.bool,
   hideLanguage: PropTypes.bool,
   hideSpecies: PropTypes.bool,
+  hideAddress: PropTypes.bool,
+  hideState: PropTypes.bool,
+  hideZipCode: PropTypes.bool,
+  hideCountry: PropTypes.bool,
   appWidth: PropTypes.number,
   noDataMessagePadding: PropTypes.number,
   rowsPerPage: PropTypes.number,
