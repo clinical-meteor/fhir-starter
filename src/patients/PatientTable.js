@@ -16,8 +16,6 @@ import {
   LastPageIcon
 } from '@material-ui/core';
 
-// import { FaTags  } from 'react-icons/fa';
-// import { GoTrashcan } from 'react-icons/go';
 
 // import Icon from 'react-icons-kit'
 // import { tag } from 'react-icons-kit/fa/tag'
@@ -33,6 +31,10 @@ import _ from 'lodash';
 let get = _.get;
 let set = _.set;
 
+
+
+//===========================================================================
+// THEMING
 
 let styles = {
   hideOnPhone: {
@@ -57,7 +59,6 @@ let styles = {
   }
 };
 
-
 import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles(theme => ({
   root: {
@@ -74,6 +75,140 @@ const useStyles = makeStyles(theme => ({
     padding: '0 30px',
   }
 }));
+
+
+
+
+//===========================================================================
+// FLATTENING / MAPPING
+
+
+function flattenPatient(patient, internalDateFormat){
+  let result = {
+    _id: get(patient, '_id'),
+    id: get(patient, 'id'),
+    meta: '',
+    identifier: '',
+    active: true,
+    gender: get(patient, 'gender'),
+    name: '',
+    mrn: '',
+    birthDate: '',
+    photo: "/thumbnail-blank.png",
+    addressLine: '',
+    state: '',
+    postalCode: '',
+    country: '',
+    maritalStatus: '',
+    preferredLanguage: '',
+    species: '',
+    resourceCounts: '',
+    deceased: false
+  };
+
+  result._id =  get(patient, 'id') ? get(patient, 'id') : get(patient, '_id');
+  result.id = get(patient, 'id', '');
+  result.identifier = get(patient, 'identifier[0].value', '');
+
+  result.identifier = get(patient, 'identifier[0].value', '');
+  result.active = get(patient, 'active', true).toString();
+  
+  result.gender = get(patient, 'gender', '');
+
+  // patient name has gone through a number of revisions, and we need to search a few different spots, and assemble as necessary  
+  let resultingNameString = "";
+
+  let nameText = get(patient, 'name[0].text', '');
+  if(nameText.length > 0){
+    // some systems will store the name as it is to be displayed in the name[0].text field
+    // if that's present, use it
+    resultingNameString = get(patient, 'name[0].text', '');    
+  } else {
+    // the majority of systems out there are SQL based and make a design choice to store as 'first' and 'last' name
+    // critiques of that approach can be saved for a later time
+    // but suffice it to say that we need to assemble the parts
+
+    if(get(patient, 'name[0].prefix[0]')){
+      resultingNameString = get(patient, 'name[0].prefix[0]')  + ' ';
+    }
+
+    if(get(patient, 'name[0].given[0]')){
+      resultingNameString = resultingNameString + get(patient, 'name[0].given[0]')  + ' ';
+    }
+
+    if(get(patient, 'name[0].family')){
+      // R4 - droped the array of family names; one authoritative family name per patient
+      resultingNameString = resultingNameString + get(patient, 'name[0].family')  + ' ';
+    } else if (get(patient, 'name[0].family[0]')){
+      // DSTU2 and STU3 - allows an array of family names
+      resultingNameString = resultingNameString + get(patient, 'name[0].family[0]')  + ' ';
+    }
+    
+    if(get(patient, 'name[0].suffix[0]')){
+      resultingNameString = resultingNameString + ' ' + get(patient, 'name[0].suffix[0]');
+    }
+  }
+
+  // remove any whitespace from the name
+  result.name = resultingNameString.trim();
+
+  // there's an off-by-1 error between momment() and Date() that we want
+  // to account for when converting back to a string
+  // which is why we run it through moment()
+  result.birthDate = moment(get(patient, "birthDate")).format("YYYY-MM-DD")
+
+  result.photo = get(patient, 'photo[0].url', '');
+
+  result.maritalStatus = get(patient, 'maritalStatus.text', '');
+
+  let communicationArray = [];
+  if(get(patient, 'communication') && Array.isArray(get(patient, 'communication'))){
+    communicationArray = get(patient, 'communication');
+    // first, we're going to try to loop through the communications array 
+    // and find an authoritatively preferred language
+    communicationArray.forEach(function(communication){
+      if(get(communication, "preferred")){
+        if(get(communication, "text")){
+          // using the text field if possible
+          result.preferredLanguage = get(communication, "text");
+        } else {
+          // but resorting to a code name, if needed
+          result.preferredLanguage = get(communication, "coding[0].display");
+        }
+      }
+    })
+    // if we didn't find any langauge that is marked as preferred 
+    if(result.preferredLanguage === ""){
+      // then we try the same thing on the first language listed
+      if(get(communicationArray[0], "text")){
+        result.preferredLanguage = get(communicationArray[0], "text");
+      } else if (get(communicationArray[0], "coding[0].display")) {
+        result.preferredLanguage = get(communicationArray[0], "coding[0].display")
+      }
+    }
+  }
+
+
+  // is the patient dead?  :(
+  result.deceased = get(patient, 'deceasedBoolean', '');
+
+  // DSTU2 & STU3 
+  result.species = get(patient, 'animal.species.text', '');
+
+
+  // address
+  result.addressLine = get(patient, 'address[0].line[0]')
+  result.state = get(patient, 'address[0].state')
+  result.postalCode = get(patient, 'address[0].postalCode')
+  result.country = get(patient, 'address[0].country')
+
+  // console.log('flattened', result)
+  return result;
+}
+
+
+//===========================================================================
+// PAGINATION  
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -126,8 +261,6 @@ function TablePaginationActions(props) {
   );
 }
 
-
-
 TablePaginationActions.propTypes = {
   count: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired,
@@ -137,7 +270,8 @@ TablePaginationActions.propTypes = {
 
 
 
-
+//===========================================================================
+// MAIN COMPONENT  
 
 function PatientTable(props){
   // console.log('PatientTable', props)
@@ -157,7 +291,7 @@ function PatientTable(props){
     hideSpecies,
     hideAddress,
     hideState,
-    hideZipCode,
+    hidePostalCode,
     hideCountry,
     appWidth,
     noDataMessagePadding,
@@ -201,54 +335,6 @@ function PatientTable(props){
     setPage(0);
   };
 
-  //================================================================
-  // Data Methods
-  
-  function flattenPatient(person){
-    let result = {
-      _id: person._id,
-      id: person._id,
-      active: true,
-      gender: get(person, 'gender'),
-      name: '',
-      mrn: '',
-      birthDate: '',
-      photo: "/thumbnail-blank.png",
-      initials: 'abc'
-    };
-
-    result.active = get(person, 'active', true).toString();
-
-    // there's an off-by-1 error between momment() and Date() that we want
-    // to account for when converting back to a string
-    result.birthDate = moment(person.birthDate).format("YYYY-MM-DD")
-    result.photo = get(person, 'photo[0].url', '');
-    result.identifier = get(person, 'identifier[0].value', '');
-    result.gender = get(person, 'gender', '');
-
-    result.maritalStatus = get(person, 'maritalStatus.text', '');
-    result.deceased = get(person, 'deceasedBoolean', '');
-    result.species = get(person, 'animal.species.text', '');
-    result.language = get(person, 'communication[0].language.text', '');
-
-    let nameText = get(person, 'name[0].text', '');
-    if(nameText.length > 0){
-      result.name = get(person, 'name[0].text', '');    
-    } else {
-      if(get(person, 'name[0].suffix[0]')){
-        result.name = get(person, 'name[0].suffix[0]')  + ' ';
-      }
-
-      result.name = result.name + get(person, 'name[0].given[0]') + ' ' + get(person, 'name[0].family[0]');
-      
-      if(get(person, 'name[0].suffix[0]')){
-        result.name = result.name + ' ' + get(person, 'name[0].suffix[0]');
-      }
-    }
-
-    // console.log('flattened', result)
-    return result;
-  }
 
   //================================================================
   // Render Methods
@@ -401,14 +487,14 @@ function PatientTable(props){
     }
   }
   function renderZipCodeHeader(){
-    if (!props.hideZipCode) {
+    if (!props.hidePostalCode) {
       return (
         <TableCell className="zipCode">Zip Code</TableCell>
       );
     }
   }
   function renderZipCode(zipCode){
-    if (!props.hideZipCode) {
+    if (!props.hidePostalCode) {
       return (
         <TableCell className='zipCode'>{zipCode}</TableCell>
       );
@@ -470,6 +556,52 @@ function PatientTable(props){
     if (!props.hideActive) {
       return (
         <TableCell className='isActive'>{isActive}</TableCell>
+      );
+    }
+  }
+
+
+  function renderNameHeader(){
+    if (!props.hideName) {
+      return (
+        <TableCell className="fullName">Full Name</TableCell>
+      );
+    }
+  }
+  function renderName(fullName, _id){
+    if (!props.hideName) {
+      return (
+        <TableCell className='name' onClick={ cellClick.bind(this, _id)} >{fullName}</TableCell>
+      );
+    }
+  }
+
+  function renderGenderHeader(){
+    if (!props.hideGender) {
+      return (
+        <TableCell className="gender">Gender</TableCell>
+      );
+    }
+  }
+  function renderGender(gender, _id){
+    if (!props.hideGender) {
+      return (
+        <TableCell className='gender' onClick={ cellClick.bind(this, _id)} >{gender}</TableCell>
+      );
+    }
+  }
+
+  function renderBirthDateHeader(){
+    if (!props.hideBirthDate) {
+      return (
+        <TableCell className="birthDate">Birth Date</TableCell>
+      );
+    }
+  }
+  function renderBirthDate(birthDate, _id){
+    if (!props.hideBirthDate) {
+      return (
+        <TableCell className='birthDate' onClick={ cellClick.bind(this, _id)} style={{minWidth: '100px', paddingTop: '16px'}}>{birthDate}</TableCell> 
       );
     }
   }
@@ -630,18 +762,18 @@ function PatientTable(props){
           { renderRowAvatar(patientsToRender[i], styles.avatar) }
           { renderIdentifier(patientsToRender[i].identifier)}
 
-          <TableCell className='name' onClick={ cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].name }</TableCell>
-          <TableCell className='gender' onClick={ cellClick.bind(this, patientsToRender[i]._id)} >{patientsToRender[i].gender}</TableCell>
-          <TableCell className='birthDate' onClick={ cellClick.bind(this, patientsToRender[i]._id)} style={{minWidth: '100px', paddingTop: '16px'}}>{patientsToRender[i].birthDate }</TableCell>
+          { renderName(get(patientsToRender[i], "name"), get(patientsToRender[i], "_id"))}
+          { renderGender(get(patientsToRender[i], "gender"), get(patientsToRender[i], "_id"))}
+          { renderBirthDate(get(patientsToRender[i], "birthDate"), get(patientsToRender[i], "_id"))}
 
-          { renderAddress(get(patientsToRender[i], 'address[0].street[0]') ) }
-          { renderState(get(patientsToRender[i], 'address[0].state')) }
-          { renderZipCode(get(patientsToRender[i], 'address[0].zipCode')) }
-          { renderCountry(get(patientsToRender[i], 'address[0].country')) }
+          { renderAddress(get(patientsToRender[i], 'addressLine') ) }
+          { renderState(get(patientsToRender[i], 'state')) }
+          { renderZipCode(get(patientsToRender[i], 'postalCode')) }
+          { renderCountry(get(patientsToRender[i], 'country')) }
 
-          { renderMaritalStatus(patientsToRender[i]) }
-          { renderLanguage(patientsToRender[i]) }
-          { renderIsActive(patientsToRender[i].active) }
+          { renderMaritalStatus(get(patientsToRender[i], "maritalStatus")) }
+          { renderLanguage(get(patientsToRender[i], "preferredLanguage")) }
+          { renderIsActive(get(patientsToRender[i], "active")) }
 
           { renderCounts(props.cursors, i) }
           { renderActionButton(patientsToRender[i], styles.avatar) }
@@ -663,13 +795,8 @@ function PatientTable(props){
       count={paginationCount}
       rowsPerPage={rowsPerPageToRender}
       page={page}
-      // SelectProps={{
-      //   inputProps: { 'aria-label': 'rows per page' },
-      //   native: true
-      // }}
       onChangePage={handleChangePage}
       onChangeRowsPerPage={handleChangeRowsPerPage}
-      // ActionsComponent={TablePaginationActions}
       style={{float: 'right', border: 'none'}}
     />
   }
@@ -683,17 +810,17 @@ function PatientTable(props){
             { renderRowAvatarHeader() }
             { renderIdentifierHeader() }
 
-            <TableCell className='name'>Name</TableCell>
-            <TableCell className='gender'>Gender</TableCell>
-            <TableCell className='birthdate' style={{minWidth: '100px'}}>Birthdate</TableCell>
+            { renderNameHeader() }
+            { renderGenderHeader() }
+            { renderBirthDateHeader() }
 
             { renderAddressHeader() }
             { renderStateHeader() }
             { renderZipCodeHeader() }
             { renderCountryHeader() }
 
-            { renderMaritalStatusHeader(patientsToRender[i]) }
-            { renderLanguageHeader(patientsToRender[i]) }              
+            { renderMaritalStatusHeader() }
+            { renderLanguageHeader() }              
             { renderIsActiveHeader() }
 
             { renderCountsHeader() }
@@ -721,12 +848,17 @@ PatientTable.propTypes = {
   hideActionIcons: PropTypes.bool,
   hideIdentifier: PropTypes.bool,
   hideActive: PropTypes.bool,
+
+  hideName: PropTypes.bool,
+  hideGender: PropTypes.bool,
+  hideBirthDate: PropTypes.bool,
+  
   hideMaritalStatus: PropTypes.bool,
   hideLanguage: PropTypes.bool,
   hideSpecies: PropTypes.bool,
   hideAddress: PropTypes.bool,
   hideState: PropTypes.bool,
-  hideZipCode: PropTypes.bool,
+  hidePostalCode: PropTypes.bool,
   hideCountry: PropTypes.bool,
   appWidth: PropTypes.number,
   noDataMessagePadding: PropTypes.number,
@@ -744,6 +876,9 @@ PatientTable.propTypes = {
 };
 PatientTable.defaultProps = {
   paginationCount: 100,
+  hideName: false,
+  hideGender: false,
+  hideBirthDate: false,
   rowsPerPage: 5
 }
 
