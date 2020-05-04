@@ -278,10 +278,11 @@ function PatientTable(props){
 
   let { 
     children, 
+
     id,
-    patients,
     fhirVersion,
-    showActionButton,
+    patients,
+
     hideCheckbox,
     hideActionIcons,
     hideIdentifier,
@@ -296,7 +297,8 @@ function PatientTable(props){
     hideState,
     hidePostalCode,
     hideCountry,
-    appWidth,
+    showActionButton,
+    
     noDataMessagePadding,
     rowsPerPage,
     onCellClick,
@@ -309,6 +311,8 @@ function PatientTable(props){
     paginationCount,
     showCounts,
     cursors, 
+    font3of9,
+
     ...otherProps 
   } = props;
 
@@ -608,7 +612,27 @@ function PatientTable(props){
       );
     }
   }
+  function renderBarcode(id){
+    if (!props.hideBarcode) {
 
+      let barcodeClasses = "helvetica";
+
+      if(props.font3of9){
+        barcodeClasses = "barcode helvetica";
+      }
+
+      return (
+        <TableCell><span className={barcodeClasses}>{id}</span></TableCell>
+      );
+    }
+  }
+  function renderBarcodeHeader(){
+    if (!props.hideBarcode) {
+      return (
+        <TableCell>System ID</TableCell>
+      );
+    }
+  }
 
   function renderCountsHeader(){
     if (props.showCounts) {
@@ -781,6 +805,7 @@ function PatientTable(props){
           { renderCounts(props.cursors, i) }
           { renderActionButton(patientsToRender[i], styles.avatar) }
 
+          { renderBarcode(patientsToRender[i].id)}
         </TableRow>
       );
     }
@@ -829,6 +854,7 @@ function PatientTable(props){
             { renderCountsHeader() }
             { renderActionButtonHeader() }
 
+            { renderBarcodeHeader() }
           </TableRow>
         </TableHead>
         <TableBody>
@@ -863,7 +889,9 @@ PatientTable.propTypes = {
   hideState: PropTypes.bool,
   hidePostalCode: PropTypes.bool,
   hideCountry: PropTypes.bool,
-  appWidth: PropTypes.number,
+  hideBarcode: PropTypes.bool,
+
+  
   noDataMessagePadding: PropTypes.number,
   rowsPerPage: PropTypes.number,
   onCellClick: PropTypes.func,
@@ -875,14 +903,17 @@ PatientTable.propTypes = {
   disablePagination: PropTypes.bool,
   paginationCount: PropTypes.number,
   showCounts: PropTypes.bool,
-  cursors: PropTypes.array
+  cursors: PropTypes.array,
+
+  font3of9: PropTypes.bool
 };
 PatientTable.defaultProps = {
   paginationCount: 100,
   hideName: false,
   hideGender: false,
   hideBirthDate: false,
-  rowsPerPage: 5
+  rowsPerPage: 5,
+  font3of9: true
 }
 
 export default PatientTable;
