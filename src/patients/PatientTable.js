@@ -608,7 +608,7 @@ function PatientTable(props){
   function renderBirthDate(birthDate, _id){
     if (!props.hideBirthDate) {
       return (
-        <TableCell className='birthDate' onClick={ cellClick.bind(this, _id)} style={{minWidth: '100px', paddingTop: '16px'}}>{birthDate}</TableCell> 
+        <TableCell className='birthDate' onClick={ cellClick.bind(this, _id)} style={{minWidth: '100px'}}>{birthDate}</TableCell> 
       );
     }
   }
