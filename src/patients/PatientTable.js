@@ -171,10 +171,13 @@ function flattenPatient(patient, internalDateFormat){
         if(get(communication, "text")){
           // using the text field if possible
           result.preferredLanguage = get(communication, "text");
-        } else {
-          // but resorting to a code name, if needed
-          result.preferredLanguage = get(communication, "coding[0].display");
-        }
+        } else if(get(communication, "language.text")){
+          // using the text field if possible
+          result.preferredLanguage = get(communication, "text");
+        } else if(get(communication, "language.coding[0].display")){
+          // using the text field if possible
+          result.preferredLanguage = get(communication, "language.coding[0].display");
+        } 
       }
     })
     // if we didn't find any langauge that is marked as preferred 
@@ -182,9 +185,12 @@ function flattenPatient(patient, internalDateFormat){
       // then we try the same thing on the first language listed
       if(get(communicationArray[0], "text")){
         result.preferredLanguage = get(communicationArray[0], "text");
-      } else if (get(communicationArray[0], "coding[0].display")) {
-        result.preferredLanguage = get(communicationArray[0], "coding[0].display")
-      }
+      } else if(get(communicationArray[0], "language.text")){
+        result.preferredLanguage = get(communicationArray[0], "text");
+      } else if(get(communicationArray[0], "language.coding[0].display")){
+        result.preferredLanguage = get(communicationArray[0], "language.coding[0].display");
+      } 
+      
     }
   }
 

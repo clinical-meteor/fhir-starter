@@ -218,7 +218,6 @@ meteor reset
 rm -rf node_modules
 meteor npm install
 meteor npm link packages/material-fhir-ui
-
 ```
 
 ## Deployment
