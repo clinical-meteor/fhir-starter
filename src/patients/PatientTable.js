@@ -536,10 +536,10 @@ function PatientTable(props){
       );
     }
   }
-  function renderMaritalStatus(patient){
+  function renderMaritalStatus(maritalStatus){
     if (!props.hideMaritalStatus) {
       return (
-        <TableCell className='maritalStatus'>{patient.maritalStatus}</TableCell>
+        <TableCell className='maritalStatus'>{maritalStatus}</TableCell>
       );
     }
   }
@@ -551,10 +551,10 @@ function PatientTable(props){
       );
     }
   }
-  function renderLanguage(patient){
+  function renderLanguage(language){
     if (!props.hideLanguage) {
       return (
-        <TableCell className='language'>{patient.language}</TableCell>
+        <TableCell className='language'>{language}</TableCell>
       );
     }
   }
@@ -634,6 +634,28 @@ function PatientTable(props){
   }
   function renderBarcodeHeader(){
     if (!props.hideBarcode) {
+      return (
+        <TableCell>FHIR ID</TableCell>
+      );
+    }
+  }
+
+  function renderSystemBarcode(id){
+    if (!props.hideSystemBarcode) {
+
+      let barcodeClasses = "helvetica";
+
+      if(props.font3of9){
+        barcodeClasses = "barcode helvetica";
+      }
+
+      return (
+        <TableCell><span className={barcodeClasses}>{id}</span></TableCell>
+      );
+    }
+  }
+  function renderSystemBarcodeHeader(){
+    if (!props.hideSystemBarcode) {
       return (
         <TableCell>System ID</TableCell>
       );
@@ -811,6 +833,7 @@ function PatientTable(props){
           { renderCounts(props.cursors, i) }
           { renderActionButton(patientsToRender[i], styles.avatar) }
 
+          { renderSystemBarcode(patientsToRender[i]._id)}
           { renderBarcode(patientsToRender[i].id)}
         </TableRow>
       );
@@ -860,6 +883,7 @@ function PatientTable(props){
             { renderCountsHeader() }
             { renderActionButtonHeader() }
 
+            { renderSystemBarcodeHeader() }
             { renderBarcodeHeader() }
           </TableRow>
         </TableHead>
@@ -896,6 +920,7 @@ PatientTable.propTypes = {
   hidePostalCode: PropTypes.bool,
   hideCountry: PropTypes.bool,
   hideBarcode: PropTypes.bool,
+  hideSystemBarcode: PropTypes.bool,
 
   
   noDataMessagePadding: PropTypes.number,
@@ -919,7 +944,9 @@ PatientTable.defaultProps = {
   hideGender: false,
   hideBirthDate: false,
   rowsPerPage: 5,
-  font3of9: true
+  font3of9: true,
+  hideSystemBarcode: true,
+  hideBarcode: false,
 }
 
 export default PatientTable;
