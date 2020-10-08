@@ -22,7 +22,7 @@ function PageCanvas(props){
   let returnedStyle = {};
 
   if(style){
-    returnedStyle = style;
+    returnedStyle = Object.assign(returnedStyle, style);
   }
 
   if(headerHeight > 0){
