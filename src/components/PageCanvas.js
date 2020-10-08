@@ -7,7 +7,7 @@ import { get } from 'lodash';
 function PageCanvas(props){
   // console.log('PageCanvas.props', props);
 
-  const {
+  let {
     logging,
     children, 
     classes, 
