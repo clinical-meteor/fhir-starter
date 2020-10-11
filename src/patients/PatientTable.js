@@ -288,6 +288,7 @@ function PatientTable(props){
     id,
     fhirVersion,
     patients,
+    selectedPatientId,
 
     hideCheckbox,
     hideActionIcons,
@@ -312,15 +313,113 @@ function PatientTable(props){
     onMetaClick, 
     onActionButtonClick,
     actionButtonLabel,
+
     defaultAvatar,
     disablePagination,
     paginationCount,
-    showCounts,
+    hideCounts,
     cursors, 
     font3of9,
 
+    formFactorLayout,
+    multiline,
+
+    count,
+    tableRowSize,
+
     ...otherProps 
   } = props;
+
+
+
+  // ------------------------------------------------------------------------
+  // Form Factors
+
+  if(formFactorLayout){
+    logger.verbose('formFactorLayout', formFactorLayout + ' ' + window.innerWidth);
+
+    switch (formFactorLayout) {
+      case "phone":
+        hideName = false;
+        hideGender = false;
+        hideBirthDate = false;
+        hideMaritalStatus = true;
+        hideLanguage = true;
+        hideSpecies = true;
+        hideAddress = true;
+        hideState = true;
+        hidePostalCode = true;
+        hideCountry = true;
+        hideCounts = true;
+        hideSystemBarcode = true;
+        hideBarcode = true;
+        break;
+      case "tablet":
+        hideName = false;
+        hideGender = false;
+        hideBirthDate = false;
+        hideMaritalStatus = false;
+        hideLanguage = false;
+        hideSpecies = true;
+        hideAddress = true;
+        hideState = true;
+        hidePostalCode = true;
+        hideCountry = true;
+        hideCounts = true;
+        hideSystemBarcode = true;
+        hideBarcode = true;
+        break;
+      case "web":
+        hideName = false;
+        hideGender = false;
+        hideBirthDate = false;
+        hideMaritalStatus = false;
+        hideLanguage = false;
+        hideSpecies = true;
+        hideAddress = true;
+        hideState = false;
+        hidePostalCode = false;
+        hideCountry = false;
+        hideCounts = true;
+        hideSystemBarcode = true;
+        hideBarcode = true;
+        break;
+      case "desktop":
+        hideName = false;
+        hideGender = false;
+        hideBirthDate = false;
+        hideMaritalStatus = false;
+        hideLanguage = false;
+        hideSpecies = true;
+        hideAddress = true;
+        hideState = false;
+        hidePostalCode = false;
+        hideCountry = false;
+        hideCounts = true;
+        hideSystemBarcode = true;
+        hideBarcode = true;
+        break;
+      case "hdmi":
+        hideName = false;
+        hideGender = false;
+        hideBirthDate = false;
+        hideMaritalStatus = false;
+        hideLanguage = false;
+        hideSpecies = true;
+        hideAddress = true;
+        hideState = false;
+        hidePostalCode = false;
+        hideCountry = false;
+        hideCounts = true;
+        hideSystemBarcode = false;
+        hideBarcode = true;
+        break;            
+    }
+  }
+
+
+    //---------------------------------------------------------------------
+  // Table Rows
 
   let tableRows = [];
   let footer;
@@ -332,8 +431,8 @@ function PatientTable(props){
   const emptyRows = rowsPerPageToRender - Math.min(rowsPerPageToRender, rows.length - page * rowsPerPageToRender);
 
 
-  if(props.paginationCount){
-    paginationCount = props.paginationCount;
+  if(paginationCount){
+    paginationCount = paginationCount;
   } else {
     paginationCount = rows.length;
   }
@@ -354,7 +453,7 @@ function PatientTable(props){
 
 
   function renderRowAvatarHeader(){
-    if (get(this, 'props.defaultAvatar') && (props.showAvatars === true)) {
+    if (get(this, 'defaultAvatar') && (showAvatars === true)) {
       return (
         <TableCell className='avatar'>photo</TableCell>
       );
@@ -363,12 +462,12 @@ function PatientTable(props){
   function renderRowAvatar(patient, avatarStyle){
     //console.log('renderRowAvatar', patient, avatarStyle)
     
-    if (get(this, 'props.defaultAvatar') && (props.showAvatars === true)) {
+    if (get(this, 'defaultAvatar') && (showAvatars === true)) {
       return (
         <TableCell className='avatar'>
           <img 
             src={patient.photo} 
-            onError={(e)=>{e.target.onerror = null; e.target.src = get(this, 'props.defaultAvatar')}}
+            onError={(e)=>{e.target.onerror = null; e.target.src = get(this, 'defaultAvatar')}}
             style={avatarStyle}
           />
         </TableCell>
@@ -376,14 +475,14 @@ function PatientTable(props){
     }
   }
   function renderIdentifier(identifier){
-    if (!props.hideIdentifier) {
+    if (!hideIdentifier) {
       return (
         <TableCell className="identifier hidden-on-phone">{ identifier }</TableCell>
       );
     }
   }
   function renderIdentifierHeader(){
-    if (!props.hideIdentifier) {
+    if (!hideIdentifier) {
       return (
         <TableCell className="identifier hidden-on-phone">identifier</TableCell>
       );
@@ -391,14 +490,14 @@ function PatientTable(props){
   }
 
   function renderSpeciesHeader(){
-    if(!props.hideSpecies || (props.fhirVersion === "R4")){
+    if(!hideSpecies || (fhirVersion === "R4")){
       return (
         <TableCell className='species'>Species</TableCell>
       );
     }
   }
   function renderSpecies(patient){
-    if(!props.hideSpecies || (props.fhirVersion === "R4")){
+    if(!hideSpecies || (fhirVersion === "R4")){
       return (
         <TableCell className='species' style={styles.cellHideOnPhone}>
           {patient.species}
@@ -407,14 +506,14 @@ function PatientTable(props){
     }
   }
   function renderActionButtonHeader(){
-    if (props.showActionButton === true) {
+    if (showActionButton === true) {
       return (
         <TableCell className='ActionButton' >Action</TableCell>
       );
     }
   }
   function renderActionButton(patient, avatarStyle){
-    if (props.showActionButton === true) {
+    if (showActionButton === true) {
       return (
         <TableCell className='ActionButton' >
           <Button onClick={ handleActionButtonClick.bind('this', patientsToRender[i]._id)}>{ get(props, "actionButtonLabel", "") }</Button>
@@ -423,23 +522,23 @@ function PatientTable(props){
     }
   }
   function handleActionButtonClick(id){
-    if(typeof props.onActionButtonClick === "function"){
-      props.onActionButtonClick(id);
+    if(typeof onActionButtonClick === "function"){
+      onActionButtonClick(id);
     }
   }
   function cellClick(id){
-    if(typeof props.onCellClick === "function"){
-      props.onCellClick(id);
+    if(typeof onCellClick === "function"){
+      onCellClick(id);
     }
   }
   function selectPatientRow(patientId){
     console.log('Selecting a new Patient...');
-    if(typeof props.onRowClick  === "function"){
-      props.onRowClick(patientId);
+    if(typeof onRowClick  === "function"){
+      onRowClick(patientId);
     }
   }
   function renderActionIconsHeader(){
-    if (!props.hideActionIcons) {
+    if (!hideActionIcons) {
       return (
         <TableCell className='actionIcons' style={{minWidth: '120px'}}>Actions</TableCell>
       );
@@ -447,13 +546,13 @@ function PatientTable(props){
   }
   function removeRecord(_id){
     console.log('Remove patient ', _id)
-    if(props.onRemoveRecord){
-      props.onRemoveRecord(_id);
+    if(onRemoveRecord){
+      onRemoveRecord(_id);
     }
     // Patients._collection.remove({_id: _id})
   }
   function renderActionIcons(patient ){
-    if (!props.hideActionIcons) {
+    if (!hideActionIcons) {
       let iconStyle = {
         marginLeft: '4px', 
         marginRight: '4px', 
@@ -472,56 +571,56 @@ function PatientTable(props){
   } 
 
   function renderAddressHeader(){
-    if (!props.hideAddress) {
+    if (!hideAddress) {
       return (
         <TableCell className="streetAddress">Address</TableCell>
       );
     }
   }
   function renderAddress(streetAddress){
-    if (!props.hideAddress) {
+    if (!hideAddress) {
       return (
         <TableCell className='streetAddress'>{streetAddress}</TableCell>
       );
     }
   }
   function renderStateHeader(){
-    if (!props.hideState) {
+    if (!hideState) {
       return (
         <TableCell className="state">State</TableCell>
       );
     }
   }
   function renderState(state){
-    if (!props.hideState) {
+    if (!hideState) {
       return (
         <TableCell className='state'>{state}</TableCell>
       );
     }
   }
   function renderZipCodeHeader(){
-    if (!props.hidePostalCode) {
+    if (!hidePostalCode) {
       return (
         <TableCell className="zipCode">Zip Code</TableCell>
       );
     }
   }
   function renderZipCode(zipCode){
-    if (!props.hidePostalCode) {
+    if (!hidePostalCode) {
       return (
         <TableCell className='zipCode'>{zipCode}</TableCell>
       );
     }
   }
   function renderCountryHeader(){
-    if (!props.hideCountry) {
+    if (!hideCountry) {
       return (
         <TableCell className="country">Country</TableCell>
       );
     }
   }
   function renderCountry(country){
-    if (!props.hideCountry) {
+    if (!hideCountry) {
       return (
         <TableCell className='country'>{country}</TableCell>
       );
@@ -530,14 +629,14 @@ function PatientTable(props){
 
 
   function renderMaritalStatusHeader(){
-    if (!props.hideMaritalStatus) {
+    if (!hideMaritalStatus) {
       return (
         <TableCell className="maritalStatus">Marital Status</TableCell>
       );
     }
   }
   function renderMaritalStatus(maritalStatus){
-    if (!props.hideMaritalStatus) {
+    if (!hideMaritalStatus) {
       return (
         <TableCell className='maritalStatus'>{maritalStatus}</TableCell>
       );
@@ -545,28 +644,28 @@ function PatientTable(props){
   }
 
   function renderLanguageHeader(){
-    if (!props.hideLanguage) {
+    if (!hideLanguage) {
       return (
         <TableCell className="language">Language</TableCell>
       );
     }
   }
   function renderLanguage(language){
-    if (!props.hideLanguage) {
+    if (!hideLanguage) {
       return (
         <TableCell className='language'>{language}</TableCell>
       );
     }
   }
   function renderIsActiveHeader(){
-    if (!props.hideActive) {
+    if (!hideActive) {
       return (
         <TableCell className="isActive">Active</TableCell>
       );
     }
   }
   function renderIsActive(isActive){
-    if (!props.hideActive) {
+    if (!hideActive) {
       return (
         <TableCell className='isActive'>{isActive}</TableCell>
       );
@@ -575,14 +674,14 @@ function PatientTable(props){
 
 
   function renderNameHeader(){
-    if (!props.hideName) {
+    if (!hideName) {
       return (
         <TableCell className="fullName">Full Name</TableCell>
       );
     }
   }
   function renderName(fullName, _id){
-    if (!props.hideName) {
+    if (!hideName) {
       return (
         <TableCell className='name' onClick={ cellClick.bind(this, _id)} >{fullName}</TableCell>
       );
@@ -590,14 +689,14 @@ function PatientTable(props){
   }
 
   function renderGenderHeader(){
-    if (!props.hideGender) {
+    if (!hideGender) {
       return (
         <TableCell className="gender">Gender</TableCell>
       );
     }
   }
   function renderGender(gender, _id){
-    if (!props.hideGender) {
+    if (!hideGender) {
       return (
         <TableCell className='gender' onClick={ cellClick.bind(this, _id)} >{gender}</TableCell>
       );
@@ -605,25 +704,25 @@ function PatientTable(props){
   }
 
   function renderBirthDateHeader(){
-    if (!props.hideBirthDate) {
+    if (!hideBirthDate) {
       return (
         <TableCell className="birthDate">Birth Date</TableCell>
       );
     }
   }
   function renderBirthDate(birthDate, _id){
-    if (!props.hideBirthDate) {
+    if (!hideBirthDate) {
       return (
         <TableCell className='birthDate' onClick={ cellClick.bind(this, _id)} style={{minWidth: '100px'}}>{birthDate}</TableCell> 
       );
     }
   }
   function renderBarcode(id){
-    if (!props.hideBarcode) {
+    if (!hideBarcode) {
 
       let barcodeClasses = "helvetica";
 
-      if(props.font3of9){
+      if(font3of9){
         barcodeClasses = "barcode helvetica";
       }
 
@@ -633,7 +732,7 @@ function PatientTable(props){
     }
   }
   function renderBarcodeHeader(){
-    if (!props.hideBarcode) {
+    if (!hideBarcode) {
       return (
         <TableCell>FHIR ID</TableCell>
       );
@@ -641,11 +740,11 @@ function PatientTable(props){
   }
 
   function renderSystemBarcode(id){
-    if (!props.hideSystemBarcode) {
+    if (!hideSystemBarcode) {
 
       let barcodeClasses = "helvetica";
 
-      if(props.font3of9){
+      if(font3of9){
         barcodeClasses = "barcode helvetica";
       }
 
@@ -655,7 +754,7 @@ function PatientTable(props){
     }
   }
   function renderSystemBarcodeHeader(){
-    if (!props.hideSystemBarcode) {
+    if (!hideSystemBarcode) {
       return (
         <TableCell>System ID</TableCell>
       );
@@ -663,7 +762,7 @@ function PatientTable(props){
   }
 
   function renderCountsHeader(){
-    if (props.showCounts) {
+    if (!hideCounts) {
       return (
         <TableCell className="counts">Counts</TableCell>
       );
@@ -671,8 +770,8 @@ function PatientTable(props){
   }
 
   function handleMetaClick(patient){
-    if(props.onMetaClick){
-      props.onMetaClick(patient);
+    if(onMetaClick){
+      onMetaClick(patient);
     }
   }
 
@@ -773,7 +872,7 @@ function PatientTable(props){
       // console.log('PatientTable.serializedCounts', serializedCounts)
     }
 
-    if (props.showCounts) {
+    if (hideCounts) {
       return (
         <TableCell className='counts'>
           {serializedCounts}
@@ -787,10 +886,10 @@ function PatientTable(props){
   const classes = useStyles();
 
   let patientsToRender = [];
-  if(props.patients){
-    if(props.patients.length > 0){            
+  if(patients){
+    if(patients.length > 0){            
       let count = 0;  
-      props.patients.forEach(function(patient){
+      patients.forEach(function(patient){
         if((count >= (page * rowsPerPageToRender)) && (count < (page + 1) * rowsPerPageToRender)){
           patientsToRender.push(flattenPatient(patient));
         }
@@ -800,19 +899,27 @@ function PatientTable(props){
   }
 
   if(patientsToRender.length === 0){
-    footer = <TableNoData noDataPadding={ props.noDataMessagePadding } />
+    footer = <TableNoData noDataPadding={ noDataMessagePadding } />
   } else {
     for (var i = 0; i < patientsToRender.length; i++) {
+      let selected = false;
+      if(auditEventsToRender[i].id === selectedAuditEventId){
+        selected = true;
+      }
 
       let rowStyle = {
-        cursor: 'pointer'
+        cursor: 'pointer', 
+        height: '52px'
       }
       if(get(patientsToRender[i], 'modifierExtension[0]')){
         rowStyle.color = "orange";
       }
+      if(tableRowSize === "small"){
+        rowStyle.height = '32px';
+      }
 
       tableRows.push(
-        <TableRow key={i} className="patientRow" style={rowStyle} onClick={ selectPatientRow.bind(this, patientsToRender[i]._id )} >
+        <TableRow key={i} className="patientRow" hover={true} style={rowStyle} selected={selected} onClick={ selectPatientRow.bind(this, patientsToRender[i]._id )} >
           { renderActionIcons(patientsToRender[i]) }
           { renderRowAvatar(patientsToRender[i], styles.avatar) }
           { renderIdentifier(patientsToRender[i].identifier)}
@@ -830,7 +937,7 @@ function PatientTable(props){
           { renderLanguage(get(patientsToRender[i], "preferredLanguage")) }
           { renderIsActive(get(patientsToRender[i], "active")) }
 
-          { renderCounts(props.cursors, i) }
+          { renderCounts(cursors, i) }
           { renderActionButton(patientsToRender[i], styles.avatar) }
 
           { renderSystemBarcode(patientsToRender[i]._id)}
@@ -844,7 +951,7 @@ function PatientTable(props){
 
 
   let paginationFooter;
-  if(!props.disablePagination){
+  if(!disablePagination){
     paginationFooter = <TablePagination
       component="div"
       rowsPerPageOptions={[5, 10, 25, 100]}
@@ -898,9 +1005,12 @@ function PatientTable(props){
 
 
 PatientTable.propTypes = {
+  fhirVersion: PropTypes.string,
+
   id: PropTypes.string,
   patients: PropTypes.array,
-  fhirVersion: PropTypes.string,
+  selectedAuditEventId: PropTypes.string,
+
   showActionButton: PropTypes.bool,
   onRowClick: PropTypes.func,
   hideCheckbox: PropTypes.bool,
@@ -921,7 +1031,7 @@ PatientTable.propTypes = {
   hideCountry: PropTypes.bool,
   hideBarcode: PropTypes.bool,
   hideSystemBarcode: PropTypes.bool,
-
+  hideCounts: PropTypes.bool,
   
   noDataMessagePadding: PropTypes.number,
   rowsPerPage: PropTypes.number,
@@ -933,20 +1043,40 @@ PatientTable.propTypes = {
   defaultAvatar: PropTypes.string,
   disablePagination: PropTypes.bool,
   paginationCount: PropTypes.number,
-  showCounts: PropTypes.bool,
+  dateFormat: PropTypes.string,
+  showMinutes: PropTypes.bool,
+  
   cursors: PropTypes.array,
+  font3of9: PropTypes.bool,
 
-  font3of9: PropTypes.bool
+  count: PropTypes.number,
+  tableRowSize: PropTypes.string,
+  formFactorLayout: PropTypes.string
 };
 PatientTable.defaultProps = {
+  tableRowSize: 'medium',
+  rowsPerPage: 5,
+  dateFormat: "YYYY-MM-DD hh:mm:ss",
   paginationCount: 100,
   hideName: false,
   hideGender: false,
   hideBirthDate: false,
-  rowsPerPage: 5,
+
+  hideMaritalStatus: false,
+  hideLanguage: false,
+  hideSpecies: true,
+  hideAddress: false,
+  hideState: false,
+  hidePostalCode: false,
+  hideCountry: false,
+  hideBarcode: false,
+  hideSystemBarcode: false,
+  hideCounts: true,
+
   font3of9: true,
   hideSystemBarcode: true,
   hideBarcode: false,
+  multiline: false
 }
 
 export default PatientTable;
