@@ -70,11 +70,11 @@ ReactDOM.render(
 **Patient Table Example**
 ```jsx
 import React from 'react';
-import { PatientTable } from 'material-fhir-ui';
+import { PatientsTable } from 'material-fhir-ui';
 
 const MyFhirWorkflowComponent = () => (
   <div>
-    <PatientTable 
+    <PatientsTable 
       noDataMessagePadding={100}
       patients={ Patients.find().fetch() }
       paginationLimit={ t100 }
@@ -111,7 +111,7 @@ Please refer to each component's documentation page to see how they should be im
 ## Component Demos and API Examples      
 
 [PatientCard](https://codesandbox.io/s/material-ui-on-fhir-demo-e9vc0)     
-[PatientTable](https://codesandbox.io/s/patienttable-ks1k8)    
+[PatientsTable](https://codesandbox.io/s/PatientsTable-ks1k8)    
 [PatientDetail](https://codesandbox.io/s/patientdetail-q4r34)     
 
 [ObservationTable](https://codesandbox.io/s/observationtable-tpi8v)     

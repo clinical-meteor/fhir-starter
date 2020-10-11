@@ -10,7 +10,7 @@
 // import TableNoData from './components/TableNoData';
 
 import PatientCard from './patients/PatientCard';
-import PatientTable from './patients/PatientTable';
+import PatientsTable from './patients/PatientsTable';
 import PatientDetail from './patients/PatientDetail';
 
 import ObservationTable from './observations/ObservationTable';
@@ -21,7 +21,7 @@ import PageCanvas from './components/PageCanvas';
 
 export default { 
   PatientCard,
-  PatientTable,
+  PatientsTable,
   PatientDetail,
 
   ObservationTable,

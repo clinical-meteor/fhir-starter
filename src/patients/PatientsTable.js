@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme => ({
 // FLATTENING / MAPPING
 
 
-function flattenPatient(patient, internalDateFormat){
+function flattenPatient(patient, dateFormat){
   let result = {
     _id: get(patient, '_id'),
     id: get(patient, 'id'),
@@ -96,6 +96,7 @@ function flattenPatient(patient, internalDateFormat){
     birthDate: '',
     photo: "/thumbnail-blank.png",
     addressLine: '',
+    city: '',
     state: '',
     postalCode: '',
     country: '',
@@ -155,11 +156,12 @@ function flattenPatient(patient, internalDateFormat){
   // there's an off-by-1 error between momment() and Date() that we want
   // to account for when converting back to a string
   // which is why we run it through moment()
-  result.birthDate = moment(get(patient, "birthDate")).format("YYYY-MM-DD")
+
+  result.birthDate = moment(get(patient, "birthDate")).format(dateFormat)
 
   result.photo = get(patient, 'photo[0].url', '');
 
-  result.maritalStatus = get(patient, 'maritalStatus.text', '');
+  result.maritalStatus = get(patient, 'maritalStatus[0].text', '');
 
   let communicationArray = [];
   if(get(patient, 'communication') && Array.isArray(get(patient, 'communication'))){
@@ -204,6 +206,7 @@ function flattenPatient(patient, internalDateFormat){
 
   // address
   result.addressLine = get(patient, 'address[0].line[0]')
+  result.city = get(patient, 'address[0].city')
   result.state = get(patient, 'address[0].state')
   result.postalCode = get(patient, 'address[0].postalCode')
   result.country = get(patient, 'address[0].country')
@@ -279,8 +282,8 @@ TablePaginationActions.propTypes = {
 //===========================================================================
 // MAIN COMPONENT  
 
-function PatientTable(props){
-  // console.log('PatientTable', props)
+function PatientsTable(props){
+  // console.log('PatientsTable', props)
 
   let { 
     children, 
@@ -301,9 +304,12 @@ function PatientTable(props){
     hideLanguage,
     hideSpecies,
     hideAddress,
+    hideCity,
     hideState,
     hidePostalCode,
     hideCountry,
+    hideSystemBarcode,
+    hideBarcode,
     showActionButton,
     
     noDataMessagePadding,
@@ -316,7 +322,9 @@ function PatientTable(props){
 
     defaultAvatar,
     disablePagination,
+    paginationLimit,
     paginationCount,
+    dateFormat,
     hideCounts,
     cursors, 
     font3of9,
@@ -340,6 +348,7 @@ function PatientTable(props){
 
     switch (formFactorLayout) {
       case "phone":
+        hideActionIcons = true;
         hideName = false;
         hideGender = false;
         hideBirthDate = false;
@@ -347,21 +356,26 @@ function PatientTable(props){
         hideLanguage = true;
         hideSpecies = true;
         hideAddress = true;
+        hideCity = true;
         hideState = true;
         hidePostalCode = true;
         hideCountry = true;
         hideCounts = true;
         hideSystemBarcode = true;
         hideBarcode = true;
+        hideIdentifier = true;
+        hideActive = true;
         break;
       case "tablet":
+        hideActionIcons = true;
         hideName = false;
         hideGender = false;
         hideBirthDate = false;
-        hideMaritalStatus = false;
-        hideLanguage = false;
+        hideMaritalStatus = true;
+        hideLanguage = true;
         hideSpecies = true;
         hideAddress = true;
+        hideCity = true;
         hideState = true;
         hidePostalCode = true;
         hideCountry = true;
@@ -370,6 +384,7 @@ function PatientTable(props){
         hideBarcode = true;
         break;
       case "web":
+        hideActionIcons = true;
         hideName = false;
         hideGender = false;
         hideBirthDate = false;
@@ -377,14 +392,16 @@ function PatientTable(props){
         hideLanguage = false;
         hideSpecies = true;
         hideAddress = true;
+        hideCity = false;
         hideState = false;
         hidePostalCode = false;
-        hideCountry = false;
+        hideCountry = true;
         hideCounts = true;
         hideSystemBarcode = true;
         hideBarcode = true;
         break;
       case "desktop":
+        hideActionIcons = true;
         hideName = false;
         hideGender = false;
         hideBirthDate = false;
@@ -392,6 +409,7 @@ function PatientTable(props){
         hideLanguage = false;
         hideSpecies = true;
         hideAddress = true;
+        hideCity = false;
         hideState = false;
         hidePostalCode = false;
         hideCountry = false;
@@ -400,6 +418,7 @@ function PatientTable(props){
         hideBarcode = true;
         break;
       case "hdmi":
+        hideActionIcons = true;
         hideName = false;
         hideGender = false;
         hideBirthDate = false;
@@ -407,6 +426,7 @@ function PatientTable(props){
         hideLanguage = false;
         hideSpecies = true;
         hideAddress = true;
+        hideCity = false;
         hideState = false;
         hidePostalCode = false;
         hideCountry = false;
@@ -484,7 +504,7 @@ function PatientTable(props){
   function renderIdentifierHeader(){
     if (!hideIdentifier) {
       return (
-        <TableCell className="identifier hidden-on-phone">identifier</TableCell>
+        <TableCell className="identifier hidden-on-phone">Identifier</TableCell>
       );
     }
   }
@@ -581,6 +601,20 @@ function PatientTable(props){
     if (!hideAddress) {
       return (
         <TableCell className='streetAddress'>{streetAddress}</TableCell>
+      );
+    }
+  }
+  function renderCityHeader(){
+    if (!hideCity) {
+      return (
+        <TableCell className="city">City</TableCell>
+      );
+    }
+  }
+  function renderCity(city){
+    if (!hideCity) {
+      return (
+        <TableCell className='city'>{city}</TableCell>
       );
     }
   }
@@ -705,6 +739,7 @@ function PatientTable(props){
 
   function renderBirthDateHeader(){
     if (!hideBirthDate) {
+      
       return (
         <TableCell className="birthDate">Birth Date</TableCell>
       );
@@ -866,13 +901,13 @@ function PatientTable(props){
       let paginatedIndex = (page * rowsPerPageToRender) + index + 1;
 
       serializedCounts = serializeCounts(cursors[paginatedIndex])
-      // console.log('PatientTable.serializedCounts.array', serializedCounts, index, cursors[index])
+      // console.log('PatientsTable.serializedCounts.array', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
-      // console.log('PatientTable.serializedCounts', serializedCounts)
+      // console.log('PatientsTable.serializedCounts', serializedCounts)
     }
 
-    if (hideCounts) {
+    if (!hideCounts) {
       return (
         <TableCell className='counts'>
           {serializedCounts}
@@ -891,7 +926,7 @@ function PatientTable(props){
       let count = 0;  
       patients.forEach(function(patient){
         if((count >= (page * rowsPerPageToRender)) && (count < (page + 1) * rowsPerPageToRender)){
-          patientsToRender.push(flattenPatient(patient));
+          patientsToRender.push(flattenPatient(patient, dateFormat));
         }
         count++;
       });  
@@ -903,7 +938,7 @@ function PatientTable(props){
   } else {
     for (var i = 0; i < patientsToRender.length; i++) {
       let selected = false;
-      if(auditEventsToRender[i].id === selectedAuditEventId){
+      if(patientsToRender[i].id === selectedPatientId){
         selected = true;
       }
 
@@ -929,6 +964,7 @@ function PatientTable(props){
           { renderBirthDate(get(patientsToRender[i], "birthDate"), get(patientsToRender[i], "_id"))}
 
           { renderAddress(get(patientsToRender[i], 'addressLine') ) }
+          { renderCity(get(patientsToRender[i], 'city')) }
           { renderState(get(patientsToRender[i], 'state')) }
           { renderZipCode(get(patientsToRender[i], 'postalCode')) }
           { renderCountry(get(patientsToRender[i], 'country')) }
@@ -979,6 +1015,7 @@ function PatientTable(props){
             { renderBirthDateHeader() }
 
             { renderAddressHeader() }
+            { renderCityHeader() }
             { renderStateHeader() }
             { renderZipCodeHeader() }
             { renderCountryHeader() }
@@ -1004,12 +1041,12 @@ function PatientTable(props){
 }
 
 
-PatientTable.propTypes = {
+PatientsTable.propTypes = {
   fhirVersion: PropTypes.string,
 
   id: PropTypes.string,
   patients: PropTypes.array,
-  selectedAuditEventId: PropTypes.string,
+  selectedPatientId: PropTypes.string,
 
   showActionButton: PropTypes.bool,
   onRowClick: PropTypes.func,
@@ -1026,6 +1063,7 @@ PatientTable.propTypes = {
   hideLanguage: PropTypes.bool,
   hideSpecies: PropTypes.bool,
   hideAddress: PropTypes.bool,
+  hideCity: PropTypes.bool,
   hideState: PropTypes.bool,
   hidePostalCode: PropTypes.bool,
   hideCountry: PropTypes.bool,
@@ -1042,6 +1080,7 @@ PatientTable.propTypes = {
   actionButtonLabel: PropTypes.string,
   defaultAvatar: PropTypes.string,
   disablePagination: PropTypes.bool,
+  paginationLimit: PropTypes.number,
   paginationCount: PropTypes.number,
   dateFormat: PropTypes.string,
   showMinutes: PropTypes.bool,
@@ -1053,10 +1092,10 @@ PatientTable.propTypes = {
   tableRowSize: PropTypes.string,
   formFactorLayout: PropTypes.string
 };
-PatientTable.defaultProps = {
+PatientsTable.defaultProps = {
   tableRowSize: 'medium',
   rowsPerPage: 5,
-  dateFormat: "YYYY-MM-DD hh:mm:ss",
+  dateFormat: "YYYY-MM-DD",
   paginationCount: 100,
   hideName: false,
   hideGender: false,
@@ -1066,6 +1105,7 @@ PatientTable.defaultProps = {
   hideLanguage: false,
   hideSpecies: true,
   hideAddress: false,
+  hideCity: false,
   hideState: false,
   hidePostalCode: false,
   hideCountry: false,
@@ -1074,12 +1114,11 @@ PatientTable.defaultProps = {
   hideCounts: true,
 
   font3of9: true,
-  hideSystemBarcode: true,
   hideBarcode: false,
   multiline: false
 }
 
-export default PatientTable;
+export default PatientsTable;
 
 
 

@@ -20,6 +20,10 @@ import _ from 'lodash';
 let get = _.get;
 let set = _.set;
 
+import moment from 'moment';
+
+import StyledCard from '../components/StyledCard';
+
 import { makeStyles, useTheme } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -213,37 +217,47 @@ function PatientCard(props){
 
   console.log('PatientCard v0.7.22')
 
-  let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = props;
 
-  fullName = get(props, 'patient.name[0].text', '');
-  familyName = get(props, 'patient.name[0].family[0]', '');        
-  givenName = get(props, 'patient.name[0].given[0]', '');
-  email = get(props, 'patient.contact[0].value', '');
-  birthdate = get(props, 'patient.birthDate', '');
-  gender = get(props, 'patient.gender', '');
-  avatar = get(props, 'patient.photo[0].url', '');
-  identifier = get(props, 'patient.identifier[0].value', '');
+  let { identifier, active, familyName, givenName, fullName, email, birthDate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = props;
+
+  // fullName = get(props, 'patient.name[0].text', '');
+  // familyName = get(props, 'patient.name[0].family[0]', '');        
+  // givenName = get(props, 'patient.name[0].given[0]', '');
+  // email = get(props, 'patient.contact[0].value', '');
+  // birthdate = get(props, 'patient.birthDate', '');
+  // gender = get(props, 'patient.gender', '');
+  // avatar = get(props, 'patient.photo[0].url', '');
+  // identifier = get(props, 'patient.identifier[0].value', '');
+
+  if(patient){
+    fullName = get(patient, 'name[0].text', '');
+
+    if(Array.isArray(get(patient, 'name[0].family'))){
+      familyName = get(patient, 'name[0].family[0]', '');        
+    } else {
+      familyName = get(patient, 'name[0].family', '');        
+    }
+
+    givenName = get(patient, 'name[0].given[0]', '');
+
+    email = get(patient, 'contact[0].value', '');
+    birthDate = get(patient, 'birthDate', '');
+    gender = get(patient, 'gender', '');
+    avatar = get(patient, 'photo[0].url', '');
+    identifier = get(patient, 'identifier[0].value', '');
+  } 
 
   const classes = useStyles();
   const theme = useTheme();
 
   return(
   <div className='patientCard'>
-    <Card>
+    <StyledCard otherProps >
       <CardHeader title={fullName} />
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography variant="h5" color="textSecondary">
-            { birthdate } 
-          </Typography>
           <Typography color="textSecondary">
-            { gender }
-          </Typography>
-          <Typography color="textSecondary">
-            { identifier }
-          </Typography>
-          <Typography color="textSecondary">
-            { email }
+            MRN: { identifier } DOB:  { moment(birthDate).format("MMM DD, YYYY") } Gender: { gender } 
           </Typography>
         </CardContent>
       </div>
@@ -251,19 +265,20 @@ function PatientCard(props){
         className={classes.cover}
         image={avatar}
       />
-    </Card>
+    </StyledCard>
   </div>
   );
 }
 
 
 PatientCard.propTypes = {
+  patient: PropTypes.object,
   multiline: PropTypes.bool,
   fullName: PropTypes.string,
   familyName: PropTypes.string,
   givenName: PropTypes.string,
   email: PropTypes.string,
-  birthdate: PropTypes.string,
+  birthDate: PropTypes.string,
   gender: PropTypes.string,
   avatar: PropTypes.string,
   hideDetails: PropTypes.bool,
