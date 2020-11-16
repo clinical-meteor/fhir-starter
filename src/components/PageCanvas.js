@@ -7,7 +7,7 @@ import { get } from 'lodash';
 function PageCanvas(props){
   // console.log('PageCanvas.props', props);
 
-  let {
+  const {
     logging,
     children, 
     classes, 
@@ -36,7 +36,8 @@ function PageCanvas(props){
   }
 
   if(logging){
-    console.log('returnedStyle', returnedStyle)
+    console.log('PageCanvas.logging', logging)
+    // console.log('returnedStyle', returnedStyle)
   }
 
   return(
