@@ -19,7 +19,7 @@ import TableNoData from './components/TableNoData';
 import StyledCard from './components/StyledCard';
 import PageCanvas from './components/PageCanvas';
 
-export default { 
+export { 
   PatientCard,
   PatientsTable,
   PatientDetail,
