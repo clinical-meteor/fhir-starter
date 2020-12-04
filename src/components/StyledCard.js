@@ -29,9 +29,12 @@ function StyledCard(props){
   let footerHeight = 64;
 
 
-  if(get(Meteor, 'settings.public.defaults.prominantHeader', false)){
-    headerHeight = 128;
-  } 
+  // backwards compatibility with Meteor on FHIR  
+  if(typeof Meteor === "object"){
+    if(get(Meteor, 'settings.public.defaults.prominantHeader', false)){
+      headerHeight = 128;
+    }   
+  }
 
   if(get(props, 'headerHeight')){
     headerHeight = get(props, 'headerHeight')

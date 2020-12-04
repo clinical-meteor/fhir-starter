@@ -55,6 +55,13 @@ import MyAwesomeReactComponent from './MyAwesomeReactComponent';
 
 import { PatientCard } from 'material-fhir-ui';
 
+import {
+  MuiThemeProvider,
+  makeStyles,
+  createMuiTheme,
+} from '@material-ui/core/styles';
+
+
 const App = () => (
   <MuiThemeProvider>
     <PatientCard />

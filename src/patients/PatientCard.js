@@ -3,17 +3,22 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
- */
+ */  
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { 
   Card,
-  CardHeader,
+  CardHeader,  
   CardContent,
   CardMedia,
-  Typography
+  Typography, 
+  TextField,
+  FormControl,
+  Input, 
+  InputLabel,
+  Grid
 } from '@material-ui/core';
 
 import _ from 'lodash';
@@ -24,36 +29,10 @@ import moment from 'moment';
 
 import StyledCard from '../components/StyledCard';
 
-import { makeStyles, useTheme } from '@material-ui/styles';
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    display: 'flex',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    width: 151,
-  },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-  },
-  playIcon: {
-    height: 38,
-    width: 38,
-  },
-}));
+// import { makeStyles, useTheme } from '@material-ui/styles';
 
 // import { get } from 'lodash-es';
-// import moment from 'moment'
+// import moment from 'moment';
 
 // const style = {
 //   avatar: {
@@ -94,140 +73,16 @@ const useStyles = makeStyles(theme => ({
 // },
 // }
 
-// export class PatientCard extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       name: 'Guest'
-//     }
-//     if(props.name){
-//       this.state.name = props.name;      
-//     }
-//   }
-
-//   render() {
-//     let { identifier, active, familyName, givenName, fullName, email, birthdate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = this.props;
-
-//     fullName = get(this, 'props.patient.name[0].text', '');
-//     familyName = get(this, 'props.patient.name[0].family[0]', '');        
-//     givenName = get(this, 'props.patient.name[0].given[0]', '');
-//     email = get(this, 'props.patient.contact[0].value', '');
-//     birthdate = get(this, 'props.patient.birthDate', '');
-//     gender = get(this, 'props.patient.gender', '');
-//     avatar = get(this, 'props.patient.photo[0].url', '');
-//     identifier = get(this, 'props.patient.identifier[0].value', '');
-        
-//     let details;
-//     if(!this.props.hideDetails){
-//         details = <div id='profileDemographicsPane' style={{position: 'relative'}}>
-//                   <Row style={ style.synopsis} >
-//                     <Col md={6}>
-//                       <TextField
-//                         id='givenNameInput'
-//                         name='given'
-//                         type='text'
-//                         floatingLabelText='given name'
-//                         value={ givenName }                        
-//                         fullWidth
-//                         /><br/>
-//                     </Col>
-//                     <Col md={6}>
-//                       <TextField
-//                         id='familyNameInput'
-//                         name='family'
-//                         type='text'
-//                         floatingLabelText='family name'
-//                         value={ familyName }                        
-//                         fullWidth
-//                         /><br/>
-//                     </Col>
-//                   </Row>
-//                   <Row style={ style.synopsis }>
-//                     <Col md={4}>
-//                       <TextField
-//                         id='birthdateInput'
-//                         name='birthdate'
-//                         type='date'
-//                         floatingLabelText='date of birth'
-//                         floatingLabelFixed={true}
-//                         value={ moment(birthdate).format('YYYY-MM-DD') }                                                  
-//                         fullWidth
-//                         /><br/>
-//                     </Col>
-//                     <Col md={2}>
-//                       <TextField
-//                         id='genderInput'
-//                         name='gender'
-//                         type='text'
-//                         floatingLabelText='gender'
-//                         value={ gender }                        
-//                         fullWidth
-//                         /><br/>
-
-//                     </Col>
-//                     <Col md={6}>
-//                       <TextField
-//                         id='avatarInput'
-//                         name='avatar'
-//                         type='text'
-//                         floatingLabelText='avatar'
-//                         value={ avatar }                        
-//                         fullWidth
-//                         /><br/>
-
-//                     </Col>
-//                   </Row>
-//                 </div>
-
-//     }
-
-//     if(this.props.style){
-//       style.patientCard = this.props.style;
-//     }
-
-//     return(
-//       <div className='patientCard' style={style.patientCardSpace} >
-//         <Card style={ style.photo } >
-//           <img 
-//             id='avatarImage' 
-//             className='avatarImage' 
-//             onError={(e)=>{e.target.onerror = null; e.target.src = get(this, 'props.defaultAvatar') }}
-//             src={ avatar } 
-//             style={ style.avatar} 
-//             />
-//         </Card>
-//         <Card style={ style.patientCard } >
-//           <CardTitle
-//               title={ fullName }
-//               subtitle={ birthdate + ', ' + gender }
-//               style={ style.title }
-//             />
-//           <CardText>
-//             { details }
-//           </CardText>
-//         </Card>
-//       </div>
-//     );
-//   }
-// }
-
 
 
 function PatientCard(props){
 
-  console.log('PatientCard v0.7.22')
+  console.log('PatientCard v0.10.34')
 
 
-  let { identifier, active, familyName, givenName, fullName, email, birthDate, gender, avatar, patient, zDepth, overflowY, ...otherProps } = props;
+  let { identifier, active, familyName, givenName, fullName, email, birthDate, gender, avatar, patient, zDepth, overflowY, showDetails, showSummary, showName, ...otherProps } = props;
 
-  // fullName = get(props, 'patient.name[0].text', '');
-  // familyName = get(props, 'patient.name[0].family[0]', '');        
-  // givenName = get(props, 'patient.name[0].given[0]', '');
-  // email = get(props, 'patient.contact[0].value', '');
-  // birthdate = get(props, 'patient.birthDate', '');
-  // gender = get(props, 'patient.gender', '');
-  // avatar = get(props, 'patient.photo[0].url', '');
-  // identifier = get(props, 'patient.identifier[0].value', '');
+
 
   if(patient){
     fullName = get(patient, 'name[0].text', '');
@@ -247,24 +102,134 @@ function PatientCard(props){
     identifier = get(patient, 'identifier[0].value', '');
   } 
 
-  const classes = useStyles();
-  const theme = useTheme();
+  const styles = {
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    content: {
+      flex: '1 0 auto',
+    },
+    cover: {
+      width: 151
+    },
+    patientCardSpace: {
+      position: 'relative'
+    }
+  }
+
+  function handleChange(){ 
+
+  }
+     
+  let details;
+  if(props.showDetails){
+      details = <div id='profileDemographicsPane' style={{position: 'relative'}}>
+        <Grid container justify="space-evenly" style={ styles.synopsis} >
+          <Grid item md={6} style={{paddingRight: '10px', paddingBottom: '20px'}}>
+            <TextField
+              id='givenNameInput'
+              name='given'
+              type='text'
+              label='Given Name'
+              value={ givenName }    
+              // helperText="aka First Name"                    
+              fullWidth
+              /><br/>
+          </Grid>
+          <Grid item md={6} style={{paddingLeft: '10px', paddingBottom: '20px'}}>
+            <TextField
+              id='familyNameInput'
+              name='family'
+              type='text'
+              label='Family Name'
+              value={ familyName }                        
+              fullWidth
+              /><br/>
+          </Grid>
+        </Grid>
+        <Grid container style={ styles.synopsis }>
+          <Grid item md={4} style={{paddingRight: '10px'}}>
+            <TextField
+              id='birthDateInput'
+              name='birthDate'
+              type={ birthDate ? 'date' : 'text' }    
+              label='Date of Birth' 
+              value={ birthDate ? moment(birthDate).format('YYYY-MM-DD') : '' }                                                  
+              fullWidth
+              /><br/>
+          </Grid>
+          <Grid item md={2} style={{paddingRight: '10px', paddingLeft: '10px'}} >
+            <TextField
+              id='genderInput'
+              name='gender'
+              type='text'
+              label='Gender'
+              value={ gender }                        
+              fullWidth
+              /><br/>
+          </Grid>
+          <Grid item md={6} style={{paddingLeft: '10px'}}>
+            <TextField
+              id='avatarInput'
+              name='avatar'
+              type='text'
+              label='Avatar'
+              value={ avatar }                        
+              fullWidth
+              /><br/>
+          </Grid>
+        </Grid>
+      </div>
+
+  }
+
+  let styledCardStyle = {
+    display: 'flex',
+    flexGrow: 1
+  }
+
+
+  let showMedia = false;
+  let mediaElements;
+  let avatarHeight = 220;
+  if(avatar){
+    if(!showName){
+      avatarHeight = avatarHeight - 64;
+    }
+    if(!showDetails){
+      avatarHeight = avatarHeight - 156;
+    }
+    mediaElements = <CardMedia      
+      image={avatar}      
+      style={{height: avatarHeight + 'px', width: '151px'}}
+    />
+  }
+
+  let summaryElements;
+  if(showSummary){
+    summaryElements = <Typography color="textSecondary">
+      MRN: { identifier } DOB:  { moment(birthDate).format("MMM DD, YYYY") } Gender: { gender } 
+    </Typography>
+  }
+
+  let nameElements;
+  if(showName){
+    nameElements = <CardHeader title={fullName} />
+  }
 
   return(
+
   <div className='patientCard'>
-    <StyledCard otherProps >
-      <CardHeader title={fullName} />
-      <div className={classes.details}>
-        <CardContent className={classes.content}>
-          <Typography color="textSecondary">
-            MRN: { identifier } DOB:  { moment(birthDate).format("MMM DD, YYYY") } Gender: { gender } 
-          </Typography>
+    <StyledCard style={styledCardStyle} >
+      { mediaElements }
+      <div style={styles.details}>
+        { nameElements }
+        <CardContent>
+          { showSummary }
+          { details }
         </CardContent>
       </div>
-      <CardMedia
-        className={classes.cover}
-        image={avatar}
-      />
     </StyledCard>
   </div>
   );
@@ -281,10 +246,18 @@ PatientCard.propTypes = {
   birthDate: PropTypes.string,
   gender: PropTypes.string,
   avatar: PropTypes.string,
-  hideDetails: PropTypes.bool,
+  hideDetails: PropTypes.bool,  // deprecated
+  showDetails: PropTypes.bool,
+  showSummary: PropTypes.bool,
+  showName: PropTypes.bool,
   overflowY: PropTypes.string,
   style: PropTypes.object,
   defaultAvatar: PropTypes.string
 };
+PatientCard.defaultProps = {
+  showDetails: true,
+  showSummary: false,
+  showName: true
+}
 
 export default PatientCard;
