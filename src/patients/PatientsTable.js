@@ -309,7 +309,7 @@ function PatientsTable(props){
     hidePostalCode,
     hideCountry,
     hideSystemBarcode,
-    hideBarcode,
+    hideFhirBarcode,
     showActionButton,
     
     noDataMessagePadding,
@@ -362,7 +362,7 @@ function PatientsTable(props){
         hideCountry = true;
         hideCounts = true;
         hideSystemBarcode = true;
-        hideBarcode = true;
+        hideFhirBarcode = true;
         hideIdentifier = true;
         hideActive = true;
         break;
@@ -381,7 +381,7 @@ function PatientsTable(props){
         hideCountry = true;
         hideCounts = true;
         hideSystemBarcode = true;
-        hideBarcode = true;
+        hideFhirBarcode = true;
         break;
       case "web":
         hideActionIcons = true;
@@ -398,7 +398,7 @@ function PatientsTable(props){
         hideCountry = true;
         hideCounts = true;
         hideSystemBarcode = true;
-        hideBarcode = true;
+        hideFhirBarcode = true;
         break;
       case "desktop":
         hideActionIcons = true;
@@ -415,7 +415,7 @@ function PatientsTable(props){
         hideCountry = false;
         hideCounts = true;
         hideSystemBarcode = true;
-        hideBarcode = true;
+        hideFhirBarcode = true;
         break;
       case "hdmi":
         hideActionIcons = true;
@@ -431,8 +431,8 @@ function PatientsTable(props){
         hidePostalCode = false;
         hideCountry = false;
         hideCounts = true;
-        hideSystemBarcode = false;
-        hideBarcode = true;
+        hideSystemBarcode = true;
+        hideFhirBarcode = false;
         break;            
     }
   }
@@ -753,7 +753,7 @@ function PatientsTable(props){
     }
   }
   function renderBarcode(id){
-    if (!hideBarcode) {
+    if (!hideFhirBarcode) {
 
       let barcodeClasses = "helvetica";
 
@@ -767,7 +767,7 @@ function PatientsTable(props){
     }
   }
   function renderBarcodeHeader(){
-    if (!hideBarcode) {
+    if (!hideFhirBarcode) {
       return (
         <TableCell>FHIR ID</TableCell>
       );
@@ -1067,7 +1067,7 @@ PatientsTable.propTypes = {
   hideState: PropTypes.bool,
   hidePostalCode: PropTypes.bool,
   hideCountry: PropTypes.bool,
-  hideBarcode: PropTypes.bool,
+  hideFhirBarcode: PropTypes.bool,
   hideSystemBarcode: PropTypes.bool,
   hideCounts: PropTypes.bool,
   
@@ -1109,12 +1109,12 @@ PatientsTable.defaultProps = {
   hideState: false,
   hidePostalCode: false,
   hideCountry: false,
-  hideBarcode: false,
+  hideFhirBarcode: false,
   hideSystemBarcode: false,
   hideCounts: true,
 
   font3of9: true,
-  hideBarcode: false,
+  hideFhirBarcode: false,
   multiline: false
 }
 
