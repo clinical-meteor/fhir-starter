@@ -80,7 +80,7 @@ function PatientCard(props){
   console.log('PatientCard v0.10.34')
 
 
-  let { identifier, active, familyName, givenName, fullName, email, birthDate, gender, avatar, patient, zDepth, overflowY, showDetails, showSummary, showName, ...otherProps } = props;
+  let { identifier, active, familyName, givenName, fullName, email, birthDate, gender, avatar, patient, zDepth, overflowY, showDetails, showSummary, showName, avatarUrlHostname, ...otherProps } = props;
 
 
 
@@ -98,7 +98,11 @@ function PatientCard(props){
     email = get(patient, 'contact[0].value', '');
     birthDate = get(patient, 'birthDate', '');
     gender = get(patient, 'gender', '');
-    avatar = get(patient, 'photo[0].url', '');
+    if(avatarUrlHostname){
+      avatar = avatarUrlHostname + get(patient, 'photo[0].url', '');
+    } else {
+      avatar = get(patient, 'photo[0].url', '');
+    }
     identifier = get(patient, 'identifier[0].value', '');
   } 
 
@@ -252,12 +256,14 @@ PatientCard.propTypes = {
   showName: PropTypes.bool,
   overflowY: PropTypes.string,
   style: PropTypes.object,
-  defaultAvatar: PropTypes.string
+  defaultAvatar: PropTypes.string,
+  avatarUrlHostname: PropTypes.string
 };
 PatientCard.defaultProps = {
   showDetails: true,
   showSummary: false,
-  showName: true
+  showName: true,
+  avatarUrlHostname: ''
 }
 
 export default PatientCard;
