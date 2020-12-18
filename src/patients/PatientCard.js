@@ -77,7 +77,7 @@ import StyledCard from '../components/StyledCard';
 
 function PatientCard(props){
 
-  console.log('PatientCard v0.10.34')
+  console.log('PatientCard v0.10.60')
 
 
   let { identifier, active, familyName, givenName, fullName, email, birthDate, gender, avatar, patient, zDepth, overflowY, showDetails, showSummary, showName, avatarUrlHostname, ...otherProps } = props;
