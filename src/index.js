@@ -13,18 +13,22 @@ import PatientCard from './patients/PatientCard';
 import PatientsTable from './patients/PatientsTable';
 import PatientDetail from './patients/PatientDetail';
 
-import ObservationTable from './observations/ObservationTable';
+import ObservationsTable from './observations/ObservationsTable';
 
 import TableNoData from './components/TableNoData';
 import StyledCard from './components/StyledCard';
 import PageCanvas from './components/PageCanvas';
+import DynamicSpacer from './components/DynamicSpacer';
+
+import ValueSetsTable from './valuesets/ValueSetsTable';
 
 export { 
   PatientCard,
   PatientsTable,
   PatientDetail,
 
-  ObservationTable,
+  ObservationsTable,
+  ValueSetsTable,
 
   TableNoData,
   StyledCard,
