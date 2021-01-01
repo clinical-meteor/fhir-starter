@@ -22,6 +22,8 @@ import DynamicSpacer from './components/DynamicSpacer';
 
 import ValueSetsTable from './valuesets/ValueSetsTable';
 
+import FhirDehydrator from './FhirDehydrator';
+
 export { 
   PatientCard,
   PatientsTable,
@@ -32,5 +34,7 @@ export {
 
   TableNoData,
   StyledCard,
-  PageCanvas
+  PageCanvas,
+  
+  FhirDehydrator  
 };
