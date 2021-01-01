@@ -1,6 +1,6 @@
 ## Contributing to Material FHIR UI
 
-♥ [material-fhir-ui](https://github.com/clinical-meteor/material-fhir-ui) and want to get involved? Thanks!
+♥ [fhir-starter](https://github.com/clinical-meteor/fhir-starter) and want to get involved? Thanks!
 There are plenty of ways you can help!
 
 Please take a moment to review this document in order to make the contribution process easy and
@@ -96,10 +96,10 @@ Adhering to the following process is the best way to get your work included in t
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/material-fhir-ui.git
+   git clone https://github.com/<your-username>/fhir-starter.git
 
    # Navigate to the newly cloned directory
-   cd material-fhir-ui
+   cd fhir-starter
 
    # Assign the original repo to a remote called "upstream"
    git remote add upstream https://github.com/kriasoft/babel-starter-kit.git
@@ -164,7 +164,7 @@ yarn rollup -c --watch
 meteor npm install  
 
 # link the npm package you're locally working on
-meteor npm link packages/material-fhir-ui  
+meteor npm link packages/fhir-starter  
 
 # run the app with your local version
 # meteor will watch the file system for changes

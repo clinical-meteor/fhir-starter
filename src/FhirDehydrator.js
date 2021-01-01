@@ -1841,7 +1841,7 @@ export function flatten(collectionName, resource){
   }
 }
 
-FhirDehydrator = {
+export const FhirDehydrator = {
   dehydrateAllergyIntolerance: flattenAllergyIntolerance,
   dehydrateBundle: flattenBundle,
   dehydrateCarePlan: flattenCarePlan,

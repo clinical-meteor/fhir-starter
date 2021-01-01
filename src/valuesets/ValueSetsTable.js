@@ -10,7 +10,7 @@ import {
   TablePagination
 } from '@material-ui/core';
 
-import TableNoData from 'material-fhir-ui';
+import TableNoData from '../components/TableNoData';
 
 import moment from 'moment'
 import _ from 'lodash';

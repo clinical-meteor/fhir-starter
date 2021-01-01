@@ -1,4 +1,4 @@
-## [material-fhir-ui](http://clinical.meteorapp.com)  
+## [fhir-starter](http://clinical.meteorapp.com)  
 [![npm package](https://img.shields.io/npm/v/material-ui.svg?style=flat-square)](https://www.npmjs.org/package/material-ui)
 
 Material-FHIR UI is a set of [React](http://facebook.github.io/react/) components that implement [HL7 FHIR Resources](https://www.hl7.org/fhir/resourcelist.html) using
@@ -19,15 +19,15 @@ If you're interested in non-normative resources, feel free to peruse the `/clien
 
 ## Installation
 
-Material-FHIR-UI is available as an [npm package](https://www.npmjs.org/package/material-ui).
+fhir-starter is available as an [npm package](https://www.npmjs.org/package/material-ui).
 
 ```sh
-npm install material-fhir-ui
+npm install fhir-starter
 ```
 
 To save the package to your Meteor app's `package.json` file, run the following:
 ```sh
-meteor npm install --save material-fhir-ui winston
+meteor npm install --save fhir-starter winston
 ```
 
 
@@ -45,7 +45,7 @@ on how to do so.
 
 ## Theming  
 
-Material-FHIR-UI components require a theme to be provided. The quickest way to get up and running is by using the `MuiThemeProvider` to inject the theme into your application context. Following that, you can to use any of the components as demonstrated in the documentation. Here is a quick example to get you started:
+fhir-starter components require a theme to be provided. The quickest way to get up and running is by using the `MuiThemeProvider` to inject the theme into your application context. Following that, you can to use any of the components as demonstrated in the documentation. Here is a quick example to get you started:
 
 ```jsx
 import React from 'react';
@@ -53,7 +53,7 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MyAwesomeReactComponent from './MyAwesomeReactComponent';
 
-import { PatientCard } from 'material-fhir-ui';
+import { PatientCard } from 'fhir-starter';
 
 import {
   MuiThemeProvider,
@@ -77,7 +77,7 @@ ReactDOM.render(
 **Patient Table Example**
 ```jsx
 import React from 'react';
-import { PatientsTable } from 'material-fhir-ui';
+import { PatientsTable } from 'fhir-starter';
 
 const MyFhirWorkflowComponent = () => (
   <div>
@@ -197,18 +197,18 @@ https://github.com/clinical-meteor/material-fhir-demo
 
 ```js
 // LOCAL DEVELOPMENT
-git clone https://github.com/clinical-meteor/material-fhir-ui packages/material-fhir-ui
-meteor npm link packages/material-fhir-ui
+git clone https://github.com/clinical-meteor/fhir-starter packages/fhir-starter
+meteor npm link packages/fhir-starter
 
-cd packages/material-fhir-ui
+cd packages/fhir-starter
 
 yarn add rollup rollup-plugin-terser rollup-plugin-typescript2 typescript rollup-plugin-babel rollup-plugin-commonjs rollup-plugin-node-resolve rollup-plugin-replace rollup-plugin-progress @babel/core @babel/preset-env --only=dev 
 
 
-// bump the material-fhir-ui/package.json version number
+// bump the fhir-starter/package.json version number
 nano package.json
 
-// bump the application's dependency on material-fhir-ui
+// bump the application's dependency on fhir-starter
 nano ../../package.json
 
 // get rollup working
@@ -224,7 +224,7 @@ yarn rollup --config
 meteor reset
 rm -rf node_modules
 meteor npm install
-meteor npm link packages/material-fhir-ui
+meteor npm link packages/fhir-starter
 ```
 
 ## Deployment
@@ -235,7 +235,7 @@ meteor npm link packages/material-fhir-ui
 - [The crucial tool for modern frontend engineers](https://blog.hichroma.com/the-crucial-tool-for-modern-frontend-engineers-fb849b06187a)    
 
 ```js
-cd packages/material-fhir-ui
+cd packages/fhir-starter
 rm -rf node_modules
 
 npm update
