@@ -699,7 +699,7 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
   result.contentAttachment = get(documentReference, 'content[0].attachment.url', '')
   result.contentTitle = get(documentReference, 'content[0].attachment.title', '')
   result.contentSize = get(documentReference, 'content[0].attachment.size', '')
-  result.contentFormat = get(documentReference, 'content[0].format', '')
+  result.contentFormat = get(documentReference, 'content[0].format.display', '')
 
   if(Array.isArray(documentReference.content)){
     result.contentCount = documentReference.content.length;
