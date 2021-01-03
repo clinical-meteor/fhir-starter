@@ -273,8 +273,8 @@ export function flattenComposition(composition){
     classCode: ''
   };
 
-  result.id = get(plan, 'id', '');
-  result._id = get(plan, '_id', '');
+  result.id = get(composition, 'id', '');
+  result._id = get(composition, '_id', '');
 
   if(get(composition, 'subject.display', '')){
     result.subject = get(composition, 'subject.display', '');
@@ -299,7 +299,9 @@ export function flattenComposition(composition){
 
   let statusHistory = get(composition, 'statusHistory', []);
 
-  result.statusHistory = statusHistory.length;
+  if(Array.isArray(statusHistory)){
+    result.statusHistory = statusHistory.length;
+  }
 
   return result;
 }
