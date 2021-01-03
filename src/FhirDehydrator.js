@@ -260,47 +260,67 @@ export function flattenComposition(composition){
     _id: '',
     id: '',
     meta: '',
-    subject: '',
-    subjectId: '',
+    identifier: '',
     status: '',
-    statusHistory: 0,
-    periodStart: '',
-    periodEnd: '',
-    reasonCode: '', 
-    reasonDisplay: '', 
     typeCode: '',
     typeDisplay: '',
-    classCode: ''
+    categoryDisplay: '',
+    subject: '',
+    subjectReference: '',
+    encounter: '',
+    encounterReference: '',
+    author: '',
+    authorReference: '',
+    relatesToCode: '',
+    relatesToIdentifier: '',
+    relatesToDisplay: '',
+    relatesToReference: '',
+    date: '',
+
+    sectionsCount: 0,
   };
 
   result.id = get(composition, 'id', '');
   result._id = get(composition, '_id', '');
 
-  if(get(composition, 'subject.display', '')){
+  result.identifier = get(composition, 'identifier[0].value', '')    
+  result.status = get(composition, 'status', '');
+  result.date = moment(get(composition, 'date', '')).format("YYYY-MM-DD hh:mm");
+  result.typeCode = get(composition, 'type.coding[0].code', '');
+  result.typeDisplay = get(composition, 'type.coding[0].display', '');
+  result.categoryDisplay = get(composition, 'category[0].text', '');
+
+
+  if(has(composition, 'subject')){
     result.subject = get(composition, 'subject.display', '');
   } else {
     result.subject = get(composition, 'subject.reference', '');
   }
-  result.subjectId = get(composition, 'subject.reference', '');
+  result.subjectReference = get(composition, 'subject.reference', '');
 
-  result.status = get(composition, 'status', '');
-  result.periodStart = moment(get(composition, 'period.start', '')).format("YYYY-MM-DD hh:mm");
-  result.periodEnd = moment(get(composition, 'period.end', '')).format("YYYY-MM-DD hh:ss");
-  result.reasonCode = get(composition, 'reason[0].coding[0].code', '');
-  result.reasonDisplay = get(composition, 'reason[0].coding[0].display', '');
-  result.typeCode = get(composition, 'type[0].coding[0].code', '');
-  result.typeDisplay = get(composition, 'type[0].coding[0].display', '');
-
-  if(get(composition, 'class.code')){
-    result.classCode = get(composition, 'class.code', '');
-  } else if(get(composition, 'class')){
-    result.classCode = get(composition, 'class', '');
+  if(has(composition, 'encounter')){
+    result.encounter = get(composition, 'encounter.display', '');
+  } else {
+    result.encounter = get(composition, 'encounter.reference', '');
   }
+  result.encounterReference = get(composition, 'encounter.reference', '');
 
-  let statusHistory = get(composition, 'statusHistory', []);
+  if(has(composition, 'author')){
+    result.author = get(composition, 'author.display', '');
+  } else {
+    result.author = get(composition, 'author.reference', '');
+  }
+  result.authorReference = get(composition, 'author.reference', '');
 
-  if(Array.isArray(statusHistory)){
-    result.statusHistory = statusHistory.length;
+
+  result.relatesToCode = get(composition, 'relatesTo[0].code', '');
+  result.relatesToIdentifier = get(composition, 'relatesTo[0].targetIdentifier.value', '');
+  result.relatesToDisplay = get(composition, 'relatesTo[0].targetReference.display', '');
+  result.relatesToReference = get(composition, 'relatesTo[0].targetReference.reference', '');
+  
+  let sectionArray = get(composition, 'section', []);
+  if(Array.isArray(sectionArray)){
+    result.sectionsCount = sectionArray.length;
   }
 
   return result;
