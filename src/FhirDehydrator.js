@@ -681,30 +681,30 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
 
   result.date = moment(get(documentReference, 'date')).format("YYYY-MM-DD");
 
-  if(get(report, 'category.coding[0].code')){
-    result.category = get(report, 'category.coding[0].code');
+  if(get(documentReference, 'category.coding[0].code')){
+    result.category = get(documentReference, 'category.coding[0].code');
   } else {
-    result.category = get(report, 'category.text');
+    result.category = get(documentReference, 'category.text');
   }
 
-  result.typeDisplay = get(auditEvent, 'type.display', '');
-  result.typeCode = get(auditEvent, 'type.code', '');
+  result.typeDisplay = get(documentReference, 'type.display', '');
+  result.typeCode = get(documentReference, 'type.code', '');
 
-  result.author = get(plan, 'author[0].display', '')
-  result.authorReference = get(plan, 'author[0].reference', '')
+  result.author = get(documentReference, 'author[0].display', '')
+  result.authorReference = get(documentReference, 'author[0].reference', '')
 
-  result.relatesToCode = get(plan, 'relatesTo[0].code', '')
-  result.relatesToReference = get(plan, 'relatesTo[0].reference', '')
+  result.relatesToCode = get(documentReference, 'relatesTo[0].code', '')
+  result.relatesToReference = get(documentReference, 'relatesTo[0].reference', '')
 
   result.description = get(documentReference, 'description', '');
 
-  result.contentAttachment = get(plan, 'content[0].attachment', '')
-  result.contentFormat = get(plan, 'content[0].format', '')
+  result.contentAttachment = get(documentReference, 'content[0].attachment', '')
+  result.contentFormat = get(documentReference, 'content[0].format', '')
 
   if(Array.isArray(documentReference.content)){
     result.contentCount = documentReference.content.length;
   }
-  result.content = get(plan, 'content[0].display', '')
+  result.content = get(documentReference, 'content[0].display', '')
 
   console.log('result', JSON.stringify(result))
   return result;
