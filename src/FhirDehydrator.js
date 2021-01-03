@@ -656,10 +656,10 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     relatesToCode: '',
     relatesToReference: '',
 
-    description: '',
-
     contentAttachment: '',
     contentFormat: '',
+    contentTitle: '',
+    contentSize: '',
     contentCount: 0
   };
 
@@ -687,26 +687,24 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     result.category = get(documentReference, 'category.text');
   }
 
-  result.typeDisplay = get(documentReference, 'type.display', '');
-  result.typeCode = get(documentReference, 'type.code', '');
+  result.typeCode = get(documentReference, 'type.coding[0].code', '');
+  result.typeDisplay = get(documentReference, 'type.text', '');
 
   result.author = get(documentReference, 'author[0].display', '')
   result.authorReference = get(documentReference, 'author[0].reference', '')
 
   result.relatesToCode = get(documentReference, 'relatesTo[0].code', '')
-  result.relatesToReference = get(documentReference, 'relatesTo[0].reference', '')
+  result.relatesToReference = get(documentReference, 'relatesTo[0].target.reference', '')
 
-  result.description = get(documentReference, 'description', '');
-
-  result.contentAttachment = get(documentReference, 'content[0].attachment', '')
+  result.contentAttachment = get(documentReference, 'content[0].attachment.url', '')
+  result.contentTitle = get(documentReference, 'content[0].attachment.title', '')
+  result.contentSize = get(documentReference, 'content[0].attachment.size', '')
   result.contentFormat = get(documentReference, 'content[0].format', '')
 
   if(Array.isArray(documentReference.content)){
     result.contentCount = documentReference.content.length;
   }
-  result.content = get(documentReference, 'content[0].display', '')
 
-  console.log('result', JSON.stringify(result))
   return result;
 }
 
