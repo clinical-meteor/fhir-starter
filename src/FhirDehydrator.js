@@ -638,14 +638,26 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     _id: '',
     id: '',
     meta: '',
+    masterIdentifier: '',
+    identifier: '',
     status: '',
     docStatus: '',
-    identifier: '',
-    description: '',
-    category: '',
     typeDisplay: '',
     typeCode: '',
+    category: '',
+    subjectReference: '',
+    subjectDisplay: '',
+    date: '',
+
+    description: '',
     author: '',
+    authorReference: '',
+
+    relatesToCode: '',
+    relatesToReference: '',
+
+    description: '',
+
     contentAttachment: '',
     contentFormat: '',
     contentCount: 0
@@ -662,6 +674,13 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
   result.docStatus = get(documentReference, 'docStatus', '');
   result.description = get(documentReference, 'description', '');
 
+  result.masterIdentifier = get(documentReference, 'masterIdentifier.value', '');
+
+  result.subjectReference = get(documentReference, 'subject.reference', '');
+  result.subjectDisplay = get(documentReference, 'subject.display', '');
+
+  result.date = moment(get(documentReference, 'date')).format("YYYY-MM-DD");
+
   if(get(report, 'category.coding[0].code')){
     result.category = get(report, 'category.coding[0].code');
   } else {
@@ -672,6 +691,12 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
   result.typeCode = get(auditEvent, 'type.code', '');
 
   result.author = get(plan, 'author[0].display', '')
+  result.authorReference = get(plan, 'author[0].reference', '')
+
+  result.relatesToCode = get(plan, 'relatesTo[0].code', '')
+  result.relatesToReference = get(plan, 'relatesTo[0].reference', '')
+
+  result.description = get(documentReference, 'description', '');
 
   result.contentAttachment = get(plan, 'content[0].attachment', '')
   result.contentFormat = get(plan, 'content[0].format', '')
