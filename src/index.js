@@ -35,6 +35,7 @@ export {
   TableNoData,
   StyledCard,
   PageCanvas,
+  DynamicSpacer,
   
   FhirDehydrator  
 };
