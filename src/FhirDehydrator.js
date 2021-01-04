@@ -1774,8 +1774,52 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
 }
 
 
+export function flattenTask(task, internalDateFormat){
+  let result = {
+    _id: '',
+    meta: '',
+    identifier: '',
+    publisher: '',
+    status: '',
+    title: '',
+    authoredOn: '',
+    lastModified: '',
+    focus: '',
+    for: '',
+    intent: '',
+    code: '',
+    requester: ''
+  };
 
-export function  flattenValueSet(valueSet, internalDateFormat){
+  if(!internalDateFormat){
+    internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
+  }
+
+  result._id =  get(task, 'id') ? get(task, 'id') : get(task, '_id');
+  result.id = get(task, 'id', '');
+  result.identifier = get(task, 'identifier[0].value', '');
+
+  if(get(task, 'authoredOn')){
+    result.authoredOn = moment(get(task, 'authoredOn', '')).format(internalDateFormat);
+  }
+  if(get(task, 'lastModified')){
+    result.lastModified = moment(get(task, 'lastModified', '')).format(internalDateFormat);
+  }
+
+  result.description = get(task, 'description', '');
+  result.status = get(task, 'status', '');
+  result.businessStatus = get(task, 'businessStatus.coding[0].display', '');
+  result.intent = get(task, 'intent', '');
+  result.focus = get(task, 'focus.display', '');
+  result.for = get(task, 'for.display', '');
+  result.requester = get(task, 'requester.display', '');
+  result.code = get(task, 'code.text', '');
+
+  return result;
+}
+
+
+export function flattenValueSet(valueSet, internalDateFormat){
   let result = {
     _id: '',
     meta: '',
@@ -1879,8 +1923,10 @@ export function flatten(collectionName, resource){
       return notImplementedMessage;     
     case "Sequences":
       return notImplementedMessage;     
+    case "Tasks":
+      return flattenTask(resource);
     case "ValueSets":
-      return flattenValueSet(resource);    ;     
+      return flattenValueSet(resource);
     default:
       break;
   }
@@ -1912,6 +1958,7 @@ export const FhirDehydrator = {
   dehydrateProcedure: flattenProcedure,
   dehydrateQuestionnaire: flattenQuestionnaire,
   dehydrateQuestionnaireResponse: flattenQuestionnaireResponse,
+  dehydrateTask: flattenTask,
   dehydrateValueSet: flattenValueSet,
   flatten: flatten
 }
@@ -1943,6 +1990,7 @@ export default {
   flattenProcedure,
   flattenQuestionnaire,
   flattenQuestionnaireResponse,
+  flattenTask,
   flattenValueSet,
   flatten
 }
