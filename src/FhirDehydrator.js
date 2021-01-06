@@ -1788,7 +1788,12 @@ export function flattenTask(task, internalDateFormat){
     for: '',
     intent: '',
     code: '',
-    requester: ''
+    requester: '',
+    requesterReference: '',
+    encounter: '',
+    encounterReference: '',
+    owner: '',
+    ownerReference: ''
   };
 
   if(!internalDateFormat){
@@ -1814,6 +1819,13 @@ export function flattenTask(task, internalDateFormat){
   result.for = get(task, 'for.display', '');
   result.requester = get(task, 'requester.display', '');
   result.code = get(task, 'code.text', '');
+
+  result.requester = get(task, 'requester.display', '');
+  result.requesterReference = get(task, 'requester.reference', '');
+  result.encounter = get(task, 'encounter.display', '');
+  result.encounterReference = get(task, 'encounter.reference', '');
+  result.owner = get(task, 'owner.display', '');
+  result.ownerReference = get(task, 'owner.reference', '');
 
   return result;
 }
