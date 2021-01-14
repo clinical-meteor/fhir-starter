@@ -160,6 +160,7 @@ function PatientCard(props){
               type={ birthDate ? 'date' : 'text' }    
               label='Date of Birth' 
               value={ birthDate ? moment(birthDate).format('YYYY-MM-DD') : '' }                                                  
+              InputLabelProps={{ shrink: true }}
               fullWidth
               /><br/>
           </Grid>
