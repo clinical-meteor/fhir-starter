@@ -873,7 +873,7 @@ export function flattenImmunization(immunization, internalDateFormat){
 
 
 export function flattenList(list, extensionUrl){
-  console.log('flattenList', preferredExtensionUrl);
+  console.log('flattenList', list);
   
   let result = {
     _id: '',
@@ -897,17 +897,17 @@ export function flattenList(list, extensionUrl){
 
   result._id = get(list, '_id');
   result.id = get(list, 'id');
-  result.identifier = get(documentReference, 'identifier[0].value', '');
-  result.status = get(documentReference, 'status', '');
-  result.mode = get(documentReference, 'mode', '');
-  result.title = get(documentReference, 'title', '');
-  result.subjectDisplay = get(documentReference, 'subject.display', '');
-  result.subjectReference = get(documentReference, 'subject.reference', '');
-  result.encounterDisplay = get(documentReference, 'encounter.display', '');
-  result.encounterReference = get(documentReference, 'encounter.reference', '');
-  result.date = get(documentReference, 'date', '');
-  result.sourceDisplay = get(documentReference, 'source.display', '');
-  result.sourceReference = get(documentReference, 'source.reference', '');
+  result.identifier = get(list, 'identifier[0].value', '');
+  result.status = get(list, 'status', '');
+  result.mode = get(list, 'mode', '');
+  result.title = get(list, 'title', '');
+  result.subjectDisplay = get(list, 'subject.display', '');
+  result.subjectReference = get(list, 'subject.reference', '');
+  result.encounterDisplay = get(list, 'encounter.display', '');
+  result.encounterReference = get(list, 'encounter.reference', '');
+  result.date = get(list, 'date', '');
+  result.sourceDisplay = get(list, 'source.display', '');
+  result.sourceReference = get(list, 'source.reference', '');
 
   return result;
 }
