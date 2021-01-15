@@ -871,6 +871,47 @@ export function flattenImmunization(immunization, internalDateFormat){
   return result;
 }
 
+
+export function flattenList(list, extensionUrl){
+  console.log('flattenList', preferredExtensionUrl);
+  
+  let result = {
+    _id: '',
+    id: '',
+    meta: '',
+    identifier: '',
+    status: '',
+    mode: '',
+    title: '',
+    subjectDisplay: '',
+    subjectReference: '',
+    encounterDisplay: '',
+    encounterReference: '',
+    date: '',
+    sourceDisplay: '',
+    sourceReference: '',
+    oderedByText: '',
+    emptyReason: ''
+  };
+
+
+  result._id = get(list, '_id');
+  result.id = get(list, 'id');
+  result.identifier = get(documentReference, 'identifier[0].value', '');
+  result.status = get(documentReference, 'status', '');
+  result.mode = get(documentReference, 'mode', '');
+  result.title = get(documentReference, 'title', '');
+  result.subjectDisplay = get(documentReference, 'subject.display', '');
+  result.subjectReference = get(documentReference, 'subject.reference', '');
+  result.encounterDisplay = get(documentReference, 'encounter.display', '');
+  result.encounterReference = get(documentReference, 'encounter.reference', '');
+  result.date = get(documentReference, 'date', '');
+  result.sourceDisplay = get(documentReference, 'source.display', '');
+  result.sourceReference = get(documentReference, 'source.reference', '');
+
+  return result;
+}
+
 export function flattenLocation(location, extensionUrl){
   console.log('flattenLocation', preferredExtensionUrl);
   
@@ -1898,7 +1939,9 @@ export function flatten(collectionName, resource){
     case "Immunizations":
       return flattenImmunization(resource);          
     case "ImagingStudies":
-      return notImplementedMessage;        
+      return notImplementedMessage;     
+    case "Lists":
+      return flattenList(resource);   
     case "Locations":
       return flattenLocation(resource);
     case "HospitalLocations":
@@ -1957,6 +2000,7 @@ export const FhirDehydrator = {
   dehydrateDiagnosticReport: flattenDiagnosticReport,
   dehydrateDocumentReference: flattenDocumentReference,
   dehydrateEncounter: flattenEncounter,
+  dehydrateList: flattenList,
   dehydrateLocation: flattenLocation,
   dehydrateImmunization: flattenImmunization,
   dehydrateMeasureReport: flattenMeasureReport,
@@ -1990,6 +2034,7 @@ export default {
   flattenDocumentReference,
   flattenEncounter,
   flattenImmunization,
+  flattenList,
   flattenLocation,
   flattenMeasureReport,
   flattenMeasure,
