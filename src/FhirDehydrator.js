@@ -941,11 +941,7 @@ export function flattenLocation(location, preferredExtensionUrl){
     result.name = get(location, 'name');
   }
   if (get(location, 'address')) {
-    if(simplifiedAddress){
-      result.address = FhirUtilities.stringifyAddress(get(location, 'address'), {noPrefix: true});
-    } else {
-      result.address = get(location, 'address');
-    }
+    result.address = FhirUtilities.stringifyAddress(get(location, 'address'), {noPrefix: true});
   }
   if (get(location, 'address.city')) {
     result.city = get(location, 'address.city');
