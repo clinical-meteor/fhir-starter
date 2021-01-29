@@ -912,7 +912,7 @@ export function flattenList(list, extensionUrl){
   return result;
 }
 
-export function flattenLocation(location, extensionUrl){
+export function flattenLocation(location, preferredExtensionUrl){
   console.log('flattenLocation', preferredExtensionUrl);
   
   let result = {
