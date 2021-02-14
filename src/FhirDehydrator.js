@@ -1195,6 +1195,9 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
     valueString: '',
     value: '',
     units: '',
+    system: '',
+    comparator: '',
+    quantityCode: '',
     observationValue: '',
     subject: '',
     subjectReference: '',
@@ -1248,17 +1251,16 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
     result.effectiveDateTime =  moment(get(observation, 'issued')).format(dateFormat);    
   }
 
-  result.meta = get(observation, 'category.text', '');
+  result.category = get(observation, 'category.text', '');
 
-  if(result.valueString.length > 0){
-    result.value = result.valueString;
-  } else {
-    if(result.comparator){
-      result.value = result.comparator + ' ';
-    } 
-    result.value = result.value + result.observationValue + ' ' + result.unit;
-  }
 
+  // SINGLE COMPONENT OBSERVATIONS
+  result.unit = get(componentObservation, 'code.valueQuantity.unit');
+  result.system = get(componentObservation, 'code.valueQuantity.system');
+  result.value = get(componentObservation, 'code.valueQuantity.value');
+  result.quantityCode = get(componentObservation, 'code.valueQuantity.code');
+
+  // MULTICOMPONENT OBSERVATIONS
   if(Array.isArray(get(observation, 'component'))){
     result.valueString = observation.component.length + ' samplesets / sec';
     result.units = 'components / sec';
@@ -1318,6 +1320,15 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
       // but we also want to string it together into a nice readable string
       result.valueString = result.comparator + " " + result.observationValue + " " + result.unit;
     }
+  }
+
+  if(result.valueString.length > 0){
+    result.value = result.valueString;
+  } else {
+    if(result.comparator){
+      result.value = result.comparator + ' ';
+    } 
+    result.value = result.value + result.observationValue + ' ' + result.unit;
   }
 
   return result;
