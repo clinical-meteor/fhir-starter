@@ -1314,18 +1314,19 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
     result.category = get(observation, 'category[0].coding[0].display', '');
   }
 
-  if(get(observation, 'code.coding[0].code')){
-    result.codeValue = get(observation, 'code.coding[0].code', '');
+  if(Array.isArray(get(observation, 'code.coding'))){
+    observation.code.coding.forEach(function(encoding){
+      if(!["8716-3"].includes(get(encoding, 'code'))){
+        result.codeValue = get(encoding, 'code', '');
+        result.codeDisplay = get(encoding, 'display', '');
+      }  
+    })
   } else {
     result.codeValue = get(observation, 'code.text', '');
-  }
-  if(get(observation, 'code.coding[0].display')){
-    result.codeDisplay = get(observation, 'code.coding[0].display', '');
-  } else {
     result.codeDisplay = get(observation, 'code.text', '');
-  }
+  }   
 
-  // result.codeValue = get(observation, 'code.coding[0].code', '');
+  
   result.subject = get(observation, 'subject.display', '');
   result.subjectReference = get(observation, 'subject.reference', '');
   result.device = get(observation, 'device.display', '');
