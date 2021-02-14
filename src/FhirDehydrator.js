@@ -1343,10 +1343,10 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
 
 
   // SINGLE COMPONENT OBSERVATIONS
-  result.unit = get(componentObservation, 'code.valueQuantity.unit');
-  result.system = get(componentObservation, 'code.valueQuantity.system');
-  result.value = get(componentObservation, 'code.valueQuantity.value');
-  result.quantityCode = get(componentObservation, 'code.valueQuantity.code');
+  result.unit = get(observation, 'code.valueQuantity.unit');
+  result.system = get(observation, 'code.valueQuantity.system');
+  result.value = get(observation, 'code.valueQuantity.value');
+  result.quantityCode = get(observation, 'code.valueQuantity.code');
 
   // MULTICOMPONENT OBSERVATIONS
   if(Array.isArray(get(observation, 'component'))){
