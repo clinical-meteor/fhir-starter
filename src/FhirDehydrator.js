@@ -260,46 +260,68 @@ export function flattenComposition(composition){
     _id: '',
     id: '',
     meta: '',
-    subject: '',
-    subjectId: '',
+    identifier: '',
     status: '',
-    statusHistory: 0,
-    periodStart: '',
-    periodEnd: '',
-    reasonCode: '', 
-    reasonDisplay: '', 
     typeCode: '',
     typeDisplay: '',
-    classCode: ''
+    categoryDisplay: '',
+    subject: '',
+    subjectReference: '',
+    encounter: '',
+    encounterReference: '',
+    author: '',
+    authorReference: '',
+    relatesToCode: '',
+    relatesToIdentifier: '',
+    relatesToDisplay: '',
+    relatesToReference: '',
+    date: '',
+
+    sectionsCount: 0,
   };
 
-  result.id = get(plan, 'id', '');
-  result._id = get(plan, '_id', '');
+  result.id = get(composition, 'id', '');
+  result._id = get(composition, '_id', '');
 
-  if(get(composition, 'subject.display', '')){
+  result.identifier = get(composition, 'identifier[0].value', '')    
+  result.status = get(composition, 'status', '');
+  result.date = moment(get(composition, 'date', '')).format("YYYY-MM-DD hh:mm");
+  result.typeCode = get(composition, 'type.coding[0].code', '');
+  result.typeDisplay = get(composition, 'type.coding[0].display', '');
+  result.categoryDisplay = get(composition, 'category[0].text', '');
+
+
+  if(has(composition, 'subject')){
     result.subject = get(composition, 'subject.display', '');
   } else {
     result.subject = get(composition, 'subject.reference', '');
   }
-  result.subjectId = get(composition, 'subject.reference', '');
+  result.subjectReference = get(composition, 'subject.reference', '');
 
-  result.status = get(composition, 'status', '');
-  result.periodStart = moment(get(composition, 'period.start', '')).format("YYYY-MM-DD hh:mm");
-  result.periodEnd = moment(get(composition, 'period.end', '')).format("YYYY-MM-DD hh:ss");
-  result.reasonCode = get(composition, 'reason[0].coding[0].code', '');
-  result.reasonDisplay = get(composition, 'reason[0].coding[0].display', '');
-  result.typeCode = get(composition, 'type[0].coding[0].code', '');
-  result.typeDisplay = get(composition, 'type[0].coding[0].display', '');
-
-  if(get(composition, 'class.code')){
-    result.classCode = get(composition, 'class.code', '');
-  } else if(get(composition, 'class')){
-    result.classCode = get(composition, 'class', '');
+  if(has(composition, 'encounter')){
+    result.encounter = get(composition, 'encounter.display', '');
+  } else {
+    result.encounter = get(composition, 'encounter.reference', '');
   }
+  result.encounterReference = get(composition, 'encounter.reference', '');
 
-  let statusHistory = get(composition, 'statusHistory', []);
+  if(has(composition, 'author')){
+    result.author = get(composition, 'author.display', '');
+  } else {
+    result.author = get(composition, 'author.reference', '');
+  }
+  result.authorReference = get(composition, 'author.reference', '');
 
-  result.statusHistory = statusHistory.length;
+
+  result.relatesToCode = get(composition, 'relatesTo[0].code', '');
+  result.relatesToIdentifier = get(composition, 'relatesTo[0].targetIdentifier.value', '');
+  result.relatesToDisplay = get(composition, 'relatesTo[0].targetReference.display', '');
+  result.relatesToReference = get(composition, 'relatesTo[0].targetReference.reference', '');
+  
+  let sectionArray = get(composition, 'section', []);
+  if(Array.isArray(sectionArray)){
+    result.sectionsCount = sectionArray.length;
+  }
 
   return result;
 }
@@ -638,16 +660,28 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     _id: '',
     id: '',
     meta: '',
+    masterIdentifier: '',
+    identifier: '',
     status: '',
     docStatus: '',
-    identifier: '',
-    description: '',
-    category: '',
     typeDisplay: '',
     typeCode: '',
+    category: '',
+    subjectReference: '',
+    subjectDisplay: '',
+    date: '',
+
+    description: '',
     author: '',
+    authorReference: '',
+
+    relatesToCode: '',
+    relatesToReference: '',
+
     contentAttachment: '',
     contentFormat: '',
+    contentTitle: '',
+    contentSize: '',
     contentCount: 0
   };
 
@@ -662,26 +696,37 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
   result.docStatus = get(documentReference, 'docStatus', '');
   result.description = get(documentReference, 'description', '');
 
-  if(get(report, 'category.coding[0].code')){
-    result.category = get(report, 'category.coding[0].code');
+  result.masterIdentifier = get(documentReference, 'masterIdentifier.value', '');
+
+  result.subjectReference = get(documentReference, 'subject.reference', '');
+  result.subjectDisplay = get(documentReference, 'subject.display', '');
+
+  result.date = moment(get(documentReference, 'date')).format("YYYY-MM-DD");
+
+  if(get(documentReference, 'category.coding[0].code')){
+    result.category = get(documentReference, 'category.coding[0].code');
   } else {
-    result.category = get(report, 'category.text');
+    result.category = get(documentReference, 'category.text');
   }
 
-  result.typeDisplay = get(auditEvent, 'type.display', '');
-  result.typeCode = get(auditEvent, 'type.code', '');
+  result.typeCode = get(documentReference, 'type.coding[0].code', '');
+  result.typeDisplay = get(documentReference, 'type.text', '');
 
-  result.author = get(plan, 'author[0].display', '')
+  result.author = get(documentReference, 'author[0].display', '')
+  result.authorReference = get(documentReference, 'author[0].reference', '')
 
-  result.contentAttachment = get(plan, 'content[0].attachment', '')
-  result.contentFormat = get(plan, 'content[0].format', '')
+  result.relatesToCode = get(documentReference, 'relatesTo[0].code', '')
+  result.relatesToReference = get(documentReference, 'relatesTo[0].target.reference', '')
+
+  result.contentAttachment = get(documentReference, 'content[0].attachment.url', '')
+  result.contentTitle = get(documentReference, 'content[0].attachment.title', '')
+  result.contentSize = get(documentReference, 'content[0].attachment.size', '')
+  result.contentFormat = get(documentReference, 'content[0].format.display', '')
 
   if(Array.isArray(documentReference.content)){
     result.contentCount = documentReference.content.length;
   }
-  result.content = get(plan, 'content[0].display', '')
 
-  console.log('result', JSON.stringify(result))
   return result;
 }
 
@@ -826,7 +871,48 @@ export function flattenImmunization(immunization, internalDateFormat){
   return result;
 }
 
-export function flattenLocation(location, extensionUrl){
+
+export function flattenList(list, extensionUrl){
+  console.log('flattenList', list);
+  
+  let result = {
+    _id: '',
+    id: '',
+    meta: '',
+    identifier: '',
+    status: '',
+    mode: '',
+    title: '',
+    subjectDisplay: '',
+    subjectReference: '',
+    encounterDisplay: '',
+    encounterReference: '',
+    date: '',
+    sourceDisplay: '',
+    sourceReference: '',
+    oderedByText: '',
+    emptyReason: ''
+  };
+
+
+  result._id = get(list, '_id');
+  result.id = get(list, 'id');
+  result.identifier = get(list, 'identifier[0].value', '');
+  result.status = get(list, 'status', '');
+  result.mode = get(list, 'mode', '');
+  result.title = get(list, 'title', '');
+  result.subjectDisplay = get(list, 'subject.display', '');
+  result.subjectReference = get(list, 'subject.reference', '');
+  result.encounterDisplay = get(list, 'encounter.display', '');
+  result.encounterReference = get(list, 'encounter.reference', '');
+  result.date = get(list, 'date', '');
+  result.sourceDisplay = get(list, 'source.display', '');
+  result.sourceReference = get(list, 'source.reference', '');
+
+  return result;
+}
+
+export function flattenLocation(location, simplifiedAddress, preferredExtensionUrl){
   console.log('flattenLocation', preferredExtensionUrl);
   
   let result = {
@@ -1740,8 +1826,64 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
 }
 
 
+export function flattenTask(task, internalDateFormat){
+  let result = {
+    _id: '',
+    meta: '',
+    identifier: '',
+    publisher: '',
+    status: '',
+    title: '',
+    authoredOn: '',
+    lastModified: '',
+    focus: '',
+    for: '',
+    intent: '',
+    code: '',
+    requester: '',
+    requesterReference: '',
+    encounter: '',
+    encounterReference: '',
+    owner: '',
+    ownerReference: ''
+  };
 
-export function  flattenValueSet(valueSet, internalDateFormat){
+  if(!internalDateFormat){
+    internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
+  }
+
+  result._id =  get(task, 'id') ? get(task, 'id') : get(task, '_id');
+  result.id = get(task, 'id', '');
+  result.identifier = get(task, 'identifier[0].value', '');
+
+  if(get(task, 'authoredOn')){
+    result.authoredOn = moment(get(task, 'authoredOn', '')).format(internalDateFormat);
+  }
+  if(get(task, 'lastModified')){
+    result.lastModified = moment(get(task, 'lastModified', '')).format(internalDateFormat);
+  }
+
+  result.description = get(task, 'description', '');
+  result.status = get(task, 'status', '');
+  result.businessStatus = get(task, 'businessStatus.coding[0].display', '');
+  result.intent = get(task, 'intent', '');
+  result.focus = get(task, 'focus.display', '');
+  result.for = get(task, 'for.display', '');
+  result.requester = get(task, 'requester.display', '');
+  result.code = get(task, 'code.text', '');
+
+  result.requester = get(task, 'requester.display', '');
+  result.requesterReference = get(task, 'requester.reference', '');
+  result.encounter = get(task, 'encounter.display', '');
+  result.encounterReference = get(task, 'encounter.reference', '');
+  result.owner = get(task, 'owner.display', '');
+  result.ownerReference = get(task, 'owner.reference', '');
+
+  return result;
+}
+
+
+export function flattenValueSet(valueSet, internalDateFormat){
   let result = {
     _id: '',
     meta: '',
@@ -1808,7 +1950,9 @@ export function flatten(collectionName, resource){
     case "Immunizations":
       return flattenImmunization(resource);          
     case "ImagingStudies":
-      return notImplementedMessage;        
+      return notImplementedMessage;     
+    case "Lists":
+      return flattenList(resource);   
     case "Locations":
       return flattenLocation(resource);
     case "HospitalLocations":
@@ -1845,8 +1989,10 @@ export function flatten(collectionName, resource){
       return notImplementedMessage;     
     case "Sequences":
       return notImplementedMessage;     
+    case "Tasks":
+      return flattenTask(resource);
     case "ValueSets":
-      return flattenValueSet(resource);    ;     
+      return flattenValueSet(resource);
     default:
       break;
   }
@@ -1865,6 +2011,7 @@ export const FhirDehydrator = {
   dehydrateDiagnosticReport: flattenDiagnosticReport,
   dehydrateDocumentReference: flattenDocumentReference,
   dehydrateEncounter: flattenEncounter,
+  dehydrateList: flattenList,
   dehydrateLocation: flattenLocation,
   dehydrateImmunization: flattenImmunization,
   dehydrateMeasureReport: flattenMeasureReport,
@@ -1878,6 +2025,7 @@ export const FhirDehydrator = {
   dehydrateProcedure: flattenProcedure,
   dehydrateQuestionnaire: flattenQuestionnaire,
   dehydrateQuestionnaireResponse: flattenQuestionnaireResponse,
+  dehydrateTask: flattenTask,
   dehydrateValueSet: flattenValueSet,
   flatten: flatten
 }
@@ -1897,6 +2045,7 @@ export default {
   flattenDocumentReference,
   flattenEncounter,
   flattenImmunization,
+  flattenList,
   flattenLocation,
   flattenMeasureReport,
   flattenMeasure,
@@ -1909,6 +2058,7 @@ export default {
   flattenProcedure,
   flattenQuestionnaire,
   flattenQuestionnaireResponse,
+  flattenTask,
   flattenValueSet,
   flatten
 }
