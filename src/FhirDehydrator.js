@@ -1289,6 +1289,7 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
     subjectReference: '',
     status: '',
     device: '',
+    deviceReference: '',
     createdBy: '',
     effectiveDateTime: '',
     issued: '',
@@ -1328,6 +1329,7 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
   result.subject = get(observation, 'subject.display', '');
   result.subjectReference = get(observation, 'subject.reference', '');
   result.device = get(observation, 'device.display', '');
+  result.deviceReference = get(observation, 'device.reference', '');
   result.status = get(observation, 'status', '');
   
   if(get(observation, 'effectiveDateTime')){
