@@ -1316,9 +1316,15 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
 
   if(Array.isArray(get(observation, 'code.coding'))){
     observation.code.coding.forEach(function(encoding){
+      
+      // don't display categorical codes
       if(!["8716-3"].includes(get(encoding, 'code'))){
         result.codeValue = get(encoding, 'code', '');
-        result.codeDisplay = get(encoding, 'display', '');
+        if(has(encoding, 'display')){
+          result.codeDisplay = get(encoding, 'display', '');
+        } else {
+          result.codeDisplay = get(observation, 'code.text', '');
+        }
       }  
     })
   } else {
