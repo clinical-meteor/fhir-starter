@@ -34,8 +34,8 @@ function PageCanvas(props){
   }
 
   if(logging){
-    console.log('PageCanvas.logging', logging)
-    // console.log('returnedStyle', returnedStyle)
+    console.log('PageCanvas.logging', logging);
+
   }
 
   return(

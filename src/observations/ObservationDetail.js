@@ -6,8 +6,6 @@
 // import { Row, Col } from 'react-bootstrap';
 
 // import React from 'react';
-// import { ReactMeteorData } from 'meteor/react-meteor-data';
-// import ReactMixin from 'react-mixin';
 // import PropTypes from 'prop-types';
 
 // import { Meteor } from 'meteor/meteor';
@@ -520,5 +518,5 @@
 //   onRemove: PropTypes.func,
 //   onCancel: PropTypes.func
 // };
-// ReactMixin(ObservationDetail.prototype, ReactMeteorData);
+
 // export default ObservationDetail;
