@@ -23,6 +23,8 @@ import DynamicSpacer from './components/DynamicSpacer';
 import ValueSetsTable from './valuesets/ValueSetsTable';
 
 import FhirDehydrator from './FhirDehydrator';
+import FhirUtilities from './FhirUtilities';
+import LayoutHelpers from './LayoutHelpers';
 
 export { 
   PatientCard,
@@ -37,5 +39,7 @@ export {
   PageCanvas,
   DynamicSpacer,
   
-  FhirDehydrator  
+  FhirDehydrator,
+  FhirUtilities,
+  LayoutHelpers
 };
