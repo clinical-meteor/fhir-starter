@@ -3,7 +3,7 @@ let get = _.get;
 let set = _.set;
 let has = _.has;
 
-LayoutHelpers = {
+export const LayoutHelpers = {
   calcCanvasPaddingWidth: function(){
     let paddingWidth = get(Meteor, 'settings.public.defaults.defaultPagePadding', 0);
 

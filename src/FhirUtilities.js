@@ -3,7 +3,7 @@ let get = _.get;
 let set = _.set;
 let has = _.has;
 
-FhirUtilities = {
+export const FhirUtilities = {
   pluckReferenceId(reference){
     let identifier = ""
     let referenceParts = [];
