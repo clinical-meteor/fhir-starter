@@ -255,6 +255,64 @@ export function flattenCarePlan(plan){
   return result;
 }
 
+
+export function flattenCareTeam(team){
+
+  let result = {
+    _id: '',
+    id: '',
+    identifier: '',
+    status: '',
+    category: '',
+    name: '',
+    subject: '',
+    periodStart: '',
+    periodEnd: '',
+    reasonReference: '',
+    reasonDisplay: '',
+    reasonCode: '',
+    participantCount: 0,
+    managingOrganization: '',
+    telecom: '',
+    note: '',
+    noteCount: 0
+  };
+
+  result.id = get(team, 'id', '');
+  result._id = get(team, '_id', '');
+
+  result.identifier = get(team, 'identifier[0].value', '')    
+  result.status = get(team, 'status', '')    
+  result.name = get(team, 'name', '')    
+  result.subject = determineSubjectDisplayString(team);
+  result.periodStart = moment(get(team, 'period.start')).format("YYYY-MM-DD hh:mm a");
+  result.periodEnd = moment(get(team, 'period.start')).format("YYYY-MM-DD hh:mm a");
+
+  result.category = get(team, 'category[0].text', '')  
+  if(Array.isArray(team.category)){
+    team.category.forEach(function(teamCategory){
+      if(get(teamCategory, 'text')){
+        result.category = teamCategory.text;
+      }
+    })
+  }
+
+  result.reasonReference = get(team, 'reasonReference[0].reference', '');
+  result.reasonDisplay = get(team, 'reasonReference[0].display', '');
+  result.reasonCode = get(team, 'reasonCode[0].coding[0].code', '');
+
+  result.managingOrganization = get(team, 'managingOrganization[0].display', '');
+
+  if(Array.isArray(team.participant)){
+    result.participantCount = team.participant.length;
+  }
+  if(Array.isArray(team.note)){
+    result.noteCount = team.note.length;
+  }
+
+  return result;
+}
+
 export function flattenComposition(composition){
   let result = {
     _id: '',
@@ -1926,6 +1984,8 @@ export function flatten(collectionName, resource){
       return flattenBundle(resource);
     case "CarePlans":
       return flattenCarePlan(resource);
+    case "CareTeams":
+      return flattenCareTeam(resource);
     case "Conditions":
       return flattenCondition(resource);
     case "Consents":
@@ -2011,6 +2071,7 @@ export const FhirDehydrator = {
   dehydrateAllergyIntolerance: flattenAllergyIntolerance,
   dehydrateBundle: flattenBundle,
   dehydrateCarePlan: flattenCarePlan,
+  dehydrateCareTeam: flattenCareTeam,
   dehydrateComposition: flattenComposition,
   dehydrateCommunication: flattenCommunication,
   dehydrateCommunicationRequest: flattenCommunicationRequest,
@@ -2044,6 +2105,7 @@ export default {
   flattenAllergyIntolerance,
   flattenBundle,
   flattenCarePlan,
+  flattenCareTeam,
   flattenComposition,
   flattenCondition,
   flattenCommunication,

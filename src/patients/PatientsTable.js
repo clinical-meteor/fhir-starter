@@ -123,7 +123,7 @@ function flattenPatient(patient, dateFormat){
   if(nameText.length > 0){
     // some systems will store the name as it is to be displayed in the name[0].text field
     // if that's present, use it
-    resultingNameString = get(patient, 'name[0].text', '');    
+    resultingNameString = get(patient, 'name.text', '');    
   } else {
     // the majority of systems out there are SQL based and make a design choice to store as 'first' and 'last' name
     // critiques of that approach can be saved for a later time
