@@ -13,16 +13,16 @@ function determineSubjectDisplayString(resourceRecord){
   let subjectDisplayString = '';
   if(get(resourceRecord, 'subject')){
     if(get(resourceRecord, 'subject.display', '')){
-      rsubjectDisplayString = get(resourceRecord, 'subject.display', '');
+      subjectDisplayString = get(resourceRecord, 'subject.display', '');
     } else {
-      rsubjectDisplayString = get(resourceRecord, 'subject.reference', '');
+      subjectDisplayString = get(resourceRecord, 'subject.reference', '');
     }
   }  
   if(get(resourceRecord, 'patient')){
     if(get(resourceRecord, 'patient.display', '')){
-      rsubjectDisplayString = get(resourceRecord, 'patient.display', '');
+      subjectDisplayString = get(resourceRecord, 'patient.display', '');
     } else {
-      rsubjectDisplayString = get(resourceRecord, 'patient.reference', '');
+      subjectDisplayString = get(resourceRecord, 'patient.reference', '');
     }
   }  
   return subjectDisplayString;
