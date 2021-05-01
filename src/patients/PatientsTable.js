@@ -334,11 +334,15 @@ function PatientsTable(props){
 
     count,
     tableRowSize,
+    logger,
 
     ...otherProps 
   } = props;
 
 
+  if(logger){
+    logger.trace('PatientsTable.patients', patients)
+  }
 
   // ------------------------------------------------------------------------
   // Form Factors
@@ -943,7 +947,7 @@ function PatientsTable(props){
     for (var i = 0; i < patientsToRender.length; i++) {
 
       if(logger){
-        logger.trace('patientsToRender[' + i + ']', patientsToRender[i]);
+        logger.trace('PatientsTable.patientsToRender[' + i + ']', patientsToRender[i]);
       }
 
       let selected = false;
