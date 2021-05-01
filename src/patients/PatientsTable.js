@@ -31,7 +31,7 @@ import _ from 'lodash';
 let get = _.get;
 let set = _.set;
 
-
+import { flattenPatient } from '../FhirDehydrator';
 
 //===========================================================================
 // THEMING
@@ -79,141 +79,141 @@ const useStyles = makeStyles(theme => ({
 
 
 
-//===========================================================================
-// FLATTENING / MAPPING
+// //===========================================================================
+// // FLATTENING / MAPPING
 
 
-function flattenPatient(patient, dateFormat){
-  let result = {
-    _id: get(patient, '_id'),
-    id: get(patient, 'id'),
-    meta: '',
-    identifier: '',
-    active: true,
-    gender: get(patient, 'gender'),
-    name: '',
-    mrn: '',
-    birthDate: '',
-    photo: "/thumbnail-blank.png",
-    addressLine: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: '',
-    maritalStatus: '',
-    preferredLanguage: '',
-    species: '',
-    resourceCounts: '',
-    deceased: false
-  };
+// function flattenPatient(patient, dateFormat){
+//   let result = {
+//     _id: get(patient, '_id'),
+//     id: get(patient, 'id'),
+//     meta: '',
+//     identifier: '',
+//     active: true,
+//     gender: get(patient, 'gender'),
+//     name: '',
+//     mrn: '',
+//     birthDate: '',
+//     photo: "/thumbnail-blank.png",
+//     addressLine: '',
+//     city: '',
+//     state: '',
+//     postalCode: '',
+//     country: '',
+//     maritalStatus: '',
+//     preferredLanguage: '',
+//     species: '',
+//     resourceCounts: '',
+//     deceased: false
+//   };
 
-  result._id =  get(patient, 'id') ? get(patient, 'id') : get(patient, '_id');
-  result.id = get(patient, 'id', '');
-  result.identifier = get(patient, 'identifier[0].value', '');
+//   result._id =  get(patient, 'id') ? get(patient, 'id') : get(patient, '_id');
+//   result.id = get(patient, 'id', '');
+//   result.identifier = get(patient, 'identifier[0].value', '');
 
-  result.identifier = get(patient, 'identifier[0].value', '');
-  result.active = get(patient, 'active', true).toString();
+//   result.identifier = get(patient, 'identifier[0].value', '');
+//   result.active = get(patient, 'active', true).toString();
   
-  result.gender = get(patient, 'gender', '');
+//   result.gender = get(patient, 'gender', '');
 
-  // patient name has gone through a number of revisions, and we need to search a few different spots, and assemble as necessary  
-  let resultingNameString = "";
+//   // patient name has gone through a number of revisions, and we need to search a few different spots, and assemble as necessary  
+//   let resultingNameString = "";
 
-  let nameText = get(patient, 'name[0].text', '');
-  if(nameText.length > 0){
-    // some systems will store the name as it is to be displayed in the name[0].text field
-    // if that's present, use it
-    resultingNameString = get(patient, 'name.text', '');    
-  } else {
-    // the majority of systems out there are SQL based and make a design choice to store as 'first' and 'last' name
-    // critiques of that approach can be saved for a later time
-    // but suffice it to say that we need to assemble the parts
+//   let nameText = get(patient, 'name[0].text', '');
+//   if(nameText.length > 0){
+//     // some systems will store the name as it is to be displayed in the name[0].text field
+//     // if that's present, use it
+//     resultingNameString = get(patient, 'name.text', '');    
+//   } else {
+//     // the majority of systems out there are SQL based and make a design choice to store as 'first' and 'last' name
+//     // critiques of that approach can be saved for a later time
+//     // but suffice it to say that we need to assemble the parts
 
-    if(get(patient, 'name[0].prefix[0]')){
-      resultingNameString = get(patient, 'name[0].prefix[0]')  + ' ';
-    }
+//     if(get(patient, 'name[0].prefix[0]')){
+//       resultingNameString = get(patient, 'name[0].prefix[0]')  + ' ';
+//     }
 
-    if(get(patient, 'name[0].given[0]')){
-      resultingNameString = resultingNameString + get(patient, 'name[0].given[0]')  + ' ';
-    }
+//     if(get(patient, 'name[0].given[0]')){
+//       resultingNameString = resultingNameString + get(patient, 'name[0].given[0]')  + ' ';
+//     }
 
-    if(get(patient, 'name[0].family')){
-      // R4 - droped the array of family names; one authoritative family name per patient
-      resultingNameString = resultingNameString + get(patient, 'name[0].family')  + ' ';
-    } else if (get(patient, 'name[0].family[0]')){
-      // DSTU2 and STU3 - allows an array of family names
-      resultingNameString = resultingNameString + get(patient, 'name[0].family[0]')  + ' ';
-    }
+//     if(get(patient, 'name[0].family')){
+//       // R4 - droped the array of family names; one authoritative family name per patient
+//       resultingNameString = resultingNameString + get(patient, 'name[0].family')  + ' ';
+//     } else if (get(patient, 'name[0].family[0]')){
+//       // DSTU2 and STU3 - allows an array of family names
+//       resultingNameString = resultingNameString + get(patient, 'name[0].family[0]')  + ' ';
+//     }
     
-    if(get(patient, 'name[0].suffix[0]')){
-      resultingNameString = resultingNameString + ' ' + get(patient, 'name[0].suffix[0]');
-    }
-  }
+//     if(get(patient, 'name[0].suffix[0]')){
+//       resultingNameString = resultingNameString + ' ' + get(patient, 'name[0].suffix[0]');
+//     }
+//   }
 
-  // remove any whitespace from the name
-  result.name = resultingNameString.trim();
+//   // remove any whitespace from the name
+//   result.name = resultingNameString.trim();
 
-  // there's an off-by-1 error between momment() and Date() that we want
-  // to account for when converting back to a string
-  // which is why we run it through moment()
+//   // there's an off-by-1 error between momment() and Date() that we want
+//   // to account for when converting back to a string
+//   // which is why we run it through moment()
 
-  result.birthDate = moment(get(patient, "birthDate")).format(dateFormat)
+//   result.birthDate = moment(get(patient, "birthDate")).format(dateFormat)
 
-  result.photo = get(patient, 'photo[0].url', '');
+//   result.photo = get(patient, 'photo[0].url', '');
 
-  result.maritalStatus = get(patient, 'maritalStatus[0].text', '');
+//   result.maritalStatus = get(patient, 'maritalStatus[0].text', '');
 
-  let communicationArray = [];
-  if(get(patient, 'communication') && Array.isArray(get(patient, 'communication'))){
-    communicationArray = get(patient, 'communication');
-    // first, we're going to try to loop through the communications array 
-    // and find an authoritatively preferred language
-    communicationArray.forEach(function(communication){
-      if(get(communication, "preferred")){
-        if(get(communication, "text")){
-          // using the text field if possible
-          result.preferredLanguage = get(communication, "text");
-        } else if(get(communication, "language.text")){
-          // using the text field if possible
-          result.preferredLanguage = get(communication, "language.text");
-        } else if(get(communication, "language.coding[0].display")){
-          // using the text field if possible
-          result.preferredLanguage = get(communication, "language.coding[0].display");
-        } 
-      }
-    })
-    // // if we didn't find any langauge that is marked as preferred 
-    // if(result.preferredLanguage === ""){
-    //   // then we try the same thing on the first language listed
-    //   if(get(communicationArray[0], "text")){
-    //     result.preferredLanguage = get(communicationArray[0], "text");
-    //   } else if(get(communicationArray[0], "language.text")){
-    //     result.preferredLanguage = get(communicationArray[0], "text");
-    //   } else if(get(communicationArray[0], "language.coding[0].display")){
-    //     result.preferredLanguage = get(communicationArray[0], "language.coding[0].display");
-    //   } 
+//   let communicationArray = [];
+//   if(get(patient, 'communication') && Array.isArray(get(patient, 'communication'))){
+//     communicationArray = get(patient, 'communication');
+//     // first, we're going to try to loop through the communications array 
+//     // and find an authoritatively preferred language
+//     communicationArray.forEach(function(communication){
+//       if(get(communication, "preferred")){
+//         if(get(communication, "text")){
+//           // using the text field if possible
+//           result.preferredLanguage = get(communication, "text");
+//         } else if(get(communication, "language.text")){
+//           // using the text field if possible
+//           result.preferredLanguage = get(communication, "language.text");
+//         } else if(get(communication, "language.coding[0].display")){
+//           // using the text field if possible
+//           result.preferredLanguage = get(communication, "language.coding[0].display");
+//         } 
+//       }
+//     })
+//     // // if we didn't find any langauge that is marked as preferred 
+//     // if(result.preferredLanguage === ""){
+//     //   // then we try the same thing on the first language listed
+//     //   if(get(communicationArray[0], "text")){
+//     //     result.preferredLanguage = get(communicationArray[0], "text");
+//     //   } else if(get(communicationArray[0], "language.text")){
+//     //     result.preferredLanguage = get(communicationArray[0], "text");
+//     //   } else if(get(communicationArray[0], "language.coding[0].display")){
+//     //     result.preferredLanguage = get(communicationArray[0], "language.coding[0].display");
+//     //   } 
 
-    // }
-  }
-
-
-  // is the patient dead?  :(
-  result.deceased = get(patient, 'deceasedBoolean', '');
-
-  // DSTU2 & STU3 
-  result.species = get(patient, 'animal.species.text', '');
+//     // }
+//   }
 
 
-  // address
-  result.addressLine = get(patient, 'address[0].line[0]')
-  result.city = get(patient, 'address[0].city')
-  result.state = get(patient, 'address[0].state')
-  result.postalCode = get(patient, 'address[0].postalCode')
-  result.country = get(patient, 'address[0].country')
+//   // is the patient dead?  :(
+//   result.deceased = get(patient, 'deceasedBoolean', '');
 
-  // logger.log('flattened', result)
-  return result;
-}
+//   // DSTU2 & STU3 
+//   result.species = get(patient, 'animal.species.text', '');
+
+
+//   // address
+//   result.addressLine = get(patient, 'address[0].line[0]')
+//   result.city = get(patient, 'address[0].city')
+//   result.state = get(patient, 'address[0].state')
+//   result.postalCode = get(patient, 'address[0].postalCode')
+//   result.country = get(patient, 'address[0].country')
+
+//   // logger.log('flattened', result)
+//   return result;
+// }
 
 
 //===========================================================================

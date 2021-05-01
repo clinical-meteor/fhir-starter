@@ -1558,29 +1558,29 @@ export function flattenPatient(patient, internalDateFormat){
   // patient name has gone through a number of revisions, and we need to search a few different spots, and assemble as necessary  
   let resultingNameString = "";
 
-  // the majority of systems out there are SQL based and make a design choice to store as 'first' and 'last' name
-  // critiques of that approach can be saved for a later time
-  // but suffice it to say that we need to assemble the parts
+    // the majority of systems out there are SQL based and make a design choice to store as 'first' and 'last' name
+    // critiques of that approach can be saved for a later time
+    // but suffice it to say that we need to assemble the parts
 
-  if(get(patient, 'name[0].prefix[0]')){
-    resultingNameString = get(patient, 'name[0].prefix[0]')  + ' ';
-  }
+    if(get(patient, 'name[0].prefix[0]')){
+      resultingNameString = get(patient, 'name[0].prefix[0]')  + ' ';
+    }
 
-  if(get(patient, 'name[0].given[0]')){
-    resultingNameString = resultingNameString + get(patient, 'name[0].given[0]')  + ' ';
-  }
+    if(get(patient, 'name[0].given[0]')){
+      resultingNameString = resultingNameString + get(patient, 'name[0].given[0]')  + ' ';
+    }
 
-  if(get(patient, 'name[0].family')){
-    // R4 - droped the array of family names; one authoritative family name per patient
-    resultingNameString = resultingNameString + get(patient, 'name[0].family')  + ' ';
-  } else if (get(patient, 'name[0].family[0]')){
-    // DSTU2 and STU3 - allows an array of family names
-    resultingNameString = resultingNameString + get(patient, 'name[0].family[0]')  + ' ';
-  }
-  
-  if(get(patient, 'name[0].suffix[0]')){
-    resultingNameString = resultingNameString + ' ' + get(patient, 'name[0].suffix[0]');
-  }
+    if(get(patient, 'name[0].family')){
+      // R4 - droped the array of family names; one authoritative family name per patient
+      resultingNameString = resultingNameString + get(patient, 'name[0].family')  + ' ';
+    } else if (get(patient, 'name[0].family[0]')){
+      // DSTU2 and STU3 - allows an array of family names
+      resultingNameString = resultingNameString + get(patient, 'name[0].family[0]')  + ' ';
+    }
+    
+    if(get(patient, 'name[0].suffix[0]')){
+      resultingNameString = resultingNameString + ' ' + get(patient, 'name[0].suffix[0]');
+    }
 
   // some systems will store the name as it is to be displayed in the name[0].text field
   // if that's present, use it
@@ -1641,6 +1641,8 @@ export function flattenPatient(patient, internalDateFormat){
   result.postalCode = get(patient, 'address[0].postalCode')
   result.country = get(patient, 'address[0].country')
 
+  
+  
   // console.log('flattened', result)
   return result;
 }
