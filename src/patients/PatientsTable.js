@@ -348,7 +348,9 @@ function PatientsTable(props){
   // Form Factors
 
   if(formFactorLayout){
-    logger.verbose('formFactorLayout', formFactorLayout + ' ' + window.innerWidth);
+    if(logger){
+      logger.verbose('formFactorLayout', formFactorLayout + ' ' + window.innerWidth);
+    }
 
     switch (formFactorLayout) {
       case "phone":
