@@ -211,7 +211,7 @@ function flattenPatient(patient, dateFormat){
   result.postalCode = get(patient, 'address[0].postalCode')
   result.country = get(patient, 'address[0].country')
 
-  // console.log('flattened', result)
+  // logger.log('flattened', result)
   return result;
 }
 
@@ -283,7 +283,7 @@ TablePaginationActions.propTypes = {
 // MAIN COMPONENT  
 
 function PatientsTable(props){
-  // console.log('PatientsTable', props)
+  // logger.log('PatientsTable', props)
 
   let { 
     children, 
@@ -480,7 +480,7 @@ function PatientsTable(props){
     }
   }
   function renderRowAvatar(patient, avatarStyle){
-    //console.log('renderRowAvatar', patient, avatarStyle)
+    //logger.log('renderRowAvatar', patient, avatarStyle)
     
     if (get(this, 'defaultAvatar') && (showAvatars === true)) {
       return (
@@ -552,7 +552,9 @@ function PatientsTable(props){
     }
   }
   function selectPatientRow(patientId){
-    console.log('Selecting a new Patient...');
+    if(logger){
+      logger.debug('Selecting a new Patient...');
+    }
     if(typeof onRowClick  === "function"){
       onRowClick(patientId);
     }
@@ -565,7 +567,9 @@ function PatientsTable(props){
     }
   }
   function removeRecord(_id){
-    console.log('Remove patient ', _id)
+    if(logger){
+      logger.debug('Remove patient ', _id)
+    }
     if(onRemoveRecord){
       onRemoveRecord(_id);
     }
@@ -825,7 +829,7 @@ function PatientsTable(props){
 
   function renderCounts(cursors, index){
     let serializedCounts = "";
-    // console.log('renderCounts', cursors)
+    // logger.log('renderCounts', cursors)
 
     function serializeCounts(cursors){
       let counts = "";
@@ -901,10 +905,10 @@ function PatientsTable(props){
       let paginatedIndex = (page * rowsPerPageToRender) + index + 1;
 
       serializedCounts = serializeCounts(cursors[paginatedIndex])
-      // console.log('PatientsTable.serializedCounts.array', serializedCounts, index, cursors[index])
+      // logger.log('PatientsTable.serializedCounts.array', serializedCounts, index, cursors[index])
     } else {
       serializedCounts = serializeCounts(cursors)
-      // console.log('PatientsTable.serializedCounts', serializedCounts)
+      // logger.log('PatientsTable.serializedCounts', serializedCounts)
     }
 
     if (!hideCounts) {
@@ -937,6 +941,11 @@ function PatientsTable(props){
     footer = <TableNoData noDataPadding={ noDataMessagePadding } />
   } else {
     for (var i = 0; i < patientsToRender.length; i++) {
+
+      if(logger){
+        logger.trace('patientsToRender[' + i + ']', patientsToRender[i]);
+      }
+
       let selected = false;
       if(patientsToRender[i].id === selectedPatientId){
         selected = true;
@@ -1090,7 +1099,9 @@ PatientsTable.propTypes = {
 
   count: PropTypes.number,
   tableRowSize: PropTypes.string,
-  formFactorLayout: PropTypes.string
+  formFactorLayout: PropTypes.string,
+
+  logger: PropTypes.object
 };
 PatientsTable.defaultProps = {
   tableRowSize: 'medium',
@@ -1115,7 +1126,9 @@ PatientsTable.defaultProps = {
 
   font3of9: true,
   hideFhirBarcode: false,
-  multiline: false
+  multiline: false,
+
+  logger: null
 }
 
 export default PatientsTable;
