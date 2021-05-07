@@ -619,6 +619,68 @@ export function flattenCommunicationResponse(communicationResponse, internalDate
   return result;
 }
 
+
+export function flattenConsent(document){
+  let result = {
+    _id: document._id,
+    id: get(document, 'id', ''),
+    dateTime: moment(get(document, 'dateTime', null)).format("YYYY-MM-DD hh:mm:ss"),
+    status: get(document, 'status', ''),
+    patientReference: get(document, 'patient.reference', ''),
+    patientName: get(document, 'patient.display', ''),
+    // consentingParty: get(document, 'consentingParty[0].display', ''),
+    performer: get(document, 'performer[0].display', ''),
+    organization: get(document, 'organization[0].display', ''),
+    policyAuthority: get(document, 'policy[0].authority', ''),
+    policyUri: get(document, 'policy[0].uri', ''),
+    policyRule: get(document, 'policyRule.text', ''),
+    provisionType: get(document, 'provision[0].type', ''),
+    provisionAction: get(document, 'provision[0].action[0].text', ''),
+    provisionClass: get(document, 'provision[0].class', ''),
+    start: '',
+    end: '',
+    sourceReference: get(document, 'sourceReference.reference', ''),
+    category: '',
+    scope: get(document, 'scope.coding[0].display')
+  };
+
+  if(has(document, 'patient.display')){
+    result.patientName = get(document, 'patient.display')
+  } else {
+    result.patientName = get(document, 'patient.reference')
+  }
+
+  if(has(document, 'category[0].text')){
+    result.category = get(document, 'category[0].text')
+  } else {
+    result.category = get(document, 'category[0].coding[0].display', '')
+  }
+
+  if(has(document, 'period.start')){
+    result.start = moment(get(document, 'period.start', '')).format("YYYY-MM-DD hh:mm:ss");
+  }
+  if(has(document, 'period.end')){
+    result.end = moment(get(document, 'period.end', '')).format("YYYY-MM-DD hh:mm:ss");
+  }
+
+
+  if(result.patientReference === ''){
+    result.patientReference = get(document, 'patient.reference', '');
+  }
+
+  if(get(document, 'provision[0].class')){
+    result.provisionClass = "";
+    document.provision[0].class.forEach(function(provision){   
+      if(result.provisionClass == ''){
+        result.provisionClass = provision.code;
+      }  else {
+        result.provisionClass = result.provisionClass + ' - ' + provision.code;
+      }      
+    });
+  }
+  return result;
+}
+
 export function flattenDevice(device, internalDateFormat){
   let result = {
     _id: '',
@@ -949,7 +1011,8 @@ export function flattenList(list, extensionUrl){
     sourceDisplay: '',
     sourceReference: '',
     oderedByText: '',
-    emptyReason: ''
+    emptyReason: '',
+    itemCount: 0
   };
 
 
@@ -966,6 +1029,10 @@ export function flattenList(list, extensionUrl){
   result.date = get(list, 'date', '');
   result.sourceDisplay = get(list, 'source.display', '');
   result.sourceReference = get(list, 'source.reference', '');
+
+  if(Array.isArray(list.entry)){
+    result.itemCount = list.entry.length;
+  }
 
   return result;
 }
@@ -1531,7 +1598,7 @@ export function flattenPatient(patient, internalDateFormat){
     identifier: '',
     active: true,
     gender: get(patient, 'gender'),
-    name: '',
+    name: get(patient, 'name[0].text', ''),
     mrn: '',
     birthDate: '',
     photo: "/thumbnail-blank.png",
@@ -1990,7 +2057,7 @@ export function flatten(collectionName, resource){
     case "Conditions":
       return flattenCondition(resource);
     case "Consents":
-      return notImplementedMessage;
+      return flattenConsent(resource);
     case "Claims":
       return notImplementedMessage;
     case "ClinicalDocuments":
@@ -2075,6 +2142,7 @@ export const FhirDehydrator = {
   dehydrateCareTeam: flattenCareTeam,
   dehydrateComposition: flattenComposition,
   dehydrateCommunication: flattenCommunication,
+  dehydrateConsent: flattenConsent,
   dehydrateCommunicationRequest: flattenCommunicationRequest,
   dehydrateCommunicationResponse: flattenCommunicationResponse,
   dehydrateCondition: flattenCondition,
@@ -2109,6 +2177,7 @@ export default {
   flattenCareTeam,
   flattenComposition,
   flattenCondition,
+  flattenConsent,
   flattenCommunication,
   flattenCommunicationRequest,
   flattenCommunicationResponse,

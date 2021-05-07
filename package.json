@@ -1,6 +1,6 @@
 {
   "name": "fhir-starter",
-  "version": "0.11.36",
+  "version": "0.11.37",
   "description": "Reausable and composable FHIR components built with React and Material UI.  Normative maturity level 5 resources only.",
   "homepage": "http://github.com/symptomatic/fhir-starter",
   "repository": "symptomatic/fhir-starter",
@@ -68,7 +68,7 @@
     "jest": "24.9.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "rollup": "^2.46.0",
+    "rollup": "^2.47.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
