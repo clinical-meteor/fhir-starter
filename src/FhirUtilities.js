@@ -173,6 +173,18 @@ export const FhirUtilities = {
     }
     return result;
   },
+  generatePatientReference(patient){
+    let patientReference = {
+      display: "",
+      reference: ""
+    };
+    if(has(patient, 'id')){
+      patientReference.reference = "Patient/" + get(patient, "id")
+    }
+    patientReference.display = FhirUtilities.pluckName(patient)
+
+    return patientReference;
+  },
   generateDateQuery(chainPrefix, startDate, endDate ){
     let dateQuery = '';
 
