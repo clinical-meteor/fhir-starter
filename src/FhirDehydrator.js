@@ -215,7 +215,7 @@ export function flattenCarePlan(plan){
 
   result.subject = determineSubjectDisplayString(plan);
 
-  result.author = get(plan, 'author[0].display', '')
+  result.author = get(plan, 'author.display', '')
   result.start = moment(get(plan, 'period.start')).format("YYYY-MM-DD hh:mm a");
   result.end = moment(get(plan, 'period.start')).format("YYYY-MM-DD hh:mm a");
   result.category = get(plan, 'category[0].text', '')  

@@ -1,6 +1,6 @@
 {
   "name": "fhir-starter",
-  "version": "0.11.38",
+  "version": "0.11.39",
   "description": "Reausable and composable FHIR components built with React and Material UI.  Normative maturity level 5 resources only.",
   "homepage": "http://github.com/symptomatic/fhir-starter",
   "repository": "symptomatic/fhir-starter",
