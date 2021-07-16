@@ -108,8 +108,8 @@ export function flattenAllergyIntolerance(allergy){
     }
   };
 
-  if(get(allergy, "issue[0].text")){
-    result.operationOutcome = get(allergy, "issue[0].text");
+  if(get(allergy, "issue[0].details.text")){
+    result.operationOutcome = get(allergy, "issue[0].details.text");
   }
 
   return result;
@@ -154,8 +154,8 @@ export function flattenAuditEvent(auditEvent){
   // to account for when converting back to a string
   result.recorded = moment(auditEvent.recorded).format("YYYY-MM-DD");
 
-  if(get(auditEvent, "issue[0].text")){
-    result.operationOutcome = get(auditEvent, "issue[0].text");
+  if(get(auditEvent, "issue[0].details.text")){
+    result.operationOutcome = get(auditEvent, "issue[0].details.text");
   }
 
   return result;
@@ -189,8 +189,8 @@ export function flattenBundle(bundle){
   // to account for when converting back to a string
   result.timestamp = moment(bundle.timestamp).format("YYYY-MM-DD hh:mm:ss");
 
-  if(get(bundle, "issue[0].text")){
-    result.operationOutcome = get(bundle, "issue[0].text");
+  if(get(bundle, "issue[0].details.text")){
+    result.operationOutcome = get(bundle, "issue[0].details.text");
   }
 
   return result;
@@ -269,8 +269,8 @@ export function flattenCarePlan(plan){
     result.title = get(plan, 'category[0].coding[0].display', '')    
   }
 
-  if(get(plan, "issue[0].text")){
-    result.operationOutcome = get(plan, "issue[0].text");
+  if(get(plan, "issue[0].details.text")){
+    result.operationOutcome = get(plan, "issue[0].details.text");
   }
 
   return result;
@@ -333,8 +333,8 @@ export function flattenCareTeam(team){
     result.noteCount = team.note.length;
   }
 
-  if(get(team, "issue[0].text")){
-    result.operationOutcome = get(team, "issue[0].text");
+  if(get(team, "issue[0].details.text")){
+    result.operationOutcome = get(team, "issue[0].details.text");
   }
 
   return result;
@@ -410,8 +410,8 @@ export function flattenComposition(composition){
     result.sectionsCount = sectionArray.length;
   }
 
-  if(get(composition, "issue[0].text")){
-    result.operationOutcome = get(composition, "issue[0].text");
+  if(get(composition, "issue[0].details.text")){
+    result.operationOutcome = get(composition, "issue[0].details.text");
   }
 
   return result;
@@ -482,8 +482,8 @@ export function flattenCondition(condition, internalDateFormat){
 
   console.log('flattenCondition().result', result);
 
-  if(get(condition, "issue[0].text")){
-    result.operationOutcome = get(condition, "issue[0].text");
+  if(get(condition, "issue[0].details.text")){
+    result.operationOutcome = get(condition, "issue[0].details.text");
   }
 
   return result;
@@ -542,8 +542,8 @@ export function flattenCommunication(communication, internalDateFormat){
   result.payload = get(communication, 'payload[0].contentString');
   result.status = get(communication, 'status');
 
-  if(get(communication, "issue[0].text")){
-    result.operationOutcome = get(communication, "issue[0].text");
+  if(get(communication, "issue[0].details.text")){
+    result.operationOutcome = get(communication, "issue[0].details.text");
   }
 
   return result;
@@ -612,8 +612,8 @@ export function flattenCommunicationRequest(communicationRequest, internalDateFo
 
   result.requester = get(communicationRequest, 'requester.display');
 
-  if(get(communicationRequest, "issue[0].text")){
-    result.operationOutcome = get(communicationRequest, "issue[0].text");
+  if(get(communicationRequest, "issue[0].details.text")){
+    result.operationOutcome = get(communicationRequest, "issue[0].details.text");
   }
 
   return result;
@@ -672,8 +672,8 @@ export function flattenCommunicationResponse(communicationResponse, internalDate
   result.payload = get(communicationResponse, 'payload[0].contentString');
   result.status = get(communicationResponse, 'status');
 
-  if(get(communicationResponse, "issue[0].text")){
-    result.operationOutcome = get(communicationResponse, "issue[0].text");
+  if(get(communicationResponse, "issue[0].details.text")){
+    result.operationOutcome = get(communicationResponse, "issue[0].details.text");
   }
 
   return result;
@@ -740,8 +740,8 @@ export function flattenConsent(document){
     });
   }
 
-  if(get(document, "issue[0].text")){
-    result.operationOutcome = get(document, "issue[0].text");
+  if(get(document, "issue[0].details.text")){
+    result.operationOutcome = get(document, "issue[0].details.text");
   }
 
   return result;
@@ -785,8 +785,8 @@ export function flattenDevice(device, internalDateFormat){
 
   console.log('result', JSON.stringify(result));
 
-  if(get(device, "issue[0].text")){
-    result.operationOutcome = get(device, "issue[0].text");
+  if(get(device, "issue[0].details.text")){
+    result.operationOutcome = get(device, "issue[0].details.text");
   }
 
   return result;
@@ -848,8 +848,8 @@ export function flattenDiagnosticReport(report, fhirVersion){
     result.issued = moment(get(report, 'issued')).format("YYYY-MM-DD"); 
   } 
 
-  if(get(report, "issue[0].text")){
-    result.operationOutcome = get(report, "issue[0].text");
+  if(get(report, "issue[0].details.text")){
+    result.operationOutcome = get(report, "issue[0].details.text");
   }
 
   return result;  
@@ -930,8 +930,8 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     result.contentCount = documentReference.content.length;
   }
 
-  if(get(documentReference, "issue[0].text")){
-    result.operationOutcome = get(documentReference, "issue[0].text");
+  if(get(documentReference, "issue[0].details.text")){
+    result.operationOutcome = get(documentReference, "issue[0].details.text");
   }
 
   return result;
@@ -1009,8 +1009,8 @@ export function flattenEncounter(encounter, internalDateFormat){
     result.duration = Math.abs(momentStart.diff(momentEnd, 'minutes', true))
   }
 
-  if(get(encounter, "issue[0].text")){
-    result.operationOutcome = get(encounter, "issue[0].text");
+  if(get(encounter, "issue[0].details.text")){
+    result.operationOutcome = get(encounter, "issue[0].details.text");
   }
 
   return result;
@@ -1082,12 +1082,12 @@ export function flattenImmunization(immunization, internalDateFormat){
   }
   result.reported = moment(get(immunization, 'reported', '')).format("YYYY-MM-DD");
 
-  if(get(immunization, "issue[0].text")){
-    result.operationOutcome = get(immunization, "issue[0].text");
+  if(get(immunization, "issue[0].details.text")){
+    result.operationOutcome = get(immunization, "issue[0].details.text");
   }
 
-  if(get(immunization, "issue[0].text")){
-    result.operationOutcome = get(immunization, "issue[0].text");
+  if(get(immunization, "issue[0].details.text")){
+    result.operationOutcome = get(immunization, "issue[0].details.text");
   }
 
   return result;
@@ -1137,8 +1137,8 @@ export function flattenList(list, extensionUrl){
     result.itemCount = list.entry.length;
   }
 
-  if(get(list, "issue[0].text")){
-    result.operationOutcome = get(list, "issue[0].text");
+  if(get(list, "issue[0].details.text")){
+    result.operationOutcome = get(list, "issue[0].details.text");
   }
 
   return result;
@@ -1213,8 +1213,8 @@ export function flattenLocation(location, simplifiedAddress, preferredExtensionU
     }
   }
 
-  if(get(location, "issue[0].text")){
-    result.operationOutcome = get(location, "issue[0].text");
+  if(get(location, "issue[0].details.text")){
+    result.operationOutcome = get(location, "issue[0].details.text");
   }
 
   return result;
@@ -1292,8 +1292,8 @@ export function flattenMeasure(measure, internalDateFormat){
   let cohorts = get(measure, 'group[0].population', []);
   result.cohortCount = cohorts.length;
 
-  if(get(measure, "issue[0].text")){
-    result.operationOutcome = get(measure, "issue[0].text");
+  if(get(measure, "issue[0].details.text")){
+    result.operationOutcome = get(measure, "issue[0].details.text");
   }
 
   return result;
@@ -1396,8 +1396,8 @@ export function flattenMeasureReport(measureReport, measuresCursor, internalDate
   let stratifierArray = get(measureReport, 'group[0].stratifier', []);
   result.stratifierCount = stratifierArray.length;
 
-  if(get(measureReport, "issue[0].text")){
-    result.operationOutcome = get(measureReport, "issue[0].text");
+  if(get(measureReport, "issue[0].details.text")){
+    result.operationOutcome = get(measureReport, "issue[0].details.text");
   }
 
   return result;
@@ -1452,8 +1452,8 @@ export function flattenMedicationOrder(medicationOrder, dateFormat){
   result.dosage = get(medicationOrder, 'dosageInstruction[0].text');
   result.barcode = get(medicationOrder, '_id');
 
-  if(get(medicationOrder, "issue[0].text")){
-    result.operationOutcome = get(medicationOrder, "issue[0].text");
+  if(get(medicationOrder, "issue[0].details.text")){
+    result.operationOutcome = get(medicationOrder, "issue[0].details.text");
   }
 
   return result;
@@ -1523,8 +1523,8 @@ export function flattenMedicationStatement(statement, fhirVersion){
     result.informationSource = get(statement, 'informationSource.display');    
   }
 
-  if(get(statement, "issue[0].text")){
-    result.operationOutcome = get(statement, "issue[0].text");
+  if(get(statement, "issue[0].details.text")){
+    result.operationOutcome = get(statement, "issue[0].details.text");
   }
   
   return result;
@@ -1688,8 +1688,8 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
     result.value = result.value + result.observationValue + ' ' + result.unit;
   }
 
-  if(get(observation, "issue[0].text")){
-    result.operationOutcome = get(observation, "issue[0].text");
+  if(get(observation, "issue[0].details.text")){
+    result.operationOutcome = get(observation, "issue[0].details.text");
   }
 
   return result;
@@ -1731,8 +1731,8 @@ export function flattenOrganization(organization, internalDateFormat){
 
   result.fullAddress = FhirUtilities.stringifyAddress(get(organization, 'address[0]'));
 
-  if(get(organization, "issue[0].text")){
-    result.operationOutcome = get(organization, "issue[0].text");
+  if(get(organization, "issue[0].details.text")){
+    result.operationOutcome = get(organization, "issue[0].details.text");
   }
 
   return result;
@@ -1859,8 +1859,8 @@ export function flattenPatient(patient, internalDateFormat){
   result.postalCode = get(patient, 'address[0].postalCode')
   result.country = get(patient, 'address[0].country')
 
-  if(get(patient, "issue[0].text")){
-    result.operationOutcome = get(patient, "issue[0].text");
+  if(get(patient, "issue[0].details.text")){
+    result.operationOutcome = get(patient, "issue[0].details.text");
   }
 
   
@@ -1980,8 +1980,8 @@ export function flattenPractitioner(practitioner, fhirVersion){
     result.fullName = FhirUtilities.assembleName(get(practitioner, 'name[0]'))
   }
 
-  if(get(practitioner, "issue[0].text")){
-    result.operationOutcome = get(practitioner, "issue[0].text");
+  if(get(practitioner, "issue[0].details.text")){
+    result.operationOutcome = get(practitioner, "issue[0].details.text");
   }
 
   return result;
@@ -2048,8 +2048,8 @@ export function flattenProcedure(procedure, internalDateFormat){
     result.notesCount = 0;
   }
 
-  if(get(procedure, "issue[0].text")){
-    result.operationOutcome = get(procedure, "issue[0].text");
+  if(get(procedure, "issue[0].details.text")){
+    result.operationOutcome = get(procedure, "issue[0].details.text");
   }
 
   return result;
@@ -2080,8 +2080,8 @@ export function flattenQuestionnaire(questionnaire){
     result.numItems = questionnaire.item.length;
   }  
   
-  if(get(questionnaire, "issue[0].text")){
-    result.operationOutcome = get(questionnaire, "issue[0].text");
+  if(get(questionnaire, "issue[0].details.text")){
+    result.operationOutcome = get(questionnaire, "issue[0].details.text");
   }
   
   return result;
@@ -2133,8 +2133,8 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
     result.count = result.numItems = questionnaireResponse.item.length;
   }
 
-  if(get(questionnaireResponse, "issue[0].text")){
-    result.operationOutcome = get(questionnaireResponse, "issue[0].text");
+  if(get(questionnaireResponse, "issue[0].details.text")){
+    result.operationOutcome = get(questionnaireResponse, "issue[0].details.text");
   }
   
   return result;
@@ -2196,8 +2196,8 @@ export function flattenTask(task, internalDateFormat){
   result.owner = get(task, 'owner.display', '');
   result.ownerReference = get(task, 'owner.reference', '');
 
-  if(get(task, "issue[0].text")){
-    result.operationOutcome = get(task, "issue[0].text");
+  if(get(task, "issue[0].details.text")){
+    result.operationOutcome = get(task, "issue[0].details.text");
   }
 
   return result;
@@ -2223,8 +2223,8 @@ export function flattenValueSet(valueSet, internalDateFormat){
   result.identifier = get(valueSet, 'identifier[0].value', '');
   result.title = get(valueSet, 'title', '');
 
-  if(get(valueSet, "issue[0].text")){
-    result.operationOutcome = get(valueSet, "issue[0].text");
+  if(get(valueSet, "issue[0].details.text")){
+    result.operationOutcome = get(valueSet, "issue[0].details.text");
   }
 
   return result;
