@@ -53,6 +53,7 @@ export function flattenAllergyIntolerance(allergy){
     onset: '',
     recordedDate: ''
   };
+  result.resourceType = get(allergy, 'resourceType', "Unknown");
 
   result.identifier = get(allergy, 'identifier[0].value');
   result.clinicalStatus = get(allergy, 'clinicalStatus');
@@ -109,7 +110,6 @@ export function flattenAllergyIntolerance(allergy){
   return result;
 }
 
-
 export function flattenAuditEvent(auditEvent){
   let result = {
     _id: auditEvent._id,
@@ -128,7 +128,7 @@ export function flattenAuditEvent(auditEvent){
 
     recorded: ''
   };
-
+  result.resourceType = get(auditEvent, 'resourceType', "Unknown");
 
   result.typeDisplay = get(auditEvent, 'type.display', '');
   result.typeCode = get(auditEvent, 'type.code', '');
@@ -151,7 +151,6 @@ export function flattenAuditEvent(auditEvent){
   return result;
 }
 
-
 export function flattenBundle(bundle){
   let result = {
     _id: bundle._id,
@@ -163,6 +162,8 @@ export function flattenBundle(bundle){
     total: 0,
     timestamp: ''
   };
+
+  result.resourceType = get(bundle, 'resourceType', "Unknown");
 
   result.type = get(bundle, 'type', '');
   if(Array.isArray(bundle.links)){
@@ -179,7 +180,6 @@ export function flattenBundle(bundle){
 
   return result;
 }
-
 
 export function flattenCarePlan(plan){
   // careplans: CarePlans.find({'subject.reference': Meteor.userId}).map(function(plan){
@@ -205,6 +205,8 @@ export function flattenCarePlan(plan){
     identifier: '',
     status: ''
   };
+
+  result.resourceType = get(plan, 'resourceType', "Unknown");
 
   result.id = get(plan, 'id', '');
   result._id = get(plan, '_id', '');
@@ -255,7 +257,6 @@ export function flattenCarePlan(plan){
   return result;
 }
 
-
 export function flattenCareTeam(team){
 
   let result = {
@@ -277,6 +278,8 @@ export function flattenCareTeam(team){
     note: '',
     noteCount: 0
   };
+
+  result.resourceType = get(team, 'resourceType', "Unknown");
 
   result.id = get(team, 'id', '');
   result._id = get(team, '_id', '');
@@ -337,6 +340,8 @@ export function flattenComposition(composition){
 
     sectionsCount: 0,
   };
+
+  result.resourceType = get(composition, 'resourceType', "Unknown");
 
   result.id = get(composition, 'id', '');
   result._id = get(composition, '_id', '');
@@ -404,6 +409,8 @@ export function flattenCondition(condition, internalDateFormat){
     abatementDateTime: ''
   };
 
+  result.resourceType = get(condition, 'resourceType', "Unknown");
+
   if(!internalDateFormat){
     internalDateFormat = "YYYY-MM-DD";
   }
@@ -448,8 +455,6 @@ export function flattenCondition(condition, internalDateFormat){
   return result;
 }
 
-
-
 export function flattenCommunication(communication, internalDateFormat){
   let result = {
     _id: communication._id,
@@ -464,6 +469,8 @@ export function flattenCommunication(communication, internalDateFormat){
     payload: '',
     status: ''
   };
+
+  result.resourceType = get(communication, 'resourceType', "Unknown");
 
   if(get(communication, 'sent')){
     result.sent = moment(get(communication, 'sent')).add(1, 'days').format("YYYY-MM-DD hh:mm")
@@ -520,6 +527,8 @@ export function flattenCommunicationRequest(communicationRequest, internalDateFo
     status: '',
     requester: ''
   };
+
+  result.resourceType = get(communicationRequest, 'resourceType', "Unknown");
 
   if(get(communicationRequest, 'sent')){
     result.sent = moment(get(communicationRequest, 'sent')).add(1, 'days').format("YYYY-MM-DD hh:mm")
@@ -581,6 +590,8 @@ export function flattenCommunicationResponse(communicationResponse, internalDate
     status: ''
   };
 
+  result.resourceType = get(communicationResponse, 'resourceType', "Unknown");
+
   if(get(communicationResponse, 'sent')){
     result.sent = moment(get(communicationResponse, 'sent')).add(1, 'days').format("YYYY-MM-DD hh:mm")
   }
@@ -619,7 +630,6 @@ export function flattenCommunicationResponse(communicationResponse, internalDate
   return result;
 }
 
-
 export function flattenConsent(document){
   let result = {
     _id: document._id,
@@ -643,6 +653,8 @@ export function flattenConsent(document){
     category: '',
     scope: get(document, 'scope.coding[0].display')
   };
+
+  result.resourceType = get(document, 'resourceType', "Unknown");
 
   if(has(document, 'patient.display')){
     result.patientName = get(document, 'patient.display')
@@ -697,6 +709,8 @@ export function flattenDevice(device, internalDateFormat){
     deviceName: ''
   };
 
+  result.resourceType = get(device, 'resourceType', "Unknown");
+
   if(!internalDateFormat){
     internalDateFormat = "YYYY-MM-DD";
   }
@@ -731,6 +745,8 @@ export function flattenDiagnosticReport(report, fhirVersion){
     category: '',
     effectiveDate: ''
   };
+
+  result.resourceType = get(report, 'resourceType', "Unknown");
   
   if (report){
     result.id = get(report, 'id');
@@ -774,7 +790,6 @@ export function flattenDiagnosticReport(report, fhirVersion){
   } 
 }
 
-
 export function flattenDocumentReference(documentReference, internalDateFormat){
   let result = {
     _id: '',
@@ -804,6 +819,8 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     contentSize: '',
     contentCount: 0
   };
+
+  result.resourceType = get(documentReference, 'resourceType', "Unknown");
 
   if(!internalDateFormat){
     internalDateFormat = "YYYY-MM-DD";
@@ -869,6 +886,8 @@ export function flattenEncounter(encounter, internalDateFormat){
     duration: ''
   };
 
+  result.resourceType = get(encounter, 'resourceType', "Unknown");
+
   if(!internalDateFormat){
     internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
   }
@@ -923,8 +942,6 @@ export function flattenEncounter(encounter, internalDateFormat){
   return result;
 }
 
-
-
 export function flattenImmunization(immunization, internalDateFormat){
   let result = {
     _id: '',
@@ -941,6 +958,8 @@ export function flattenImmunization(immunization, internalDateFormat){
     reported: '',
     date: ''
   };
+
+  result.resourceType = get(immunization, 'resourceType', "Unknown");
 
   if(!internalDateFormat){
     internalDateFormat = "YYYY-MM-DD";
@@ -991,7 +1010,6 @@ export function flattenImmunization(immunization, internalDateFormat){
   return result;
 }
 
-
 export function flattenList(list, extensionUrl){
   console.log('flattenList', list);
   
@@ -1015,6 +1033,7 @@ export function flattenList(list, extensionUrl){
     itemCount: 0
   };
 
+  result.resourceType = get(list, 'resourceType', "Unknown");
 
   result._id = get(list, '_id');
   result.id = get(list, 'id');
@@ -1056,6 +1075,8 @@ export function flattenLocation(location, simplifiedAddress, preferredExtensionU
     longitude: '',
     selectedExtension: ''
   };
+
+  result.resourceType = get(location, 'resourceType', "Unknown");
 
   result.severity = get(location, 'severity.text', '');
 
@@ -1106,9 +1127,6 @@ export function flattenLocation(location, simplifiedAddress, preferredExtensionU
   return result;
 }
 
-
-
-
 export function flattenMeasure(measure, internalDateFormat){
   let result = {
     _id: '',
@@ -1134,6 +1152,8 @@ export function flattenMeasure(measure, internalDateFormat){
     context: '', 
     version: ''
   };
+
+  result.resourceType = get(measure, 'resourceType', "Unknown");
 
   if(!internalDateFormat){
     internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
@@ -1182,7 +1202,6 @@ export function flattenMeasure(measure, internalDateFormat){
   return result;
 }
 
-
 export function flattenMeasureReport(measureReport, measuresCursor, internalDateFormat, measureShorthand, measureScoreType){
   let result = {
     _id: '',
@@ -1205,6 +1224,8 @@ export function flattenMeasureReport(measureReport, measuresCursor, internalDate
     numerator: '',
     denominator: ''
   };
+
+  result.resourceType = get(measureReport, 'resourceType', "Unknown");
 
   if(!internalDateFormat){
     internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
@@ -1280,8 +1301,6 @@ export function flattenMeasureReport(measureReport, measuresCursor, internalDate
   return result;
 }
 
-
-
 export function flattenMedicationOrder(medicationOrder, dateFormat){
   let result = {
     _id: '',
@@ -1303,6 +1322,8 @@ export function flattenMedicationOrder(medicationOrder, dateFormat){
     medicationCode: '',
     dosage: ''
   };
+
+  result.resourceType = get(medicationOrder, 'resourceType', "Unknown");
 
   result._id = get(medicationOrder, '_id');
   result.id = get(medicationOrder, 'id', '');
@@ -1352,6 +1373,8 @@ export function flattenMedicationStatement(statement, fhirVersion){
     'dosage': '',
   };
 
+  result.resourceType = get(statement, 'resourceType', "Unknown");
+
   result._id = get(statement, '_id');
   result.id = get(statement, 'id', '');
 
@@ -1395,7 +1418,6 @@ export function flattenMedicationStatement(statement, fhirVersion){
   return result;
 }
 
-
 export function flattenObservation(observation, dateFormat, numeratorCode, denominatorCode, multiComponentValues, sampledData){
   let result = {
     _id: '',
@@ -1426,6 +1448,8 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
     sampledMin: 0,
     sampledMax: 0
   };
+
+  result.resourceType = get(observation, 'resourceType', "Unknown");
 
   if(!dateFormat){
     dateFormat = get(Meteor, "settings.public.defaults.dateFormat", "YYYY-MM-DD hh a");
@@ -1570,6 +1594,8 @@ export function flattenOrganization(organization, internalDateFormat){
     fullAddress: ''
   };
 
+  result.resourceType = get(organization, 'resourceType', "Unknown");
+
   result._id = get(organization, '_id', '');
   result.id = get(organization, 'id', '');
   result.identifier = get(organization, 'identifier[0].value', '');
@@ -1612,6 +1638,8 @@ export function flattenPatient(patient, internalDateFormat){
     resourceCounts: '',
     deceased: false
   };
+
+  result.resourceType = get(patient, 'resourceType', "Unknown");
 
   result._id = get(patient, '_id', '');
   result.id = get(patient, 'id', '');
@@ -1736,6 +1764,8 @@ export function flattenPractitioner(practitioner, fhirVersion){
     fullName: ''
   };
 
+  result.resourceType = get(practitioner, 'resourceType', "Unknown");
+
   result._id = get(practitioner, '_id', '');
   result.id = get(practitioner, 'id', '');
 
@@ -1826,7 +1856,6 @@ export function flattenPractitioner(practitioner, fhirVersion){
   return result;
 }
 
-
 export function flattenProcedure(procedure, internalDateFormat){
   let result = {
     _id: '',
@@ -1845,6 +1874,8 @@ export function flattenProcedure(procedure, internalDateFormat){
     notesCount: '',
     bodySiteDisplay: ''
   };
+
+  result.resourceType = get(procedure, 'resourceType', "Unknown");
 
   if(!internalDateFormat){
     internalDateFormat = "YYYY-MM-DD";
@@ -1899,6 +1930,8 @@ export function flattenQuestionnaire(questionnaire){
     numItems: 0
   };
 
+  result.resourceType = get(questionnaire, 'resourceType', "Unknown");
+
   result.id = get(questionnaire, 'id', '');
 
   result.date = moment(questionnaire.date).add(1, 'days').format("YYYY-MM-DD")
@@ -1933,6 +1966,7 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
     authored: ''
   };
 
+  result.resourceType = get(questionnaireResponse, 'resourceType', "Unknown");
 
   // there's an off-by-1 error between momment() and Date() that we want
   // to account for when converting back to a string
@@ -1960,7 +1994,6 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
   return result;
 }
 
-
 export function flattenTask(task, internalDateFormat){
   let result = {
     _id: '',
@@ -1982,6 +2015,8 @@ export function flattenTask(task, internalDateFormat){
     owner: '',
     ownerReference: ''
   };
+
+  result.resourceType = get(task, 'resourceType', "Unknown");
 
   if(!internalDateFormat){
     internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
@@ -2017,7 +2052,6 @@ export function flattenTask(task, internalDateFormat){
   return result;
 }
 
-
 export function flattenValueSet(valueSet, internalDateFormat){
   let result = {
     _id: '',
@@ -2025,6 +2059,8 @@ export function flattenValueSet(valueSet, internalDateFormat){
     identifier: '',
     title: '',
   };
+
+  result.resourceType = get(valueSet, 'resourceType', "Unknown");
 
   if(!internalDateFormat){
     internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
