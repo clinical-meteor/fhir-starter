@@ -51,7 +51,8 @@ export function flattenAllergyIntolerance(allergy){
     reaction: '',
     substance: '',
     onset: '',
-    recordedDate: ''
+    recordedDate: '',
+    operationOutcome: ''
   };
   result.resourceType = get(allergy, 'resourceType', "Unknown");
 
@@ -107,6 +108,10 @@ export function flattenAllergyIntolerance(allergy){
     }
   };
 
+  if(get(allergy, "issue[0].text")){
+    result.operationOutcome = get(allergy, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -126,7 +131,8 @@ export function flattenAuditEvent(auditEvent){
     sourceSite: '',
     entityName: '',
 
-    recorded: ''
+    recorded: '',
+    operationOutcome: ''
   };
   result.resourceType = get(auditEvent, 'resourceType', "Unknown");
 
@@ -146,7 +152,11 @@ export function flattenAuditEvent(auditEvent){
 
   // there's an off-by-1 error between momment() and Date() that we want
   // to account for when converting back to a string
-  result.recorded = moment(auditEvent.recorded).format("YYYY-MM-DD")
+  result.recorded = moment(auditEvent.recorded).format("YYYY-MM-DD");
+
+  if(get(auditEvent, "issue[0].text")){
+    result.operationOutcome = get(auditEvent, "issue[0].text");
+  }
 
   return result;
 }
@@ -160,7 +170,8 @@ export function flattenBundle(bundle){
     links: 0,
     entries: 0,
     total: 0,
-    timestamp: ''
+    timestamp: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(bundle, 'resourceType', "Unknown");
@@ -176,7 +187,11 @@ export function flattenBundle(bundle){
 
   // there's an off-by-1 error between momment() and Date() that we want
   // to account for when converting back to a string
-  result.timestamp = moment(bundle.timestamp).format("YYYY-MM-DD hh:mm:ss")
+  result.timestamp = moment(bundle.timestamp).format("YYYY-MM-DD hh:mm:ss");
+
+  if(get(bundle, "issue[0].text")){
+    result.operationOutcome = get(bundle, "issue[0].text");
+  }
 
   return result;
 }
@@ -203,7 +218,8 @@ export function flattenCarePlan(plan){
     end: '',
     title: '',
     identifier: '',
-    status: ''
+    status: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(plan, 'resourceType', "Unknown");
@@ -253,6 +269,9 @@ export function flattenCarePlan(plan){
     result.title = get(plan, 'category[0].coding[0].display', '')    
   }
 
+  if(get(plan, "issue[0].text")){
+    result.operationOutcome = get(plan, "issue[0].text");
+  }
 
   return result;
 }
@@ -276,7 +295,8 @@ export function flattenCareTeam(team){
     managingOrganization: '',
     telecom: '',
     note: '',
-    noteCount: 0
+    noteCount: 0,
+    operationOutcome: ''
   };
 
   result.resourceType = get(team, 'resourceType', "Unknown");
@@ -313,6 +333,10 @@ export function flattenCareTeam(team){
     result.noteCount = team.note.length;
   }
 
+  if(get(team, "issue[0].text")){
+    result.operationOutcome = get(team, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -337,8 +361,8 @@ export function flattenComposition(composition){
     relatesToDisplay: '',
     relatesToReference: '',
     date: '',
-
     sectionsCount: 0,
+    operationOutcome: ''
   };
 
   result.resourceType = get(composition, 'resourceType', "Unknown");
@@ -386,6 +410,10 @@ export function flattenComposition(composition){
     result.sectionsCount = sectionArray.length;
   }
 
+  if(get(composition, "issue[0].text")){
+    result.operationOutcome = get(composition, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -406,7 +434,8 @@ export function flattenCondition(condition, internalDateFormat){
     evidenceDisplay: '',
     barcode: '',
     onsetDateTime: '',
-    abatementDateTime: ''
+    abatementDateTime: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(condition, 'resourceType', "Unknown");
@@ -451,7 +480,12 @@ export function flattenCondition(condition, internalDateFormat){
   result.onsetDateTime = moment(get(condition, 'onsetDateTime', '')).format("YYYY-MM-DD");
   result.abatementDateTime = moment(get(condition, 'abatementDateTime', '')).format("YYYY-MM-DD");
 
-  console.log('flattenCondition().result', result)
+  console.log('flattenCondition().result', result);
+
+  if(get(condition, "issue[0].text")){
+    result.operationOutcome = get(condition, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -467,7 +501,8 @@ export function flattenCommunication(communication, internalDateFormat){
     received: '',
     category: '',
     payload: '',
-    status: ''
+    status: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(communication, 'resourceType', "Unknown");
@@ -507,6 +542,10 @@ export function flattenCommunication(communication, internalDateFormat){
   result.payload = get(communication, 'payload[0].contentString');
   result.status = get(communication, 'status');
 
+  if(get(communication, "issue[0].text")){
+    result.operationOutcome = get(communication, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -525,7 +564,8 @@ export function flattenCommunicationRequest(communicationRequest, internalDateFo
     category: '',
     payload: '',
     status: '',
-    requester: ''
+    requester: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(communicationRequest, 'resourceType', "Unknown");
@@ -572,6 +612,10 @@ export function flattenCommunicationRequest(communicationRequest, internalDateFo
 
   result.requester = get(communicationRequest, 'requester.display');
 
+  if(get(communicationRequest, "issue[0].text")){
+    result.operationOutcome = get(communicationRequest, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -587,7 +631,8 @@ export function flattenCommunicationResponse(communicationResponse, internalDate
     received: '',
     category: '',
     payload: '',
-    status: ''
+    status: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(communicationResponse, 'resourceType', "Unknown");
@@ -627,6 +672,10 @@ export function flattenCommunicationResponse(communicationResponse, internalDate
   result.payload = get(communicationResponse, 'payload[0].contentString');
   result.status = get(communicationResponse, 'status');
 
+  if(get(communicationResponse, "issue[0].text")){
+    result.operationOutcome = get(communicationResponse, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -651,7 +700,8 @@ export function flattenConsent(document){
     end: '',
     sourceReference: get(document, 'sourceReference.reference', ''),
     category: '',
-    scope: get(document, 'scope.coding[0].display')
+    scope: get(document, 'scope.coding[0].display'),
+    operationOutcome: ''
   };
 
   result.resourceType = get(document, 'resourceType', "Unknown");
@@ -675,7 +725,6 @@ export function flattenConsent(document){
     result.end = moment(get(document, 'period.end', '')).format("YYYY-MM-DD hh:mm:ss");
   }
 
-
   if(result.patientReference === ''){
     result.patientReference = get(document, 'patient.reference', '');
   }
@@ -690,6 +739,11 @@ export function flattenConsent(document){
       }      
     });
   }
+
+  if(get(document, "issue[0].text")){
+    result.operationOutcome = get(document, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -706,7 +760,8 @@ export function flattenDevice(device, internalDateFormat){
     serialNumber: '',
     costOfOwnership: '',
     lotNumber: '',
-    deviceName: ''
+    deviceName: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(device, 'resourceType', "Unknown");
@@ -728,7 +783,12 @@ export function flattenDevice(device, internalDateFormat){
   result.note = get(device, 'note[0].text', '');
   result.deviceName = get(device, 'deviceName[0].name', '');
 
-  console.log('result', JSON.stringify(result))
+  console.log('result', JSON.stringify(result));
+
+  if(get(device, "issue[0].text")){
+    result.operationOutcome = get(device, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -743,7 +803,8 @@ export function flattenDiagnosticReport(report, fhirVersion){
     performerDisplay: '',
     identifier: '',
     category: '',
-    effectiveDate: ''
+    effectiveDate: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(report, 'resourceType', "Unknown");
@@ -785,9 +846,13 @@ export function flattenDiagnosticReport(report, fhirVersion){
     result.status = get(report, 'status', '');
     result.effectiveDate = moment(get(report, 'effectiveDateTime')).format("YYYY-MM-DD");
     result.issued = moment(get(report, 'issued')).format("YYYY-MM-DD"); 
-
-    return result;  
   } 
+
+  if(get(report, "issue[0].text")){
+    result.operationOutcome = get(report, "issue[0].text");
+  }
+
+  return result;  
 }
 
 export function flattenDocumentReference(documentReference, internalDateFormat){
@@ -817,7 +882,8 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     contentFormat: '',
     contentTitle: '',
     contentSize: '',
-    contentCount: 0
+    contentCount: 0,
+    operationOutcome: ''
   };
 
   result.resourceType = get(documentReference, 'resourceType', "Unknown");
@@ -864,6 +930,10 @@ export function flattenDocumentReference(documentReference, internalDateFormat){
     result.contentCount = documentReference.content.length;
   }
 
+  if(get(documentReference, "issue[0].text")){
+    result.operationOutcome = get(documentReference, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -883,7 +953,8 @@ export function flattenEncounter(encounter, internalDateFormat){
     typeCode: '',
     typeDisplay: '',
     classCode: '',
-    duration: ''
+    duration: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(encounter, 'resourceType', "Unknown");
@@ -924,7 +995,6 @@ export function flattenEncounter(encounter, internalDateFormat){
     result.periodStart = momentStart.format(internalDateFormat);
   } 
 
-
   let momentEnd;
   if(get(encounter, 'period.end')){
     momentEnd = moment(get(encounter, 'period.end', ''))
@@ -937,6 +1007,10 @@ export function flattenEncounter(encounter, internalDateFormat){
 
   if(momentStart && momentEnd){
     result.duration = Math.abs(momentStart.diff(momentEnd, 'minutes', true))
+  }
+
+  if(get(encounter, "issue[0].text")){
+    result.operationOutcome = get(encounter, "issue[0].text");
   }
 
   return result;
@@ -956,7 +1030,8 @@ export function flattenImmunization(immunization, internalDateFormat){
     vaccineDisplay: '',
     status: '',
     reported: '',
-    date: ''
+    date: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(immunization, 'resourceType', "Unknown");
@@ -1007,6 +1082,14 @@ export function flattenImmunization(immunization, internalDateFormat){
   }
   result.reported = moment(get(immunization, 'reported', '')).format("YYYY-MM-DD");
 
+  if(get(immunization, "issue[0].text")){
+    result.operationOutcome = get(immunization, "issue[0].text");
+  }
+
+  if(get(immunization, "issue[0].text")){
+    result.operationOutcome = get(immunization, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1030,7 +1113,8 @@ export function flattenList(list, extensionUrl){
     sourceReference: '',
     oderedByText: '',
     emptyReason: '',
-    itemCount: 0
+    itemCount: 0,
+    operationOutcome: ''
   };
 
   result.resourceType = get(list, 'resourceType', "Unknown");
@@ -1053,6 +1137,10 @@ export function flattenList(list, extensionUrl){
     result.itemCount = list.entry.length;
   }
 
+  if(get(list, "issue[0].text")){
+    result.operationOutcome = get(list, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1073,7 +1161,8 @@ export function flattenLocation(location, simplifiedAddress, preferredExtensionU
     type: '',
     latitude: '',
     longitude: '',
-    selectedExtension: ''
+    selectedExtension: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(location, 'resourceType', "Unknown");
@@ -1124,6 +1213,10 @@ export function flattenLocation(location, simplifiedAddress, preferredExtensionU
     }
   }
 
+  if(get(location, "issue[0].text")){
+    result.operationOutcome = get(location, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1150,7 +1243,8 @@ export function flattenMeasure(measure, internalDateFormat){
     rateAggregation: '',
     supplementalDataCount: '',
     context: '', 
-    version: ''
+    version: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(measure, 'resourceType', "Unknown");
@@ -1198,6 +1292,9 @@ export function flattenMeasure(measure, internalDateFormat){
   let cohorts = get(measure, 'group[0].population', []);
   result.cohortCount = cohorts.length;
 
+  if(get(measure, "issue[0].text")){
+    result.operationOutcome = get(measure, "issue[0].text");
+  }
 
   return result;
 }
@@ -1222,7 +1319,8 @@ export function flattenMeasureReport(measureReport, measuresCursor, internalDate
     measureScore: '',
     stratifierCount: '',
     numerator: '',
-    denominator: ''
+    denominator: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(measureReport, 'resourceType', "Unknown");
@@ -1298,6 +1396,10 @@ export function flattenMeasureReport(measureReport, measuresCursor, internalDate
   let stratifierArray = get(measureReport, 'group[0].stratifier', []);
   result.stratifierCount = stratifierArray.length;
 
+  if(get(measureReport, "issue[0].text")){
+    result.operationOutcome = get(measureReport, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1320,7 +1422,8 @@ export function flattenMedicationOrder(medicationOrder, dateFormat){
     dosageInstructionText: '',
     medicationCodeableConcept: '',
     medicationCode: '',
-    dosage: ''
+    dosage: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(medicationOrder, 'resourceType', "Unknown");
@@ -1349,6 +1452,10 @@ export function flattenMedicationOrder(medicationOrder, dateFormat){
   result.dosage = get(medicationOrder, 'dosageInstruction[0].text');
   result.barcode = get(medicationOrder, '_id');
 
+  if(get(medicationOrder, "issue[0].text")){
+    result.operationOutcome = get(medicationOrder, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1356,21 +1463,22 @@ export function flattenMedicationStatement(statement, fhirVersion){
   console.log('flattenMedicationStatement', statement)
 
   var result = {
-    '_id': '',
-    'id': '',
-    'medication': '',
-    'medicationReference': '',
-    'medicationDisplay': '',
-    'reasonCodeCode': '',
-    'reasonCodeDisplay': '',
-    'basedOn': '',
-    'effectiveDateTime': '',
-    'dateAsserted': '',
-    'informationSource': '',
-    'subjectDisplay': '',
-    'taken': '',
-    'reasonCodeDisplay': '',
-    'dosage': '',
+    _id: '',
+    id: '',
+    medication: '',
+    medicationReference: '',
+    medicationDisplay: '',
+    reasonCodeCode: '',
+    reasonCodeDisplay: '',
+    basedOn: '',
+    effectiveDateTime: '',
+    dateAsserted: '',
+    informationSource: '',
+    subjectDisplay: '',
+    taken: '',
+    reasonCodeDisplay: '',
+    dosage: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(statement, 'resourceType', "Unknown");
@@ -1415,6 +1523,10 @@ export function flattenMedicationStatement(statement, fhirVersion){
     result.informationSource = get(statement, 'informationSource.display');    
   }
 
+  if(get(statement, "issue[0].text")){
+    result.operationOutcome = get(statement, "issue[0].text");
+  }
+  
   return result;
 }
 
@@ -1446,7 +1558,8 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
 
     sampledPeriod: 0,
     sampledMin: 0,
-    sampledMax: 0
+    sampledMax: 0,
+    operationOutcome: ''
   };
 
   result.resourceType = get(observation, 'resourceType', "Unknown");
@@ -1575,6 +1688,10 @@ export function flattenObservation(observation, dateFormat, numeratorCode, denom
     result.value = result.value + result.observationValue + ' ' + result.unit;
   }
 
+  if(get(observation, "issue[0].text")){
+    result.operationOutcome = get(observation, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1591,7 +1708,8 @@ export function flattenOrganization(organization, internalDateFormat){
     city: '',
     state: '',
     postalCode: '',
-    fullAddress: ''
+    fullAddress: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(organization, 'resourceType', "Unknown");
@@ -1612,6 +1730,10 @@ export function flattenOrganization(organization, internalDateFormat){
   result.country = get(organization, 'address[0].country');
 
   result.fullAddress = FhirUtilities.stringifyAddress(get(organization, 'address[0]'));
+
+  if(get(organization, "issue[0].text")){
+    result.operationOutcome = get(organization, "issue[0].text");
+  }
 
   return result;
 }
@@ -1636,7 +1758,8 @@ export function flattenPatient(patient, internalDateFormat){
     preferredLanguage: '',
     species: '',
     resourceCounts: '',
-    deceased: false
+    deceased: false,
+    operationOutcome: ''
   };
 
   result.resourceType = get(patient, 'resourceType', "Unknown");
@@ -1736,7 +1859,10 @@ export function flattenPatient(patient, internalDateFormat){
   result.postalCode = get(patient, 'address[0].postalCode')
   result.country = get(patient, 'address[0].country')
 
-  
+  if(get(patient, "issue[0].text")){
+    result.operationOutcome = get(patient, "issue[0].text");
+  }
+
   
   // console.log('flattened', result)
   return result;
@@ -1761,7 +1887,8 @@ export function flattenPractitioner(practitioner, fhirVersion){
     city: '',
     state: '',
     postalCode: '',
-    fullName: ''
+    fullName: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(practitioner, 'resourceType', "Unknown");
@@ -1853,6 +1980,10 @@ export function flattenPractitioner(practitioner, fhirVersion){
     result.fullName = FhirUtilities.assembleName(get(practitioner, 'name[0]'))
   }
 
+  if(get(practitioner, "issue[0].text")){
+    result.operationOutcome = get(practitioner, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1872,7 +2003,8 @@ export function flattenProcedure(procedure, internalDateFormat){
     performedStart: '',
     performedEnd: '',
     notesCount: '',
-    bodySiteDisplay: ''
+    bodySiteDisplay: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(procedure, 'resourceType', "Unknown");
@@ -1916,6 +2048,10 @@ export function flattenProcedure(procedure, internalDateFormat){
     result.notesCount = 0;
   }
 
+  if(get(procedure, "issue[0].text")){
+    result.operationOutcome = get(procedure, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -1927,7 +2063,8 @@ export function flattenQuestionnaire(questionnaire){
     title: '',
     state: '',
     date: '',
-    numItems: 0
+    numItems: 0,
+    operationOutcome: ''
   };
 
   result.resourceType = get(questionnaire, 'resourceType', "Unknown");
@@ -1941,6 +2078,10 @@ export function flattenQuestionnaire(questionnaire){
 
   if(Array.isArray(questionnaire.item)){
     result.numItems = questionnaire.item.length;
+  }  
+  
+  if(get(questionnaire, "issue[0].text")){
+    result.operationOutcome = get(questionnaire, "issue[0].text");
   }
   
   return result;
@@ -1963,7 +2104,8 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
     date: '',
     count: 0,
     numItems: 0,
-    authored: ''
+    authored: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(questionnaireResponse, 'resourceType', "Unknown");
@@ -1990,6 +2132,10 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
   if(Array.isArray(questionnaireResponse.item)){
     result.count = result.numItems = questionnaireResponse.item.length;
   }
+
+  if(get(questionnaireResponse, "issue[0].text")){
+    result.operationOutcome = get(questionnaireResponse, "issue[0].text");
+  }
   
   return result;
 }
@@ -2013,7 +2159,8 @@ export function flattenTask(task, internalDateFormat){
     encounter: '',
     encounterReference: '',
     owner: '',
-    ownerReference: ''
+    ownerReference: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(task, 'resourceType', "Unknown");
@@ -2049,6 +2196,10 @@ export function flattenTask(task, internalDateFormat){
   result.owner = get(task, 'owner.display', '');
   result.ownerReference = get(task, 'owner.reference', '');
 
+  if(get(task, "issue[0].text")){
+    result.operationOutcome = get(task, "issue[0].text");
+  }
+
   return result;
 }
 
@@ -2058,6 +2209,7 @@ export function flattenValueSet(valueSet, internalDateFormat){
     meta: '',
     identifier: '',
     title: '',
+    operationOutcome: ''
   };
 
   result.resourceType = get(valueSet, 'resourceType', "Unknown");
@@ -2071,6 +2223,9 @@ export function flattenValueSet(valueSet, internalDateFormat){
   result.identifier = get(valueSet, 'identifier[0].value', '');
   result.title = get(valueSet, 'title', '');
 
+  if(get(valueSet, "issue[0].text")){
+    result.operationOutcome = get(valueSet, "issue[0].text");
+  }
 
   return result;
 }
