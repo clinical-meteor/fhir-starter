@@ -985,11 +985,11 @@ export function flattenEncounter(encounter, internalDateFormat){
 
   result.statusHistory = statusHistory.length;
 
-  let momentStart = moment(get(encounter, 'period.start', ''))
+  let momentStart = moment(get(encounter, 'period.start', '')).format("YYYY-MM-DD")
   if(get(encounter, 'period.start')){
-    momentStart = moment(get(encounter, 'period.start', ''))
+    momentStart = moment(get(encounter, 'period.start', '')).format("YYYY-MM-DD")
   } else if(get(encounter, 'performedPeriod.start')){
-    momentStart = moment(get(encounter, 'performedPeriod.start', ''))
+    momentStart = moment(get(encounter, 'performedPeriod.start', '')).format("YYYY-MM-DD")
   }
   if(momentStart){
     result.periodStart = momentStart.format(internalDateFormat);
@@ -997,9 +997,9 @@ export function flattenEncounter(encounter, internalDateFormat){
 
   let momentEnd;
   if(get(encounter, 'period.end')){
-    momentEnd = moment(get(encounter, 'period.end', ''))
+    momentEnd = moment(get(encounter, 'period.end', '')).format("YYYY-MM-DD")
   } else if(get(encounter, 'performedPeriod.end')){
-    momentEnd = moment(get(encounter, 'performedPeriod.end', ''))
+    momentEnd = moment(get(encounter, 'performedPeriod.end', '')).format("YYYY-MM-DD")
   }
   if(momentEnd){
     result.periodEnd = momentEnd.format(internalDateFormat);
