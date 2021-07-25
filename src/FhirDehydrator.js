@@ -2163,7 +2163,7 @@ export function flattenServiceRequest(document){
   let result = {
     _id: get(document, '_id', ''),
     id: get(document, 'id', ''),
-    identifier: get(questionnaireResponse, 'identifier[0].value', ''),
+    identifier: get(document, 'identifier[0].value', ''),
     authoredOn: moment(get(document, 'authoredOn', null)).format("YYYY-MM-DD"),
     status: get(document, 'status', ''),
     intent: get(document, 'intent', ''),
