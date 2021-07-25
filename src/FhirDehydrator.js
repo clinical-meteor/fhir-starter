@@ -2236,9 +2236,11 @@ export function flatten(collectionName, resource){
   console.log('Flattening record ' + resource.id + ' from the ' + collectionName + ' collection.');
   
   let notImplementedMessage = {text: "Not implemented  ."};
-  switch (collectionName) {
+  switch (collectionName) {    
     case "AllergyIntollerances":
       return flattenAllergyIntolerance(resource);
+    case "AuditEvents":
+      return flattenAuditEvent(resource);
     case "Bundles":
       return flattenBundle(resource);
     case "CarePlans":
@@ -2328,6 +2330,7 @@ export function flatten(collectionName, resource){
 
 export const FhirDehydrator = {
   dehydrateAllergyIntolerance: flattenAllergyIntolerance,
+  dehydrateAuditEvent: flattenAuditEvent,
   dehydrateBundle: flattenBundle,
   dehydrateCarePlan: flattenCarePlan,
   dehydrateCareTeam: flattenCareTeam,
@@ -2363,6 +2366,7 @@ export const FhirDehydrator = {
 export default {
   FhirDehydrator,
   flattenAllergyIntolerance,
+  flattenAuditEvent,
   flattenBundle,
   flattenCarePlan,
   flattenCareTeam,
