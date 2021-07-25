@@ -2120,7 +2120,7 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
   result.sourceDisplay = get(questionnaireResponse, 'source.display', '');
   result.sourceReference = get(questionnaireResponse, 'source.reference', '');
   result.author = get(questionnaireResponse, 'author.display', '');
-  result.identifier = get(questionnaireResponse, 'identifier.value', '');
+  result.identifier = get(questionnaireResponse, 'identifier[0].value', '');
   result.status = get(questionnaireResponse, 'status', '');
   result.id = get(questionnaireResponse, 'id', '');
   result.identifier = get(questionnaireResponse, 'identifier[0].value', '');
@@ -2137,6 +2137,47 @@ export function flattenQuestionnaireResponse(questionnaireResponse){
     result.operationOutcome = get(questionnaireResponse, "issue[0].details.text");
   }
   
+  return result;
+}
+
+export function flattenRiskAssessment(document){
+  let result = {
+    _id: get(document, '_id', ''),
+    id: get(document, 'id', ''),
+    occurrenceDateTime: moment(get(document, 'occurrenceDateTime', null)).format("YYYY-MM-DD hh:mm"),
+    identifier: get(questionnaireResponse, 'identifier[0].value', ''),
+    performer: get(document, 'performer.display', ''),
+    performerReference: get(document, 'performer.reference', ''),
+    status: get(document, 'status', ''),
+    subjectReference: get(document, 'subject.reference', ''),
+    subjectName: get(document, 'subject.display', ''),
+    outcomeText: get(document, 'prediction[0].outcome.text', ''),
+    probabilityDecimal: get(document, 'prediction[0].probabilityDecimal', ''),
+    text: get(document, 'text.div', ''),
+  };
+
+  return result;
+}
+
+export function flattenServiceRequest(document){
+  let result = {
+    _id: get(document, '_id', ''),
+    id: get(document, 'id', ''),
+    identifier: get(questionnaireResponse, 'identifier[0].value', ''),
+    authoredOn: moment(get(document, 'authoredOn', null)).format("YYYY-MM-DD"),
+    status: get(document, 'status', ''),
+    intent: get(document, 'intent', ''),
+    subjectReference: get(document, 'subject.reference', ''),
+    subjectName: get(document, 'subject.display', ''),
+    performer: get(document, 'performer[0].display', ''),
+    performerReference: get(document, 'performer[0].reference', ''),
+    orderDetail: get(document, 'orderDetail[0].text', ''),
+    requestor: get(document, 'requestor[0].display', ''),
+    requestorReference: get(document, 'requestor[0].reference', ''),
+    locationReference: get(document, 'locationReference[0].name', ''),
+    text: get(document, 'text.div', ''),
+  };
+
   return result;
 }
 
@@ -2316,9 +2357,11 @@ export function flatten(collectionName, resource){
     case "QuestionnaireResponses":
       return flattenQuestionnaireResponse(resource);     
     case "RiskAssessments":
-      return notImplementedMessage;     
+      return flattenRiskAssessment(resource);     
     case "Sequences":
       return notImplementedMessage;     
+    case "ServiceRequest":
+      return flattenServiceRequest(resource);           
     case "Tasks":
       return flattenTask(resource);
     case "ValueSets":
@@ -2358,6 +2401,8 @@ export const FhirDehydrator = {
   dehydrateProcedure: flattenProcedure,
   dehydrateQuestionnaire: flattenQuestionnaire,
   dehydrateQuestionnaireResponse: flattenQuestionnaireResponse,
+  dehydrateRiskAssessment: flattenRiskAssessment,
+  dehydrateServiceRequest: flattenServiceRequest,
   dehydrateTask: flattenTask,
   dehydrateValueSet: flattenValueSet,
   flatten: flatten
@@ -2394,6 +2439,8 @@ export default {
   flattenProcedure,
   flattenQuestionnaire,
   flattenQuestionnaireResponse,
+  flattenRiskAssessment,
+  flattenServiceRequest,
   flattenTask,
   flattenValueSet,
   flatten
