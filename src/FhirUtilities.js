@@ -4,6 +4,34 @@ let set = _.set;
 let has = _.has;
 
 export const FhirUtilities = {
+  addPatientFilterToQuery(patientId, currentQuery){
+    let returnQuery = {};
+
+    if(typeof currentQuery === "object"){
+      Object.assign(returnQuery, currentQuery);
+    }
+
+    let newQUery = {};  
+    if(patientId){
+        newQUery = {$or: [
+            {"patient.reference": "Patient/" + patientId},
+            {"patient.reference": "urn:uuid:Patient/" + patientId},
+            {"patient.reference": { $regex: ".*Patient/" + patientId}}, 
+            {"subject.reference": { $regex: ".*Patient/" + patientId}}  
+        ]}      
+    } else {
+        newQUery = {$or: [
+            {"patient.reference": "Patient/anybody"},
+            {"patient.reference": "urn:uuid:Patient/anybody"},
+            {"patient.reference": { $regex: ".*Patient/anybody"}}, 
+            {"subject.reference": { $regex: ".*Patient/anybody"}}  
+          ]}
+    }
+
+    Object.assign(returnQuery, newQUery);
+  
+    return newQUery
+  },
   pluckReferenceId(reference){
     let identifier = ""
     let referenceParts = [];
