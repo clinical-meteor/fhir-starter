@@ -17,14 +17,16 @@ export const FhirUtilities = {
             {"patient.reference": "Patient/" + patientId},
             {"patient.reference": "urn:uuid:Patient/" + patientId},
             {"patient.reference": { $regex: ".*Patient/" + patientId}}, 
-            {"subject.reference": { $regex: ".*Patient/" + patientId}}  
+            {"subject.reference": { $regex: ".*Patient/" + patientId}},
+            {"agent.who.reference": "Patient/" + patientId}
         ]}      
     } else {
         newQUery = {$or: [
             {"patient.reference": "Patient/anybody"},
             {"patient.reference": "urn:uuid:Patient/anybody"},
             {"patient.reference": { $regex: ".*Patient/anybody"}}, 
-            {"subject.reference": { $regex: ".*Patient/anybody"}}  
+            {"subject.reference": { $regex: ".*Patient/anybody"}},
+            {"agent.who.reference": "Patient/" + patientId}
           ]}
     }
 
@@ -172,9 +174,12 @@ export const FhirUtilities = {
       })
 
       // assemble the name from the first listed name or whatever is marked official
-      resultingNameString = FhirUtilities.assembleName(fhirPatientResource.name[selectedIndex], options)
+      if(has(fhirPatientResource, 'name[0].text')){
+        resultingNameString = get(fhirPatientResource, 'name[0].text');
+      } else {
+        resultingNameString = FhirUtilities.assembleName(fhirPatientResource.name[selectedIndex], options)
+      }      
     }
-
 
     // remove any whitespace from the name
     return resultingNameString.trim();
