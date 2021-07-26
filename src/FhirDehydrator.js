@@ -2145,7 +2145,7 @@ export function flattenRiskAssessment(document){
     _id: get(document, '_id', ''),
     id: get(document, 'id', ''),
     occurrenceDateTime: moment(get(document, 'occurrenceDateTime', null)).format("YYYY-MM-DD hh:mm"),
-    identifier: get(questionnaireResponse, 'identifier[0].value', ''),
+    identifier: get(document, 'identifier[0].value', ''),
     performer: get(document, 'performer.display', ''),
     performerReference: get(document, 'performer.reference', ''),
     status: get(document, 'status', ''),
