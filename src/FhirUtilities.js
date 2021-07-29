@@ -4,7 +4,7 @@ let set = _.set;
 let has = _.has;
 
 export const FhirUtilities = {
-  addPatientFilterToQuery(patientId, currentQuery){
+  addPatientFilterToQuery(patientId, currentQuery, clinicianId){
     let returnQuery = {};
 
     if(typeof currentQuery === "object"){
@@ -28,6 +28,10 @@ export const FhirUtilities = {
             {"subject.reference": { $regex: ".*Patient/anybody"}},
             {"agent.who.reference": "Patient/" + patientId}
           ]}
+    }
+
+    if(clinicianId){
+      newQuery = {};
     }
 
     Object.assign(returnQuery, newQUery);
@@ -292,7 +296,7 @@ export const FhirUtilities = {
               let interactionArray = get(resource, 'interaction');
               if(Array.isArray(interactionArray)){
                 interactionArray.forEach(function(interaction){
-                  if(get(interaction, 'code') === "read"){
+                  if(["read", "search-type"].includes(get(interaction, 'code'))){
                     canSearch[resourceType] = true;
                   }   
                 })  
