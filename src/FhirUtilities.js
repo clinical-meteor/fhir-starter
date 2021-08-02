@@ -12,30 +12,26 @@ export const FhirUtilities = {
       Object.assign(returnQuery, currentQuery);
     }
 
-    let newQuery = {};  
-    if(patientId){
-      newQuery = {$or: [
-            {"patient.reference": "Patient/" + patientId},
-            {"patient.reference": "urn:uuid:Patient/" + patientId},
-            {"patient.reference": { $regex: ".*Patient/" + patientId}}, 
-            {"subject.reference": { $regex: ".*Patient/" + patientId}},
-            {"agent.who.reference": "Patient/" + patientId}
-        ]}      
-    } else {
-      newQuery = {$or: [
-            {"patient.reference": "Patient/anybody"},
-            {"patient.reference": "urn:uuid:Patient/anybody"},
-            {"patient.reference": { $regex: ".*Patient/anybody"}}, 
-            {"subject.reference": { $regex: ".*Patient/anybody"}},
-            {"agent.who.reference": "Patient/" + patientId}
-          ]}
-    }
-
     if(clinicianId){
-      newQuery = {};
+      returnQuery = {};
+    } else {
+      if(patientId){
+        returnQuery = {$or: [
+              {"patient.reference": "Patient/" + patientId},
+              {"patient.reference": "urn:uuid:Patient/" + patientId},
+              {"patient.reference": { $regex: ".*Patient/" + patientId}}, 
+              {"subject.reference": { $regex: ".*Patient/" + patientId}},
+              {"agent.who.reference": "Patient/" + patientId}
+          ]}      
+      } else {
+        returnQuery = {$or: [
+              {"patient.reference": "Patient/public"},
+              {"patient.reference": "urn:uuid:Patient/public"},
+              {"patient.reference": { $regex: ".*Patient/public"}}, 
+              {"subject.reference": { $regex: ".*Patient/public"}}
+            ]}
+      }
     }
-
-    Object.assign(returnQuery, newQuery);
   
     return returnQuery
   },
