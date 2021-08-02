@@ -11,9 +11,9 @@ export const FhirUtilities = {
       Object.assign(returnQuery, currentQuery);
     }
 
-    let newQUery = {};  
+    let newQuery = {};  
     if(patientId){
-        newQUery = {$or: [
+      newQuery = {$or: [
             {"patient.reference": "Patient/" + patientId},
             {"patient.reference": "urn:uuid:Patient/" + patientId},
             {"patient.reference": { $regex: ".*Patient/" + patientId}}, 
@@ -21,7 +21,7 @@ export const FhirUtilities = {
             {"agent.who.reference": "Patient/" + patientId}
         ]}      
     } else {
-        newQUery = {$or: [
+      newQuery = {$or: [
             {"patient.reference": "Patient/anybody"},
             {"patient.reference": "urn:uuid:Patient/anybody"},
             {"patient.reference": { $regex: ".*Patient/anybody"}}, 
@@ -34,7 +34,7 @@ export const FhirUtilities = {
       newQuery = {};
     }
 
-    Object.assign(returnQuery, newQUery);
+    Object.assign(returnQuery, newQuery);
   
     return returnQuery
   },
