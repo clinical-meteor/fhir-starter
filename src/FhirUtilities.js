@@ -5,6 +5,7 @@ let has = _.has;
 
 export const FhirUtilities = {
   addPatientFilterToQuery(patientId, currentQuery, clinicianId){
+    console.log('FhirUtilities.addPatientFilterToQuery', patientId, currentQuery, clinicianId)
     let returnQuery = {};
 
     if(typeof currentQuery === "object"){
