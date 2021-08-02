@@ -336,6 +336,8 @@ function PatientsTable(props){
     tableRowSize,
     logger,
 
+    rowClickMode,
+
     ...otherProps 
   } = props;
 
@@ -557,10 +559,27 @@ function PatientsTable(props){
       onCellClick(id);
     }
   }
-  function selectPatientRow(patientId){
+  function selectPatientRow(patient, index){
     if(logger){
       logger.debug('Selecting a new Patient...');
     }
+
+    let patientId;
+    switch (rowClickMode) {
+      case 'index':
+        patientId = index;    
+        break;
+      case 'id':
+        patientId = get(patient, 'id');
+        break;
+      case '_id':
+        patientId = get(patient, '_id');
+        break;
+      default:
+        patientId = get(patient, '_id');
+        break;
+    }
+
     if(typeof onRowClick  === "function"){
       onRowClick(patientId);
     }
@@ -969,7 +988,7 @@ function PatientsTable(props){
       }
 
       tableRows.push(
-        <TableRow key={i} className="patientRow" hover={true} style={rowStyle} selected={selected} onClick={ selectPatientRow.bind(this, patientsToRender[i]._id )} >
+        <TableRow key={i} className="patientRow" hover={true} style={rowStyle} selected={selected} onClick={ selectPatientRow.bind(this, patientsToRender[i] )} >
           { renderActionIcons(patientsToRender[i]) }
           { renderRowAvatar(patientsToRender[i], styles.avatar) }
           { renderIdentifier(patientsToRender[i].identifier)}
@@ -1107,7 +1126,8 @@ PatientsTable.propTypes = {
   tableRowSize: PropTypes.string,
   formFactorLayout: PropTypes.string,
 
-  logger: PropTypes.object
+  logger: PropTypes.object,
+  rowClickMode: PropTypes.string
 };
 PatientsTable.defaultProps = {
   tableRowSize: 'medium',
@@ -1129,6 +1149,8 @@ PatientsTable.defaultProps = {
   hideFhirBarcode: false,
   hideSystemBarcode: false,
   hideCounts: true,
+  
+  rowClickMode: 'index',
 
   font3of9: true,
   hideFhirBarcode: false,
