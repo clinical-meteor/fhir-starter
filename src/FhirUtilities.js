@@ -36,7 +36,7 @@ export const FhirUtilities = {
 
     Object.assign(returnQuery, newQUery);
   
-    return newQUery
+    return returnQuery
   },
   pluckReferenceId(reference){
     let identifier = ""
