@@ -417,6 +417,72 @@ export function flattenComposition(composition){
   return result;
 }
 
+export function flattenCodeSystem(codeSystem, internalDateFormat){
+  let result = {
+    _id: '',
+    id: '',
+    meta: '',
+    url: '',
+    version: '',
+    name: '',
+    status: '',
+    experimental: '',
+    date: '',
+    publisher: '',
+    description: '',
+    useContext: '',
+    jurisdiction: '',
+    code: '',
+    base: '',
+    type: '',
+    expression: '',
+    xpath: '',
+    xpathUsage: '',
+    target: '',
+    multipleOr: '',
+    multipleAnd: '',
+    comparator: '',
+    modifier: '',
+    chain: '',
+  };
+
+  result.resourceType = get(codeSystem, 'resourceType', "Unknown");
+
+  if(!internalDateFormat){
+    internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
+  }
+
+  result._id =  get(codeSystem, 'id') ? get(codeSystem, 'id') : get(codeSystem, '_id');
+  result.id = get(codeSystem, 'id', '');
+  result.identifier = get(codeSystem, 'identifier[0].value', '');
+ 
+  result.version = get(codeSystem, 'version', '');
+  result.name = get(codeSystem, 'name', '');
+  result.title = get(codeSystem, 'title', '');
+  result.status = get(codeSystem, 'status', '');
+  result.experimental = get(codeSystem, 'experimental', false);
+  result.date = moment(get(codeSystem, 'date', '')).format("YYYY-MM-DD");
+  result.publisher = get(codeSystem, 'publisher', '');
+
+  result.contact = get(codeSystem, 'contact[0].name', '');
+  result.description = get(codeSystem, 'description', '');
+  result.purpose = get(codeSystem, 'purpose', '');
+  result.copyright = get(codeSystem, 'copyright', '');
+  result.caseSensitive = get(codeSystem, 'caseSensitive', false);
+
+  result.valueset = get(codeSystem, 'valueset', '');
+  result.hierarchyMeaning = get(codeSystem, 'hierarchyMeaning', '');
+
+  result.compositional = get(codeSystem, 'compositional', false);
+  result.versionNeeded = get(codeSystem, 'versionNeeded', false);
+
+  result.content = get(codeSystem, 'content', '');
+  result.supplements = get(codeSystem, 'supplements', '');
+
+  
+  return result;
+}
+
 export function flattenCondition(condition, internalDateFormat){
   let result = {
     _id: '',
@@ -2055,6 +2121,65 @@ export function flattenProcedure(procedure, internalDateFormat){
   return result;
 }
 
+
+export function flattenProvenance(provenance, internalDateFormat){
+  let result = {
+    _id: '',
+    id: '',
+    meta: '',
+    targetDisplay: '',
+    targetReference: '',
+    occurredDateTime: '',
+    occurredPeriodEnd: '',
+    recorded: '',
+    policy: '',
+    locationReference: '',
+    locationDisplay: '',
+    reason: '',
+    activity: '',
+    numAgents: 0,
+    numEntitites: 0,
+    signature: ""
+  };
+
+  result.resourceType = get(provenance, 'resourceType', "Unknown");
+
+  if(!internalDateFormat){
+    internalDateFormat = "YYYY-MM-DD";
+  }
+
+  result._id = get(provenance, '_id');
+  result.id = get(provenance, 'id', '');
+
+  result.targetReference = get(provenance, 'target[0].reference', '');
+  result.targetDisplay = get(provenance, 'target[0].display', '');
+  
+  result.occurredDateTime = moment(get(provenance, 'occurredDateTime', '')).format(internalDateFormat);
+
+  if(get(provenance, 'occurredPeriod.start')){
+    result.occurredDateTime = moment(get(provenance, 'occurredPeriod.start', '')).format(internalDateFormat);
+  }
+  if(get(provenance, 'occurredPeriod.end')){
+    result.occurredPeriodEnd = moment(get(provenance, 'occurredPeriod.end', '')).format(internalDateFormat);    
+  }
+
+  result.recorded = moment(get(provenance, 'recorded', '')).format(internalDateFormat);
+
+  result.policy = get(provenance, 'policy[0]', '');
+
+  result.locationReference = get(provenance, 'location[0].reference', '');
+  result.locationDisplay = get(provenance, 'location[0].display', '');
+
+  if(Array.isArray(get(provenance, 'agent'))){
+    result.numAgents = provenance.agent.length;
+  }
+  if(Array.isArray(get(provenance, 'entity'))){
+    result.numEntitites = provenance.entity.length;
+  }
+
+  return result;
+}
+
 export function flattenQuestionnaire(questionnaire){
   let result = {
     _id: get(questionnaire, '_id'),
@@ -2181,6 +2306,127 @@ export function flattenServiceRequest(document){
   return result;
 }
 
+export function flattenSearchParameter(parameters, internalDateFormat){
+  let result = {
+    _id: '',
+    id: '',
+    meta: '',
+    url: '',
+    version: '',
+    name: '',
+    status: '',
+    experimental: '',
+    date: '',
+    publisher: '',
+    description: '',
+    useContext: '',
+    jurisdiction: '',
+    code: '',
+    base: '',
+    type: '',
+    expression: '',
+    xpath: '',
+    xpathUsage: '',
+    target: '',
+    multipleOr: '',
+    multipleAnd: '',
+    comparator: '',
+    modifier: '',
+    chain: ''
+  };
+
+  result.resourceType = get(parameters, 'resourceType', "Unknown");
+
+  if(!internalDateFormat){
+    internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
+  }
+
+  result._id =  get(parameters, 'id') ? get(parameters, 'id') : get(parameters, '_id');
+  result.id = get(parameters, 'id', '');
+
+  result.url = get(parameters, 'url', '');
+  result.version = get(parameters, 'version', '');
+  result.name = get(parameters, 'name', '');
+  result.status = get(parameters, 'status', '');
+  result.experimental = get(parameters, 'experimental', false);
+  result.date = moment(get(parameters, 'date', '')).format("YYYY-MM-DD");
+  result.publisher = get(parameters, 'publisher', '');
+
+  result.contact = get(parameters, 'contact[0].name', '');
+  result.description = get(parameters, 'description', '');
+  result.purpose = get(parameters, 'purpose', '');
+
+  result.code = get(parameters, 'code', '');
+  result.base = get(parameters, 'base', '');
+  result.type = get(parameters, 'type', '');
+  result.expression = get(parameters, 'expression', '');
+  result.xpath = get(parameters, 'xpath', '');
+  result.xpathUsage = get(parameters, 'xpathUsage', '');
+  result.target = get(parameters, 'target', '');
+  result.multipleOr = get(parameters, 'multipleOr', false);
+  result.multipleAnd = get(parameters, 'multipleAnd', false);
+  result.comparator = get(parameters, 'comparator', '');
+  result.modifier = get(parameters, 'modifier', '');
+  result.chain = get(parameters, 'chain', '');
+
+  return result;
+}
+
+
+export function flattenStructureDefinition(definition, internalDateFormat){
+  let result = {
+    _id: '',
+    id: '',
+    meta: '',
+    url: '',
+    version: '',
+    name: '',
+    status: '',
+    experimental: '',
+    date: '',
+    publisher: '',
+    contact: '',
+    description: '',
+    jurisdiction: '',
+    purpose: '',
+    copyright: '',
+    fhirVersion: '',
+    kind: '',
+    abstract: '',
+    type: '',
+    derivation: ''
+  };
+
+  result.resourceType = get(definition, 'resourceType', "Unknown");
+
+  if(!internalDateFormat){
+    internalDateFormat = get(Meteor, "settings.public.defaults.internalDateFormat", "YYYY-MM-DD");
+  }
+
+  result._id =  get(definition, 'id') ? get(definition, 'id') : get(definition, '_id');
+  result.id = get(definition, 'id', '');
+
+  result.url = get(definition, 'url', '');
+  result.version = get(definition, 'version', '');
+  result.name = get(definition, 'name', '');
+  result.status = get(definition, 'status', '');
+  result.experimental = get(definition, 'experimental', false);
+  result.date = moment(get(definition, 'date', '')).format("YYYY-MM-DD");
+  result.publisher = get(definition, 'publisher', '');
+
+  result.contact = get(definition, 'contact[0].name', '');
+  result.description = get(definition, 'description', '');
+  result.purpose = get(definition, 'purpose', '');
+  result.copyright = get(definition, 'copyright', '');
+  result.fhirVersion = get(definition, 'fhirVersion', '');
+  result.kind = get(definition, 'kind', '');
+  result.abstract = get(definition, 'abstract', false);
+  result.type = get(definition, 'type', '');
+  result.derivation = get(definition, 'derivation', '');
+
+  return result;
+}
+
 export function flattenTask(task, internalDateFormat){
   let result = {
     _id: '',
@@ -2288,6 +2534,8 @@ export function flatten(collectionName, resource){
       return flattenCarePlan(resource);
     case "CareTeams":
       return flattenCareTeam(resource);
+    case "CodeSystems":
+      return flattenCodeSystem(resource);
     case "Conditions":
       return flattenCondition(resource);
     case "Consents":
@@ -2352,6 +2600,8 @@ export function flatten(collectionName, resource){
       return flattenPractitioner(resource);
     case "Procedures":
       return flattenProcedure(resource);
+    case "Provenances":
+      return flattenProvenance(resource);
     case "Questionnaires":
       return flattenQuestionnaire(resource);     
     case "QuestionnaireResponses":
@@ -2360,8 +2610,12 @@ export function flatten(collectionName, resource){
       return flattenRiskAssessment(resource);     
     case "Sequences":
       return notImplementedMessage;     
+    case "SearchParameters":
+      return flattenSearchParameter(resource);           
     case "ServiceRequest":
       return flattenServiceRequest(resource);           
+    case "StructureDefinitions":
+      return flattenStructureDefinition(resource);           
     case "Tasks":
       return flattenTask(resource);
     case "ValueSets":
@@ -2377,6 +2631,7 @@ export const FhirDehydrator = {
   dehydrateBundle: flattenBundle,
   dehydrateCarePlan: flattenCarePlan,
   dehydrateCareTeam: flattenCareTeam,
+  dehydrateCodeSystem: flattenCodeSystem,
   dehydrateComposition: flattenComposition,
   dehydrateCommunication: flattenCommunication,
   dehydrateConsent: flattenConsent,
@@ -2399,10 +2654,13 @@ export const FhirDehydrator = {
   dehydratePatient: flattenPatient,
   dehydratePractitioner: flattenPractitioner,
   dehydrateProcedure: flattenProcedure,
+  dehydrateProvenance: flattenProvenance,
   dehydrateQuestionnaire: flattenQuestionnaire,
   dehydrateQuestionnaireResponse: flattenQuestionnaireResponse,
   dehydrateRiskAssessment: flattenRiskAssessment,
+  dehydrateSearchParameter: flattenSearchParameter,
   dehydrateServiceRequest: flattenServiceRequest,
+  dehydrateStructureDefinition: flattenStructureDefinition,
   dehydrateTask: flattenTask,
   dehydrateValueSet: flattenValueSet,
   flatten: flatten
@@ -2415,6 +2673,7 @@ export default {
   flattenBundle,
   flattenCarePlan,
   flattenCareTeam,
+  flattenCodeSystem,
   flattenComposition,
   flattenCondition,
   flattenConsent,
@@ -2437,10 +2696,13 @@ export default {
   flattenPatient,
   flattenPractitioner,
   flattenProcedure,
+  flattenProvenance,
   flattenQuestionnaire,
   flattenQuestionnaireResponse,
   flattenRiskAssessment,
+  flattenSearchParameter,
   flattenServiceRequest,
+  flattenStructureDefinition,
   flattenTask,
   flattenValueSet,
   flatten

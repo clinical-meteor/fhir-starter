@@ -272,6 +272,34 @@ export const FhirUtilities = {
 
     return pluralized;
   },
+  singularizeResourceName(resourceTypeString){
+    var singularized = '';
+    switch (resourceTypeString) {
+      case 'Binaries':          
+        singularized = 'Binary';
+        break;
+      case 'Libraries':      
+        singularized = 'Library';
+        break;
+      case 'SupplyDeliveries':      
+        singularized = 'SupplyDelivery';
+        break;
+      case 'ImagingStudies':      
+        singularized = 'ImagingStudy';
+        break;        
+      case 'FamilyMemberHistories':      
+        singularized = 'FamilyMemberHistory';
+        break;        
+      case 'ResearchStudies':      
+        singularized = 'ResearchStudy';
+        break;        
+      default:
+        singularized = resourceTypeString.substring(0, resourceTypeString.length - 1)
+        break;
+    }
+
+    return singularized;
+  },
   parseCapabilityStatement(capabilityStatement, canSearch){
     console.log('FhirUtilities.parseCapabilityStatement.', capabilityStatement)
     if(!canSearch){

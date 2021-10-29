@@ -1,0 +1,131 @@
+Arguments: 
+  /usr/local/Cellar/node/16.6.2/bin/node /usr/local/bin/yarn add rollup
+
+PATH: 
+  /Users/awatson/.gem/ruby/2.6.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+
+Yarn version: 
+  1.22.11
+
+Node version: 
+  16.6.2
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: unable to get local issuer certificate
+      at TLSSocket.onConnectSecure (node:_tls_wrap:1530:34)
+      at TLSSocket.emit (node:events:394:28)
+      at TLSSocket._finishInit (node:_tls_wrap:944:8)
+      at TLSWrap.ssl.onhandshakedone (node:_tls_wrap:725:12)
+
+npm manifest: 
+  {
+    "name": "fhir-starter",
+    "version": "0.13.1",
+    "description": "Reausable and composable FHIR components built with React and Material UI.  Normative maturity level 5 resources only.",
+    "homepage": "http://github.com/symptomatic/fhir-starter",
+    "repository": "symptomatic/fhir-starter",
+    "author": "Abigail Watson <abigail@symptomatic.io>",
+    "contributors": [
+      "Konstantin Tarkus <hello@tarkus.me>",
+      "Vladimir Kutepov <frenzzy.man@gmail.com>"
+    ],
+    "license": "MIT",
+    "keywords": [
+      "fhir",
+      "hl7",
+      "material",
+      "ui",
+      "materialui",
+      "react",
+      "dstu2",
+      "stu3",
+      "r4",
+      "normative"
+    ],
+    "main": "dist/bundle.js",
+    "style": "dist/styles.css",
+    "files": [
+      "dist"
+    ],
+    "eslintConfig": {
+      "parser": "babel-eslint",
+      "extends": "airbnb-base"
+    },
+    "dependencies": {
+      "@babel/core": "^7.12.9",
+      "@babel/node": "^7.12.6",
+      "@babel/plugin-transform-runtime": "^7.12.1",
+      "@babel/preset-env": "^7.12.7",
+      "@babel/preset-react": "^7.12.7",
+      "@babel/runtime": "^7.12.5",
+      "babel-loader": "^8.0.6",
+      "lodash": "4.17.20",
+      "lodash-es": "4.17.15",
+      "moment": "2.24.0",
+      "prop-types": "15.7.2",
+      "react-proptypes": "^1.0.0",
+      "regjsparser": "0.6.4",
+      "typescript": "^4.0.3"
+    },
+    "deprecatedDependencies": {},
+    "devDependencies": {
+      "@babel/cli": "^7.6.4",
+      "@babel/plugin-external-helpers": "^7.2.0",
+      "@babel/register": "^7.6.2",
+      "babel-eslint": "^10.0.3",
+      "babel-plugin-add-module-exports": "^1.0.2",
+      "babel-plugin-external-helpers": "^6.22.0",
+      "builtin-modules": "^3.1.0",
+      "chai": "^4.2.0",
+      "coveralls": "^2.11.14",
+      "del": "^2.2.2",
+      "easystatic": "^0.1.12",
+      "eslint": "^5.9.0",
+      "eslint-config-airbnb-base": "^13.2.0",
+      "eslint-plugin-import": "^2.18.2",
+      "i": "^0.3.6",
+      "istanbul": "^1.1.0-alpha.1",
+      "jest": "24.9.0",
+      "mocha": "^5.2.0",
+      "nyc": "^13.1.0",
+      "rollup": "^2.53.2",
+      "rollup-plugin-babel": "^4.4.0",
+      "rollup-plugin-commonjs": "^10.1.0",
+      "rollup-plugin-node-resolve": "^5.2.0",
+      "rollup-plugin-progress": "^1.1.2",
+      "rollup-plugin-replace": "^2.2.0",
+      "sinon": "^7.5.0",
+      "styled-jsx": "^3.2.1"
+    },
+    "peerDependencies": {
+      "@material-ui/core": "4.5.1",
+      "react": "^16.13.0",
+      "react-dom": "^16.13.0",
+      "react-icons-kit": "1.3.1",
+      "webpack": "^2.0.0",
+      "winston": "3.2.1"
+    },
+    "optionalDependencies": {
+      "fsevents": "2.2.1"
+    },
+    "scripts": {
+      "lint": "eslint src test tools",
+      "test": "mocha --require @babel/register",
+      "test:watch": "mocha --require @babel/register --reporter min --watch",
+      "test:cover": "nyc npm test",
+      "coveralls": "cat ./coverage/lcov.info | coveralls",
+      "build": "rollup -c",
+      "publish:docs": "easystatic deploy docs --repo kriasoft/babel-starter-kit",
+      "publish": "npm install",
+      "start": "easystatic start docs"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
