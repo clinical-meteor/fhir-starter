@@ -23,13 +23,13 @@ function PageCanvas(props){
     returnedStyle = Object.assign(returnedStyle, style);
   }
 
-  if(headerHeight > 0){
+  if(headerHeight > -1){
     returnedStyle.paddingTop = headerHeight + 'px';
   }
-  if(paddingLeft > 0){
+  if(paddingLeft > -1){
     returnedStyle.paddingLeft = paddingLeft + 'px';
   }
-  if(paddingRight > 0){
+  if(paddingRight > -1){
     returnedStyle.paddingRight = paddingRight + 'px';
   }
 

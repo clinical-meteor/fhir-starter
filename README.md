@@ -50,6 +50,7 @@ fhir-starter components require a theme to be provided. The quickest way to get 
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MyAwesomeReactComponent from './MyAwesomeReactComponent';
 
@@ -68,7 +69,9 @@ const App = () => (
   </MuiThemeProvider>
 );
 
-ReactDOM.render(
+// ReactDReactDOM
+OM.render(
+ReactDOMClient.createRoot(
   <App />,
   document.getElementById('app')
 );
