@@ -41,7 +41,7 @@
     "babel-loader": "^8.0.6",
     "lodash": "4.17.20",
     "lodash-es": "4.17.15",
-    "moment": "2.24.0",
+    "moment": "2.29.4",
     "prop-types": "15.7.2",
     "react-proptypes": "^1.0.0",
     "regjsparser": "0.6.4",
