@@ -153,6 +153,9 @@ under the terms of the [MIT License](LICENSE.txt).
 - In terminal 1, run the following.
 
 ```bash
+# add rollup, if needed
+yarn add rollup
+
 # rollup will watch the file system for changes to the npm package and compile as needed
 yarn rollup -c --watch
 ```

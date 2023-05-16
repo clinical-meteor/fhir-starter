@@ -15,6 +15,12 @@ import PatientDetail from './patients/PatientDetail';
 
 import ObservationsTable from './observations/ObservationsTable';
 
+import QuestionnaireResponsesTable from './questionnaireResponses/QuestionnaireResponsesTable';
+import QuestionnaireResponseSummary from './questionnaireResponses/QuestionnaireResponseSummary';
+
+import QuestionnairesTable from './questionnaires/QuestionnairesTable';
+import QuestionnaireExpansionPanels from './questionnaires/QuestionnaireExpansionPanels';
+
 import TableNoData from './components/TableNoData';
 import StyledCard from './components/StyledCard';
 import PageCanvas from './components/PageCanvas';
@@ -34,6 +40,11 @@ export {
   ObservationsTable,
   ValueSetsTable,
 
+  QuestionnaireResponsesTable,
+  QuestionnaireResponseSummary,
+  QuestionnairesTable,
+  QuestionnaireExpansionPanels,
+  
   TableNoData,
   StyledCard,
   PageCanvas,
