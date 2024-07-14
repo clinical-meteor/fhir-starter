@@ -1,6 +1,6 @@
-import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default {
   input: 'src/index.js',
@@ -16,9 +16,11 @@ export default {
     'react', 
     'react-dom',
     'prop-types',
+    'react-is',
     'react-proptypes',
     '@material-ui/core',
-    '@material-ui/styles'
+    '@material-ui/styles',
+    '@material-ui/icons'
   ],
   plugins: [
     babel({
@@ -28,11 +30,7 @@ export default {
       exclude: 'node_modules/**',
     }),
     commonjs({
-      include: 'node_modules/**',
-      namedExports: {
-        'react-is': ['ForwardRef', 'isForwardRef', 'isValidElementType'],
-        'react-icons-kit/index.js': ['Icon']
-      },
+      include: 'node_modules/**'
     }),
     resolve({
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],

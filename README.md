@@ -241,10 +241,9 @@ meteor npm link packages/fhir-starter
 cd packages/fhir-starter
 rm -rf node_modules
 
-npm update
+npm update --force
 
-
-// typical rollupt
+// typical rollup
 yarn rollup --config
 
 npm login
